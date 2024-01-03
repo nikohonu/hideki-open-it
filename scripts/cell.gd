@@ -1,30 +1,20 @@
 extends Node2D
 
+signal cell_clicked(cords)
+
 var cords = Vector2i.ZERO
 var value: int:
 	get:
 		return value
 	set(i):
 		value = i
-		if value < 0:
-			$TextureButton.self_modulate = Color.RED
+		if value == 0:
+			visible = false
+		elif value < 0:
+			$Sprite2D.frame = 0
 		else:
-			$TextureButton.self_modulate = Color.GREEN
-		$TextureButton/Label.text = label_dict[abs(i)]
-
-var label_dict = {
-	1: "0",
-	2: "1",
-	3: "2",
-	4: "3",
-	5: "4",
-	6: "5",
-	7: "6",
-	8: "7",
-	9: "8",
-	10: "9",
-	11: "a",
-}
+			$Sprite2D.frame = 1
+		$Label.text = str(abs(i))
 
 
 func _ready():
@@ -36,4 +26,4 @@ func _process(delta):
 
 
 func _on_texture_button_pressed():
-	print(cords)
+	cell_clicked.emit(cords)

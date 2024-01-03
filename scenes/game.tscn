@@ -1,6 +1,81 @@
-[gd_scene load_steps=2 format=3 uid="uid://udooa3xcoxwg"]
+[gd_scene load_steps=12 format=3 uid="uid://udooa3xcoxwg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_qwehj"]
+[ext_resource type="Texture2D" uid="uid://dgt17w4xtm26o" path="res://sprites/cursor.png" id="2_k87ei"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nj5po"]
+atlas = ExtResource("2_k87ei")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llwcw"]
+atlas = ExtResource("2_k87ei")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0hfw"]
+atlas = ExtResource("2_k87ei")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkhja"]
+atlas = ExtResource("2_k87ei")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_de4tc"]
+atlas = ExtResource("2_k87ei")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_muivv"]
+atlas = ExtResource("2_k87ei")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcxfj"]
+atlas = ExtResource("2_k87ei")
+region = Rect2(576, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnrhg"]
+atlas = ExtResource("2_k87ei")
+region = Rect2(672, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s38a0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nj5po")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_llwcw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0hfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkhja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_de4tc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_muivv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rcxfj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnrhg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="Game" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_qwehj")
+
+[node name="Map" type="Node2D" parent="."]
+
+[node name="Cursor" type="AnimatedSprite2D" parent="."]
+position = Vector2(741, 401)
+sprite_frames = SubResource("SpriteFrames_s38a0")
+autoplay = "default"
+frame_progress = 0.839362
+centered = false
