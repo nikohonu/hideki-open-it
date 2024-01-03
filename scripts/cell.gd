@@ -14,7 +14,7 @@ var value: int:
 			$Sprite2D.frame = 0
 		else:
 			$Sprite2D.frame = 1
-		$Label.text = str(abs(i))
+		$CenterContainer/Label.text = str(abs(i))
 
 
 func _ready():

@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dbbwiniodfku7"]
+
+[ext_resource type="FontFile" uid="uid://ca3255aseygbu" path="res://fonts/Shantell_Sans/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf" id="1_pw6of"]
+
+[resource]
+default_font = ExtResource("1_pw6of")

@@ -8,17 +8,26 @@ var cells: Array
 var cursor = Vector2i(4, 4)
 var start_position
 var can_move = true
-var p1_score = 0
-var p2_score = 0
-@export var speed: float = 0.1
-enum Player { FIRST, SECOND }
+var scores = [0, 0]
+var tween
+@export var speed: float = 0.2
 
+
+func check_game_end(player: Global.Player):
+	var total = 0
+	if player == Global.Player.FIRST:
+		for x in range(map_size.x):
+			total += 1 if map[cursor.y][x] != 0 else 0
+	else:
+		for y in range(map_size.y):
+			total += 1 if map[y][cursor.x] != 0 else 0
+	if total == 0:
+		can_move = false
 
 func cords_to_position(cords: Vector2i):
 	return Vector2(
 		start_position.x + (cell_size.x * cords.x), start_position.y + (cell_size.y * cords.y)
 	)
-
 
 func generate_board():
 	var possible_value = []
@@ -48,22 +57,23 @@ func _ready():
 		center.x - cell_size.x * (map_size.x / 2), center.y - cell_size.y * (map_size.y / 2)
 	)
 	$Cursor.position = cords_to_position(cursor)
+	$Panel.position = cords_to_position(Vector2i(map_size.x, 0))
 	generate_board()
 
 
-func select(player: Player):
+func select(player: Global.Player):
 	var score = map[cursor.y][cursor.x]
-	if score == 0:
-		return
+	if score == 0:	return
 	map[cursor.y][cursor.x] = 0
 	cells[cursor.y][cursor.x].value = 0
-	if player == Player.FIRST:
-		p1_score += score
+	var oposite_player = Global.Player.SECOND if player == Global.Player.FIRST else Global.Player.FIRST
+	if player == Global.Player.FIRST:
 		can_move = false
 		computer_move()
-	else:
-		p2_score += score
-
+	scores[player] += score
+	$Panel.update_score(player, scores[player])
+	$Panel.update_move_status(oposite_player)
+	check_game_end(oposite_player)
 
 func calculate_computer_move():
 	var best = -99
@@ -81,7 +91,9 @@ func calculate_computer_move():
 
 func move_cursor(cords: Vector2i, diff: int, on_tween_finished):
 	var new_position = cords_to_position(cords)
-	var tween = create_tween()
+	if tween:
+		tween.kill()
+	tween = create_tween()
 	tween.finished.connect(on_tween_finished)
 	tween.tween_property($Cursor, "position", new_position, speed * diff).set_trans(
 		Tween.TRANS_CUBIC
@@ -98,7 +110,7 @@ func computer_move():
 func _process(delta):
 	var input_direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if Input.is_action_just_released("ui_accept"):
-		select(Player.FIRST)
+		select(Global.Player.FIRST)
 	if can_move and input_direction.length() > 0:
 		can_move = false
 		cursor.x = clamp(cursor.x + input_direction.x, 0, map_size.x - 1)
@@ -119,10 +131,10 @@ func _on_movement_tween_finished():
 
 # When player 1 move with mouse
 func _on_mouse_movement_tween_finished():
-	select(Player.FIRST)
+	select(Global.Player.FIRST)
 
 
 # When computer move
 func _on_computer_movement_tween_finished():
 	can_move = true
-	select(Player.SECOND)
+	select(Global.Player.SECOND)

@@ -1,7 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://udooa3xcoxwg"]
+[gd_scene load_steps=14 format=3 uid="uid://udooa3xcoxwg"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_qwehj"]
 [ext_resource type="Texture2D" uid="uid://dgt17w4xtm26o" path="res://sprites/cursor.png" id="2_k87ei"]
+[ext_resource type="Texture2D" uid="uid://b008ectkc177c" path="res://sprites/panel.png" id="3_kn2cx"]
+[ext_resource type="Theme" uid="uid://dbbwiniodfku7" path="res://theme.tres" id="4_q27nq"]
+[ext_resource type="Script" path="res://scripts/panel.gd" id="4_ug41f"]
+[ext_resource type="Texture2D" uid="uid://bej3bvecgurqt" path="res://sprites/status.png" id="5_2jia2"]
+[ext_resource type="FontFile" uid="uid://clushkhqa3am4" path="res://fonts/Shantell_Sans/ShantellSans-Italic-VariableFont_BNCE,INFM,SPAC,wght.ttf" id="5_2vast"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nj5po"]
 atlas = ExtResource("2_k87ei")
@@ -23,18 +28,6 @@ region = Rect2(288, 0, 96, 96)
 atlas = ExtResource("2_k87ei")
 region = Rect2(384, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_muivv"]
-atlas = ExtResource("2_k87ei")
-region = Rect2(480, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rcxfj"]
-atlas = ExtResource("2_k87ei")
-region = Rect2(576, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mnrhg"]
-atlas = ExtResource("2_k87ei")
-region = Rect2(672, 0, 96, 96)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_s38a0"]
 animations = [{
 "frames": [{
@@ -52,19 +45,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_de4tc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_muivv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rcxfj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mnrhg")
 }],
 "loop": true,
 "name": &"default",
-"speed": 10.0
+"speed": 5.0
 }]
 
 [node name="Game" type="Node2D"]
@@ -77,5 +61,77 @@ script = ExtResource("1_qwehj")
 position = Vector2(741, 401)
 sprite_frames = SubResource("SpriteFrames_s38a0")
 autoplay = "default"
-frame_progress = 0.839362
+frame_progress = 0.271429
 centered = false
+
+[node name="Panel" type="Sprite2D" parent="."]
+position = Vector2(1216, 156)
+texture = ExtResource("3_kn2cx")
+centered = false
+script = ExtResource("4_ug41f")
+
+[node name="P1StatusBackground" type="Sprite2D" parent="Panel"]
+position = Vector2(176, 64)
+texture = ExtResource("5_2jia2")
+vframes = 2
+
+[node name="P1Status" type="Label" parent="Panel"]
+offset_left = 128.0
+offset_top = 32.0
+offset_right = 225.0
+offset_bottom = 96.0
+theme = ExtResource("4_q27nq")
+theme_override_font_sizes/font_size = 38
+text = "Move"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P1Score" type="Label" parent="Panel"]
+offset_top = 116.0
+offset_right = 256.0
+offset_bottom = 232.0
+theme = ExtResource("4_q27nq")
+theme_override_fonts/font = ExtResource("5_2vast")
+theme_override_font_sizes/font_size = 85
+text = "000"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Logo" type="Label" parent="Panel"]
+offset_top = 256.0
+offset_right = 256.0
+offset_bottom = 512.0
+theme = ExtResource("4_q27nq")
+theme_override_font_sizes/font_size = 70
+text = "Niko
+Honu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P2StatusBackground" type="Sprite2D" parent="Panel"]
+position = Vector2(176, 576)
+texture = ExtResource("5_2jia2")
+vframes = 2
+frame = 1
+
+[node name="P2Status" type="Label" parent="Panel"]
+offset_left = 128.0
+offset_top = 544.0
+offset_right = 225.0
+offset_bottom = 608.0
+theme = ExtResource("4_q27nq")
+theme_override_font_sizes/font_size = 38
+text = "Stay"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P2Score" type="Label" parent="Panel"]
+offset_top = 628.0
+offset_right = 256.0
+offset_bottom = 744.0
+theme = ExtResource("4_q27nq")
+theme_override_fonts/font = ExtResource("5_2vast")
+theme_override_font_sizes/font_size = 85
+text = "000"
+horizontal_alignment = 2
+vertical_alignment = 1
