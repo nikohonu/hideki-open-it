@@ -8,9 +8,7 @@ var value: int:
 		return value
 	set(i):
 		value = i
-		if value == 0:
-			visible = false
-		elif value < 0:
+		if value < 0:
 			$Sprite2D.frame = 0
 		else:
 			$Sprite2D.frame = 1
