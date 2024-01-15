@@ -4,3 +4,6 @@
 
 [resource]
 default_font = ExtResource("1_pw6of")
+GridContainer/constants/h_separation = 0
+GridContainer/constants/v_separation = 0
+HBoxContainer/constants/separation = 0

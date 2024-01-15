@@ -5,7 +5,7 @@ uniform sampler2D texture_front : source_color,filter_nearest,repeat_enable;
 uniform sampler2D texture_face : source_color,filter_nearest,repeat_enable;
 uniform sampler2D texture_background : source_color,filter_linear,repeat_enable;
 uniform vec2 cell;
-uniform vec2 size;
+uniform vec2 ratio;
 uniform vec3 uv1_scale;
 uniform vec3 uv1_offset;
 
@@ -28,7 +28,7 @@ void fragment() {
 		vec2 local_cell = cell;
 		local_cell.x = 7. - local_cell.x;
 		base_uv = -((base_uv + -c3) * vec2(3, 2) + local_cell) / vec2(8, 8);
-		base_uv = base_uv * size - (vec2(1, 1) - size) / 2.;
+		base_uv = base_uv * ratio - (vec2(1, 1) - ratio) / 2.;
 		albedo_tex = texture(texture_background, base_uv);
 	}
 	else {

@@ -1,12 +1,16 @@
-[gd_scene load_steps=15 format=3 uid="uid://d0nvb0van5w8f"]
+[gd_scene load_steps=19 format=3 uid="uid://d0nvb0van5w8f"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_qwehj"]
+[ext_resource type="Script" path="res://scripts/map.gd" id="2_j7fmf"]
 [ext_resource type="Texture2D" uid="uid://dgt17w4xtm26o" path="res://sprites/cursor.png" id="2_k87ei"]
+[ext_resource type="Script" path="res://scripts/ui.gd" id="3_6gjgw"]
+[ext_resource type="Texture2D" uid="uid://biqj2wmrnln2t" path="res://backgrounds/background0.png" id="3_ke4gh"]
 [ext_resource type="Texture2D" uid="uid://b008ectkc177c" path="res://sprites/panel.png" id="3_kn2cx"]
 [ext_resource type="Theme" uid="uid://dbbwiniodfku7" path="res://theme.tres" id="4_q27nq"]
 [ext_resource type="Script" path="res://scripts/panel.gd" id="4_ug41f"]
 [ext_resource type="Texture2D" uid="uid://bej3bvecgurqt" path="res://sprites/status.png" id="5_2jia2"]
 [ext_resource type="FontFile" uid="uid://clushkhqa3am4" path="res://fonts/Shantell_Sans/ShantellSans-Italic-VariableFont_BNCE,INFM,SPAC,wght.ttf" id="5_2vast"]
+[ext_resource type="Script" path="res://scripts/cursor.gd" id="5_ervvd"]
 
 [sub_resource type="Environment" id="Environment_a7m6j"]
 ambient_light_source = 2
@@ -59,6 +63,9 @@ animations = [{
 script = ExtResource("1_qwehj")
 
 [node name="Map" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_j7fmf")
+background_texture = ExtResource("3_ke4gh")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
@@ -69,26 +76,47 @@ size = 11.25
 environment = SubResource("Environment_a7m6j")
 
 [node name="Cursor" type="AnimatedSprite3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.802815, 0.469888, 0.5)
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_gnc5n")
 autoplay = "default"
 frame_progress = 0.545264
+script = ExtResource("5_ervvd")
 
-[node name="Panel" type="TextureRect" parent="."]
-offset_left = 1216.0
-offset_top = 156.0
-offset_right = 1472.0
-offset_bottom = 924.0
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("4_q27nq")
+script = ExtResource("3_6gjgw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/HBoxContainer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/h_separation = 0
+columns = 8
+
+[node name="Panel" type="TextureRect" parent="CenterContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 texture = ExtResource("3_kn2cx")
 script = ExtResource("4_ug41f")
 
-[node name="P1StatusBackground" type="Sprite2D" parent="Panel"]
+[node name="P1StatusBackground" type="Sprite2D" parent="CenterContainer/HBoxContainer/Panel"]
 position = Vector2(176, 64)
 texture = ExtResource("5_2jia2")
 vframes = 2
 
-[node name="P1Status" type="Label" parent="Panel"]
+[node name="P1Status" type="Label" parent="CenterContainer/HBoxContainer/Panel"]
 layout_mode = 0
 offset_left = 128.0
 offset_top = 32.0
@@ -100,7 +128,7 @@ text = "Move"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="P1Score" type="Label" parent="Panel"]
+[node name="P1Score" type="Label" parent="CenterContainer/HBoxContainer/Panel"]
 layout_mode = 0
 offset_top = 116.0
 offset_right = 256.0
@@ -112,7 +140,7 @@ text = "000"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Logo" type="Label" parent="Panel"]
+[node name="Logo" type="Label" parent="CenterContainer/HBoxContainer/Panel"]
 layout_mode = 0
 offset_top = 256.0
 offset_right = 256.0
@@ -124,13 +152,13 @@ Honu"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="P2StatusBackground" type="Sprite2D" parent="Panel"]
+[node name="P2StatusBackground" type="Sprite2D" parent="CenterContainer/HBoxContainer/Panel"]
 position = Vector2(176, 576)
 texture = ExtResource("5_2jia2")
 vframes = 2
 frame = 1
 
-[node name="P2Status" type="Label" parent="Panel"]
+[node name="P2Status" type="Label" parent="CenterContainer/HBoxContainer/Panel"]
 layout_mode = 0
 offset_left = 128.0
 offset_top = 544.0
@@ -142,7 +170,7 @@ text = "Stay"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="P2Score" type="Label" parent="Panel"]
+[node name="P2Score" type="Label" parent="CenterContainer/HBoxContainer/Panel"]
 layout_mode = 0
 offset_top = 628.0
 offset_right = 256.0

@@ -1,27 +1,35 @@
-extends Node2D
+extends MeshInstance3D
 
-signal cell_clicked(cords)
+signal animation_finished
 
-var cords = Vector2i.ZERO
+var green_cell_sprite = preload("res://sprites/green_cell.png")
+var red_cell_sprite = preload("res://sprites/red_cell.png")
+var green_cell_sprite_face = preload("res://sprites/green_cell_face.png")
+var red_cell_sprite_face = preload("res://sprites/red_cell_face.png")
+
+var cords:
+	set(c):
+		mesh.get_material().set_shader_parameter("cell", c)
+		position = Global.cords_to_position(c)
+		cords = c
 var value: int:
 	get:
 		return value
-	set(i):
-		value = i
+	set(v):
+		value = v
 		if value < 0:
-			$Sprite2D.frame = 0
-		else:
-			$Sprite2D.frame = 1
-		$CenterContainer/Label.text = str(abs(i))
+			mesh.get_material().set_shader_parameter("texture_front", red_cell_sprite)
+			mesh.get_material().set_shader_parameter("texture_face", red_cell_sprite_face)
+		elif value > 0:
+			mesh.get_material().set_shader_parameter("texture_front", green_cell_sprite)
+			mesh.get_material().set_shader_parameter("texture_face", green_cell_sprite_face)
+		if value != 0:
+			$Label3D.text = str(abs(v))
 
 
-func _ready():
-	pass
+func select():
+	$AnimationPlayer.play("rotate")
 
 
-func _process(delta):
-	pass
-
-
-func _on_texture_button_pressed():
-	cell_clicked.emit(cords)
+func _on_animation_player_animation_finished(_anim_name):
+	emit_signal("animation_finished")
