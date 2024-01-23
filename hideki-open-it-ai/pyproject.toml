@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "hideki-open-it-ai"
+version = "0.1.0"
+description = "An attempt to create AI using a neural network genetic algorithm"
+authors = ["Niko Honu <nikohonu@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+torch = "^2.1.2"
+numpy = "^1.26.3"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.12.1"
+pyright = "^1.1.348"
+isort = "^5.13.2"
+pylint = "^3.0.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+hoiai = 'hideki_open_it_ai.__main__:main'
+
