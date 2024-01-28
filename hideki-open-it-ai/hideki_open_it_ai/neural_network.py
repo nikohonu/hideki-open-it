@@ -1,5 +1,4 @@
 import uuid
-from pathlib import Path
 
 import torch
 import torch.nn as nn
@@ -8,7 +7,7 @@ import torch.nn.functional as F
 
 class NeuralNetwork(nn.Module):
     def __init__(
-        self, name: str = "", input_nc=67, hidden_nc=80, output_nc=1, hidden_c=2
+        self, name: str = "", input_nc=67, hidden_nc=140, output_nc=1, hidden_c=2
     ):
         super().__init__()
         self.name = str(uuid.uuid4()) if not name else name
@@ -20,11 +19,16 @@ class NeuralNetwork(nn.Module):
         self.layers.append(nn.Linear(hidden_nc, output_nc))
 
     def forward(self, x):
-        # print(self.name)
+        map = (x[:64] * 22).reshape(-1, 8)
+        cursor = x[64] * 7
+        score = x[65] * 198
+        player = int(x[-1])
+
         for layer in self.layers:
-            # print("i", x, end=" ")
             x = F.sigmoid(layer(x))
-            # print("o", x)
+        best_move = round(float(x[0]) * 7)
+        print(map)
+        print("cursor", cursor, "player", player, "best_move", best_move, "score", score, "nn")
         return x
 
     def mutate_layer(self, layer: nn.Linear, mutation_rate):
@@ -51,10 +55,8 @@ class NeuralNetwork(nn.Module):
     def to_json(self):
         data = []
         for layer in self.layers:
-            l_data = []
-            l_data.append([layer.weight.tolist(), layer.bias.tolist()])
+            data.append([layer.weight.tolist(), layer.bias.tolist()])
             # print(layer, layer.weight, layer.bias)
-            data.append(l_data)
         return data
 
 

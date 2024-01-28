@@ -10,7 +10,7 @@ from hideki_open_it_ai.game_simulation import GameSimulation
 from hideki_open_it_ai.neural_network import NeuralNetwork
 
 
-def load_best_prev_players(mutate=True):
+def load_best_prev_players(mutate=True) -> list:
     players = []
     models_path = Path("models")
     for model_path in models_path.glob("*.dat"):
@@ -28,10 +28,11 @@ def load_best_prev_players(mutate=True):
 
 
 def generate_players():
-    """Generate 256 playes"""
+    """Generate 128 playes"""
     players = load_best_prev_players()
-    while len(players) < 256:
+    while len(players) < 128:
         players.append(NeuralNetwork())
+    random.shuffle(players)
     return players
 
 
@@ -44,10 +45,9 @@ def batched(iterable, n):
         yield batch
 
 
-def tornament(players, min=8):
+def tornament(players, min=2):
     if len(players) <= min:
         return players
-    random.shuffle(players)
     new_round_players = []
     for current_players in list(batched(players, 2)):
         gs = GameSimulation(current_players[0], current_players[1])
@@ -77,64 +77,90 @@ def save_dict_to_json(data, file_path):
         json.dump(data, json_file, indent=4)
 
 
-def main():
-    # train
-    # for i in range(10000):
-    #     print(f"Gen {i}")
-    #     players = generate_players()
-    #     players = tornament(players)
-    #     save(players)
-    # load
-    # players = load_best_prev_players(mutate=False)
-    # players = tornament(players, 1)
-    # model = players[0]
-    # data = torch.zeros(67)
-    # print(model(data).item())
-    model_path = Path("model.model")
-    model = NeuralNetwork("", 1, 2, 1, 0)
-    model.load_state_dict(torch.load(model_path))
-    print(model)
-    #     torch.save(model.state_dict(), model_path)
-    save_dict_to_json(model.to_json(), "ai.json")
-    data = torch.zeros(1)
-    print(model(data))
+def max_player(input: torch.tensor):
+    map = (input[:64] * 22).reshape(-1, 8)
+    cursor = input[64] * 7
+    score = input[65] * 198
+    player = int(input[-1])
+    cells = map[int(cursor), ::] if player == 0 else map[::, int(cursor)]
+    best_move = 0
+    best_cell = float("-inf")
+    for move, cell in enumerate(cells):
+        if cell > best_cell and cell >= -11:
+            best_cell = cell
+            best_move = move
+    print(map)
+    print("cursor", cursor, "player", player, "best_move", best_move, "score", score)
+    return torch.tensor([best_move / 7])
 
-    # all_players = []
-    # for i in range(10000):
-    #     all_players.append(NeuralNetwork())
-    # while len(all_players) > 1:
-    #     random.shuffle(all_players)
-    #     players = []
-    #     players.append(all_players.pop())
-    #     players.append(all_players.pop())
-    #     c = 0
-    #     # players[0].print_nn()
-    #     # players[1].print_nn()
-    #     while True:
-    #         c += 1
-    #         # i = input()
-    #         # if i == "r":
-    #         #     continue
-    #         # print(game.get_input())
-    #         s = players[game.player](game.get_input()).tolist()
-    #         # print(s)
-    #         if not game.select(round(s[0] * 7)):
-    #             # game.print_state()
-    #             break
-    #         # game.print_state()
-    #     game.reset()
-    #     print(c)
-    #     if game.players_score[0] > game.players_score[1]:
-    #         all_players.append(players[0])
+
+# torch.set_default_device(torch.cuda.current_device())
+torch.set_num_threads(12)
+
+
+def test(model):
+    print("test", model(torch.zeros(67)), model(torch.ones(67)))
+    pass
+
+
+def main():
+    inputs = []
+    outputs = []
+    # --------------- here ---------------
+    # 34
+    epochs = 1000
+    g = 200
+    hn = 140
+    hc = 2
+    # --------------- here ---------------
+    # for i in range(g):
+    #     gs = GameSimulation(max_player, max_player)
+    #     result, local_inputs, locals_outputs = gs.simulate()
+    #     inputs.extend(local_inputs)
+    #     outputs.extend(locals_outputs)
+    # inputs = torch.stack(inputs)
+    model_path = Path("model.model")
+
+    model = NeuralNetwork("a", 67, hn, 1, hc)
+    if model_path.exists():
+        model.load_state_dict(torch.load(model_path))
+    result = 0
+    i = 0
+    while result != 1:
+        gs = GameSimulation(max_player, model)
+        result, _, _ = gs.simulate()
+        i += 1
+        print(f"{i} win player {result}")
+        break
+    # test(model)
+    # optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+    # criterion = torch.nn.MSELoss()
+    # optimizer = torch.optim.Adam(model.parameters())
+    # best_training_loss = float("inf")
+    # for e in range(epochs):
+    #     running_loss = 0
+    #     for input, output_i in zip(inputs, outputs):
+    #         optimizer.zero_grad()
+    #         output = model(input)
+    #         loss = criterion(output, output_i)
+    #         loss.backward()
+    #         optimizer.step()
+    #         running_loss += loss.item()
     #     else:
-    #         all_players.append(players[1])
-    #
-    # #     game.reset()
-    # model_path = Path("model.model")
-    # torch.save(all_players[0].state_dict(), model_path)
-    # # model = NeuralNetwork()
-    # # model.load_state_dict(torch.load(model_path))
-    # # model.print_nn()
+    #         training_loss = running_loss / len(input)
+    #         print(
+    #             f"Epoch {e}, Training loss: {training_loss}, {best_training_loss-training_loss}, {best_training_loss}"
+    #         )
+    #         if training_loss < ((1.0 / 7.0) ** 2):
+    #             test(model)
+    #             save_dict_to_json(model.to_json(), "ai.json")
+    #             torch.save(model.state_dict(), model_path)
+    #             break
+    #         best_training_loss = min(training_loss, best_training_loss)
+    # print(model(inputs[10]), max_player(inputs[10]))
+    # test(model)
+    # save_dict_to_json(model.to_json(), "ai.json")
+    # torch.save(model.state_dict(), model_path)
 
 
 if __name__ == "__main__":

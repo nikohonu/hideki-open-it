@@ -58,40 +58,57 @@ class GameSimulation:
         return -1
 
     def get_input(self):
+        map = torch.tensor(self.map).flatten() / 22
+        map[map == 0] = -1
         return torch.concat(
             [
-                torch.tensor(self.map).flatten() / 11,
-                torch.tensor(self.scores) / 198,
+                map,
+                torch.tensor([self.cursor.y]) / 7
+                if self.player == 0
+                else torch.tensor([self.cursor.x]) / 7,
+                torch.tensor([self.scores[0] - self.scores[1]]) / 198,
                 torch.tensor([self.player]),
             ]
         )
 
     def simulate(self) -> Player:
+        inputs = []
+        outputs = []
         """Simulate game"""
         while True:
             if self.player == Player.FIRST:
-                move = self.calc_player1_move(self.get_input())
-                move = round(move.data[0].item() * 7)
+                inputs.append(self.get_input())
+                raw_move = self.calc_player1_move(self.get_input())
+                outputs.append(raw_move)
+                move = min(round(raw_move.data[0].item() * 7), 7)
+                if move < 0:
+                    print(raw_move.data[0].item(), move)
                 if self.map[self.cursor.y, move] == 0:
                     move = self.find_existing_move()
                     if move == -1:
                         break
                 self.cursor.x = move
             else:
-                move = self.calc_player2_move(self.get_input())
-                move = round(move.data[0].item() * 7)
+                inputs.append(self.get_input())
+                raw_move = self.calc_player2_move(self.get_input())
+                outputs.append(raw_move)
+                move = min(round(raw_move.data[0].item() * 7), 7)
+                if move < 0:
+                    print(raw_move.data[0].item(), move)
                 if self.map[move, self.cursor.x] == 0:
                     move = self.find_existing_move()
                     if move == -1:
                         break
                 self.cursor.y = move
             # self.print_state()
-            self.scores[self.player] = self.select()
+            self.scores[self.player] += self.select()
             self.player = Player.SECOND if self.player == Player.FIRST else Player.FIRST
         return (
             Player.FIRST
             if self.scores[Player.FIRST] > self.scores[Player.SECOND]
-            else Player.SECOND
+            else Player.SECOND,
+            inputs,
+            outputs,
         )
 
     def print_array(
