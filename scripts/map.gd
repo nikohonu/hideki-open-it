@@ -1,22 +1,22 @@
 extends Node3D
 
+const SIZE = 8
+
 @export var background_texture: CompressedTexture2D
 
 var cell_scene = preload("res://scenes/cell.tscn")
+
 var map = []
-var size = 8
+var cells = []
 
 
-func generate_possible_values() -> Array:
+func _generate_possible_values() -> Array:
 	var possible_values = []
-	var cells_count = size * size
-	var cell_count = 6.0
-	var cell_type_count = round(cells_count / cell_count)
-	for value in range(1, cell_type_count + 1):
-		for i in range(cell_count / 2):
+	for value in range(1, 12):
+		for _i in range(3):
 			possible_values += [value, -value]
 	possible_values.shuffle()
-	return possible_values.slice(0, cells_count)
+	return possible_values.slice(0, SIZE ** 2)
 
 
 func get_background_aspect_ratio():
@@ -24,16 +24,20 @@ func get_background_aspect_ratio():
 	return Vector2(background_size.y, background_size.x) / max(background_size.x, background_size.y)
 
 
-func _ready():
-	var possible_values = generate_possible_values()
+func _draw_map():
 	var ratio = get_background_aspect_ratio()
-	for y in range(size):
-		map.append([])
-		for x in range(size):
+	for y in range(SIZE):
+		cells.append([])
+		for x in range(SIZE):
 			var cell = cell_scene.instantiate()
-			cell.cords = Vector2(x, y)
-			cell.value = possible_values.pop_back()
-			cell.mesh.get_material().set_shader_parameter("texture_background", background_texture)
-			cell.mesh.get_material().set_shader_parameter("ratio", ratio)
-			map[y].push_back(cell)
+			cell.set_state(Vector2i(x, y), map[y][x], background_texture, ratio)
+			cells[y].push_back(cell)
 			add_child(cell)
+
+
+func _ready():
+	var possible_values = _generate_possible_values()
+	for i in range(SIZE):
+		var start = i * SIZE
+		map.append(possible_values.slice(start, start + SIZE))
+	_draw_map()
