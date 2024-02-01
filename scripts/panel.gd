@@ -8,18 +8,23 @@ class_name PanelUI
 var tweens = [null, null]
 var scores = [0, 0]
 
+
 func _set_score(score, player):
 	scores_labels[player].text = "%03d" % score if score >= 0 else "-%03d" % abs(score)
 	scores[player] = score
 
-func add_score(player: Game.Player,  score: int):
+
+func add_score(player: Game.Player, score: int):
 	var diff = abs(scores[player] - (scores[player] + score))
 	if tweens[player]:
 		tweens[player].kill()
 	tweens[player] = create_tween()
 	var s = scores[player]
-	var d = (0.1/speed) * diff
-	tweens[player].tween_method(_set_score.bind(player), s, s + score, d).set_trans(Tween.TRANS_LINEAR)
+	var d = (0.1 / speed) * diff
+	tweens[player].tween_method(_set_score.bind(player), s, s + score, d).set_trans(
+		Tween.TRANS_LINEAR
+	)
+
 
 func set_turn(turn: Game.Player):
 	var is_first = turn == Game.Player.FIRST

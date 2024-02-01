@@ -2,9 +2,10 @@ extends AnimatedSprite3D
 
 @onready var game: Game = get_tree().get_current_scene()
 @onready var map = %Map
+@onready var ai = %AI
 @export_range(0.1, 2, 0.1) var speed = 1.0
 
-var can_move = true
+var can_move = false
 var current_cords = Vector2i(4, 4)
 var tween: Tween
 
@@ -30,8 +31,14 @@ func select():
 
 func after_select(end):
 	if not end:
-		can_move = true
 		visible = true
+		if game.ai[game.turn] > 0:
+			var cords = ai.calc_move(
+				map.map, current_cords, game.turn, game.scores, game.ai[game.turn]
+			)
+			move(cords, true, true)
+		else:
+			can_move = true
 	else:
 		for y in range(map.SIZE):
 			for x in range(map.SIZE):
@@ -91,3 +98,11 @@ func _process(_delta):
 		)
 		if input.length() != 0:
 			move(input, false, false)
+
+
+func _on_game_ready():
+	if game.ai[Game.Player.FIRST] > 0:
+		var cords = ai.calc_move(map.map, current_cords, game.turn, game.scores, game.ai[game.turn])
+		move(cords, true, true)
+	else:
+		can_move = true

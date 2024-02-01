@@ -194,4 +194,5 @@ text = "000"
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[connection signal="ready" from="." to="Cursor" method="_on_game_ready"]
 [connection signal="cell_clicked" from="UI/HBoxContainer/MapUI" to="Cursor" method="_on_map_ui_cell_clicked"]

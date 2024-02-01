@@ -1,4 +1,5 @@
 extends Node3D
+class_name Map
 
 const SIZE = 8
 
