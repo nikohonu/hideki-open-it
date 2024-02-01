@@ -11,6 +11,19 @@ var map = []
 var cells = []
 
 
+func check_end(turn: Game.Player, cords: Vector2i, current_map = null):
+	if current_map == null:
+		current_map = map
+	var total = 0
+	if turn == Game.Player.FIRST:
+		for x in range(SIZE):
+			total += 1 if current_map[cords.y][x] != 0 else 0
+	else:
+		for y in range(SIZE):
+			total += 1 if current_map[y][cords.x] != 0 else 0
+	return total == 0
+
+
 func _generate_possible_values() -> Array:
 	var possible_values = []
 	for value in range(1, 12):

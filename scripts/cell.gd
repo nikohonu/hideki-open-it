@@ -9,6 +9,8 @@ var texture_red_cell_face = preload("res://sprites/red_cell_face.png")
 
 
 func set_state(cords, value, texture_backgroun, ratio):
+	position = Global.cords_to_position(cords)
+	cords.y = 7 - cords.y
 	if value < 0:
 		mesh.get_material().set_shader_parameter("texture_front", texture_red_cell)
 		mesh.get_material().set_shader_parameter("texture_face", texture_red_cell_face)
@@ -20,7 +22,6 @@ func set_state(cords, value, texture_backgroun, ratio):
 	mesh.get_material().set_shader_parameter("texture_background", texture_backgroun)
 	mesh.get_material().set_shader_parameter("ratio", ratio)
 	mesh.get_material().set_shader_parameter("cell", cords)
-	position = Global.cords_to_position(cords)
 
 
 func select():

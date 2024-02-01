@@ -1,137 +1,93 @@
 extends AnimatedSprite3D
 
-@export var speed: float = 0.15
-@onready var game = get_tree().get_current_scene()
+@onready var game: Game = get_tree().get_current_scene()
+@onready var map = %Map
+@export_range(0.1, 2, 0.1) var speed = 1.0
 
 var can_move = true
+var current_cords = Vector2i(4, 4)
 var tween: Tween
-
-var cords: Vector2:
-	set(c):
-		c.x = clamp(c.x, 0, 7)
-		c.y = clamp(c.y, 0, 7)
-		cords = c
 
 
 func _ready():
-	cords = Vector2(4, 3)
-	position = Global.cords_to_position(cords, 0.5)
-	if game.is_player_ai[0] == true:
-		ai_move()
+	position = Global.cords_to_position(current_cords, 0.5)
 
 
-func move(diff = 1, select = false):
-	can_move = false
-	var target_position = Global.cords_to_position(cords, 0.5)
-	if tween:
-		tween.kill()
-	tween = create_tween()
-	tween.tween_property(self, "position", target_position, speed * diff).set_trans(
-		Tween.TRANS_CUBIC
-	)
-	tween.finished.connect(on_tween_finished.bind(select))
-	
-func on_tween_finished(select = false):
-	can_move = true
-	if select:
-		select_cell()
-
-
-func check_game_end():
-	var total = 0
-	if game.current_player == game.Player.FIRST:
-		for x in range(%Map.size):
-			total += 1 if %Map.map[cords.y][x].value != 0 else 0
-	else:
-		for y in range(%Map.size):
-			total += 1 if %Map.map[y][cords.x].value != 0 else 0
-	if total == 0:
-		print("end")
-		can_move = false
-		for i in range(%Map.size):
-			for j in range(%Map.size):
-				if %Map.map[i][j].value != 0:
-					%Map.map[i][j].select()
-
-
-func select_cell():
-	var cell = %Map.map[cords.y][cords.x]
-	if cell.value == 0:
+func select():
+	var value = map.map[current_cords.y][current_cords.x]
+	var cell = map.cells[current_cords.y][current_cords.x]
+	if value == 0:
 		return
-	game.update_score(game.current_player, cell.value)
-	cell.value = 0
-	cell.connect("animation_finished", after_select)
+	game.add_score(game.turn, value)
+	var turn = game.next_turn()
+	map.map[current_cords.y][current_cords.x] = 0
+	var end = map.check_end(turn, current_cords)
+	cell.connect("animation_finished", after_select.bind(end))
 	cell.select()
 	can_move = false
 	visible = false
 
 
-func after_select():
-	visible = true
-	can_move = true
-	if game.current_player == game.Player.FIRST:
-		game.current_player = game.Player.SECOND
+func after_select(end):
+	if not end:
+		can_move = true
+		visible = true
 	else:
-		game.current_player = game.Player.FIRST
-	if game.is_player_ai[game.current_player]:
-		ai_move()
-	check_game_end()
+		for y in range(map.SIZE):
+			for x in range(map.SIZE):
+				if map.map[y][x] != 0:
+					map.map[y][x] = 0
+					map.cells[y][x].select()
 
 
-func process_input(input, select = false):
+func move(cords: Vector2i, absolute, select_on_finish):
+	if absolute:
+		if cords.y != current_cords.y and game.turn == Game.Player.FIRST:
+			return
+		if cords.x != current_cords.x and game.turn == Game.Player.SECOND:
+			return
+	var target_cords = current_cords
+	if game.turn == Game.Player.FIRST:
+		target_cords.x = cords.x if absolute else target_cords.x + cords.x
+		target_cords.x = clamp(target_cords.x, 0, 7)
+	else:
+		target_cords.y = cords.y if absolute else target_cords.y + cords.y
+		target_cords.y = clamp(target_cords.y, 0, 7)
+	var diff = (
+		abs(target_cords.x - current_cords.x)
+		if game.turn == Game.Player.FIRST
+		else abs(target_cords.y - current_cords.y)
+	)
+	var target_position = Global.cords_to_position(target_cords, 0.5)
+	can_move = false
+	if tween:
+		tween.kill()
+	tween = create_tween()
+	tween.tween_property(self, "position", target_position, (0.15 / speed) * diff).set_trans(
+		Tween.TRANS_CUBIC
+	)
+	tween.finished.connect(on_tween_finished.bind(select_on_finish))
+	current_cords = target_cords
+
+
+func on_tween_finished(select_on_finish):
+	can_move = true
+	if select_on_finish:
+		select()
+
+
+func _on_map_ui_cell_clicked(cords):
 	if can_move:
-		var diff: int
-		if game.current_player == game.Player.FIRST:
-			cords.x += input.x
-			diff = abs(input.x)
-		elif game.current_player == game.Player.SECOND:
-			cords.y += input.y
-			diff = abs(input.y)
-		move(diff, select)
+		move(cords, true, true)
 
 
 func _process(_delta):
-	if Input.is_action_just_released("select"):
-		select_cell()
-	var input = Vector2(
-		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
-		Input.get_action_strength("ui_up") - Input.get_action_strength("ui_down")
-	)
-	if game.is_player_ai[game.Player.FIRST] and input.x != 0:
-		return
-	if game.is_player_ai[game.Player.SECOND] and input.y != 0:
-		return
-	process_input(input)
-
-
-func on_mouse_click(click_cords: Vector2):
-	var input = click_cords - cords
-	process_input(input, true)
-
-
-func ai_move():
-	var target_cords: Vector2
-	var best_value = -INF
-	var best_move = 0
-	var move_cord = 0
-	for i in range(%Map.size):
-		var cell: Object
-		cell = (
-			%Map.map[cords.y][i]
-			if game.current_player == game.Player.FIRST
-			else %Map.map[i][cords.x]
+	if can_move:
+		if Input.is_action_just_released("select"):
+			select()
+		var input = Vector2(
+			Input.get_action_strength("right") - Input.get_action_strength("left"),
+			Input.get_action_strength("down") - Input.get_action_strength("up")
 		)
-		if cell.value == 0:
-			move_cord += 1
-			continue
-		if cell.value > best_value:
-			best_value = cell.value
-			best_move = move_cord
-		move_cord += 1
-	target_cords = (
-		Vector2(best_move, cords.y)
-		if game.current_player == game.Player.FIRST
-		else Vector2(cords.x, best_move)
-	)
-	var input = target_cords - cords
-	process_input(input, true)
+		if input.length() != 0:
+			move(input, false, false)

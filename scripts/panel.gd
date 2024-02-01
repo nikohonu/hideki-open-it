@@ -13,13 +13,13 @@ func _set_score(score, player):
 	scores[player] = score
 
 func add_score(player: Game.Player,  score: int):
-	var diff = abs(scores[player] - score)
+	var diff = abs(scores[player] - (scores[player] + score))
 	if tweens[player]:
 		tweens[player].kill()
 	tweens[player] = create_tween()
 	var s = scores[player]
 	var d = (0.1/speed) * diff
-	tweens[player].tween_method(_set_score.bind(player), s, score, d).set_trans(Tween.TRANS_LINEAR)
+	tweens[player].tween_method(_set_score.bind(player), s, s + score, d).set_trans(Tween.TRANS_LINEAR)
 
 func set_turn(turn: Game.Player):
 	var is_first = turn == Game.Player.FIRST
