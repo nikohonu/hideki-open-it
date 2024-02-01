@@ -43,5 +43,4 @@ func _ready():
 	for i in range(SIZE):
 		var start = i * SIZE
 		map.append(possible_values.slice(start, start + SIZE))
-	print(map)
 	_draw_map()

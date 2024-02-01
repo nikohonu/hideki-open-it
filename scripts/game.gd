@@ -1,16 +1,18 @@
 extends Node3D
+class_name Game
+
+@onready var panel: PanelUI = %PanelUI
 
 enum Player { FIRST, SECOND }
 
-var is_player_ai = [false, false]
-var player_scores = [0, 0]
+var scores = [0, 0]
+var turn = Player.FIRST
 
-var current_player = Player.FIRST:
-	set(cp):
-		%Panel.update_move_status(cp)
-		current_player = cp
+func add_score(player: Player, score: int):
+	scores[player] += score
+	panel.add_score(player, score)
 
-
-func update_score(player, value):
-	player_scores[player] += value
-	%Panel.update_score(player, player_scores[player])
+func next_turn():
+	turn = Player.SECOND if turn == Player.FIRST else Player.SECOND
+	panel.set_turn(turn)
+	return turn
