@@ -3,8 +3,9 @@ extends Node3D
 const SIZE = 8
 
 @export var background_texture: CompressedTexture2D
+@export var cell_scene: PackedScene
 
-var cell_scene = preload("res://scenes/cell.tscn")
+@onready var map_ui: MapUI = %MapUI
 
 var map = []
 var cells = []
@@ -30,9 +31,11 @@ func _draw_map():
 		cells.append([])
 		for x in range(SIZE):
 			var cell = cell_scene.instantiate()
-			cell.set_state(Vector2i(x, y), map[y][x], background_texture, ratio)
+			var cords = Vector2i(x, y)
+			cell.set_state(cords, map[y][x], background_texture, ratio)
 			cells[y].push_back(cell)
 			add_child(cell)
+			map_ui.add_cell(cords)
 
 
 func _ready():
@@ -40,4 +43,5 @@ func _ready():
 	for i in range(SIZE):
 		var start = i * SIZE
 		map.append(possible_values.slice(start, start + SIZE))
+	print(map)
 	_draw_map()

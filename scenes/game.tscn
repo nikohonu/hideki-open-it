@@ -1,16 +1,19 @@
-[gd_scene load_steps=19 format=3 uid="uid://d0nvb0van5w8f"]
+[gd_scene load_steps=22 format=3 uid="uid://d0nvb0van5w8f"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_qwehj"]
+[ext_resource type="Script" path="res://scripts/ai.gd" id="2_0wtpv"]
 [ext_resource type="Script" path="res://scripts/map.gd" id="2_j7fmf"]
 [ext_resource type="Texture2D" uid="uid://dgt17w4xtm26o" path="res://sprites/cursor.png" id="2_k87ei"]
-[ext_resource type="Script" path="res://scripts/ui.gd" id="3_6gjgw"]
-[ext_resource type="Texture2D" uid="uid://biqj2wmrnln2t" path="res://backgrounds/background0.png" id="3_ke4gh"]
 [ext_resource type="Texture2D" uid="uid://b008ectkc177c" path="res://sprites/panel.png" id="3_kn2cx"]
+[ext_resource type="PackedScene" uid="uid://o61swwd5g336" path="res://scenes/cell.tscn" id="4_j6a3k"]
 [ext_resource type="Theme" uid="uid://dbbwiniodfku7" path="res://theme.tres" id="4_q27nq"]
+[ext_resource type="Texture2D" uid="uid://c5ylnbf2wy1kt" path="res://backgrounds/background1.png" id="4_qqbmw"]
 [ext_resource type="Script" path="res://scripts/panel.gd" id="4_ug41f"]
 [ext_resource type="Texture2D" uid="uid://bej3bvecgurqt" path="res://sprites/status.png" id="5_2jia2"]
 [ext_resource type="FontFile" uid="uid://clushkhqa3am4" path="res://fonts/Shantell_Sans/ShantellSans-Italic-VariableFont_BNCE,INFM,SPAC,wght.ttf" id="5_2vast"]
+[ext_resource type="PackedScene" uid="uid://bha1ay6nc6xi7" path="res://scenes/cell_ui.tscn" id="5_akb4r"]
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="5_ervvd"]
+[ext_resource type="Script" path="res://scripts/map_ui.gd" id="11_ppl8s"]
 
 [sub_resource type="Environment" id="Environment_a7m6j"]
 ambient_light_source = 2
@@ -62,18 +65,19 @@ animations = [{
 [node name="Game" type="Node3D"]
 script = ExtResource("1_qwehj")
 
-[node name="Map" type="Node3D" parent="."]
-unique_name_in_owner = true
-script = ExtResource("2_j7fmf")
-background_texture = ExtResource("3_ke4gh")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_a7m6j")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 projection = 1
 size = 11.25
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_a7m6j")
+[node name="Map" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_j7fmf")
+background_texture = ExtResource("4_qqbmw")
+cell_scene = ExtResource("4_j6a3k")
 
 [node name="Cursor" type="AnimatedSprite3D" parent="."]
 unique_name_in_owner = true
@@ -84,7 +88,11 @@ autoplay = "default"
 frame_progress = 0.545264
 script = ExtResource("5_ervvd")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="AI" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_0wtpv")
+
+[node name="UI" type="CenterContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -93,30 +101,31 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("4_q27nq")
-script = ExtResource("3_6gjgw")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
 layout_mode = 2
 
-[node name="GridContainer" type="GridContainer" parent="CenterContainer/HBoxContainer"]
+[node name="MapUI" type="GridContainer" parent="UI/HBoxContainer"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/h_separation = 0
 columns = 8
+script = ExtResource("11_ppl8s")
+cell_screne = ExtResource("5_akb4r")
 
-[node name="Panel" type="TextureRect" parent="CenterContainer/HBoxContainer"]
+[node name="Panel" type="TextureRect" parent="UI/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("3_kn2cx")
 script = ExtResource("4_ug41f")
 
-[node name="P1StatusBackground" type="Sprite2D" parent="CenterContainer/HBoxContainer/Panel"]
+[node name="P1StatusBackground" type="Sprite2D" parent="UI/HBoxContainer/Panel"]
 position = Vector2(176, 64)
 texture = ExtResource("5_2jia2")
 vframes = 2
 
-[node name="P1Status" type="Label" parent="CenterContainer/HBoxContainer/Panel"]
+[node name="P1Status" type="Label" parent="UI/HBoxContainer/Panel"]
 layout_mode = 0
 offset_left = 128.0
 offset_top = 32.0
@@ -128,7 +137,7 @@ text = "Move"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="P1Score" type="Label" parent="CenterContainer/HBoxContainer/Panel"]
+[node name="P1Score" type="Label" parent="UI/HBoxContainer/Panel"]
 layout_mode = 0
 offset_top = 116.0
 offset_right = 256.0
@@ -140,7 +149,7 @@ text = "000"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="Logo" type="Label" parent="CenterContainer/HBoxContainer/Panel"]
+[node name="Logo" type="Label" parent="UI/HBoxContainer/Panel"]
 layout_mode = 0
 offset_top = 256.0
 offset_right = 256.0
@@ -152,13 +161,13 @@ Honu"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="P2StatusBackground" type="Sprite2D" parent="CenterContainer/HBoxContainer/Panel"]
+[node name="P2StatusBackground" type="Sprite2D" parent="UI/HBoxContainer/Panel"]
 position = Vector2(176, 576)
 texture = ExtResource("5_2jia2")
 vframes = 2
 frame = 1
 
-[node name="P2Status" type="Label" parent="CenterContainer/HBoxContainer/Panel"]
+[node name="P2Status" type="Label" parent="UI/HBoxContainer/Panel"]
 layout_mode = 0
 offset_left = 128.0
 offset_top = 544.0
@@ -170,7 +179,7 @@ text = "Stay"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="P2Score" type="Label" parent="CenterContainer/HBoxContainer/Panel"]
+[node name="P2Score" type="Label" parent="UI/HBoxContainer/Panel"]
 layout_mode = 0
 offset_top = 628.0
 offset_right = 256.0
@@ -181,3 +190,5 @@ theme_override_font_sizes/font_size = 85
 text = "000"
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[connection signal="cell_clicked" from="UI/HBoxContainer/MapUI" to="Cursor" method="_on_map_ui_cell_clicked"]

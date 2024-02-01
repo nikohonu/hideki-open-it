@@ -6,7 +6,8 @@
 [node name="CellUI" type="TextureButton"]
 offset_right = 96.0
 offset_bottom = 96.0
+focus_mode = 0
 texture_normal = ExtResource("1_gu6nk")
 script = ExtResource("2_bp1i1")
 
-[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

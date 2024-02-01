@@ -1,8 +1,10 @@
 extends TextureButton
+class_name CellUI
 
-signal cell_clicked(cords)
+signal clicked(cords)
 
 var cords = Vector2i.ZERO
 
-func _on_button_up():
-	cell_clicked.emit(cords)
+
+func _on_pressed():
+	clicked.emit(cords)
