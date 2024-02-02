@@ -24,7 +24,10 @@ func set_state(cords, value, texture_backgroun, ratio):
 	mesh.get_material().set_shader_parameter("cell", cords)
 
 
-func select():
+func select(fast = false):
+	if fast:
+		rotate_x(PI)
+		return
 	$AnimationPlayer.play("rotate")
 
 

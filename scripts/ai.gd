@@ -22,8 +22,9 @@ func negamax(position, depth, alpha, beta, color):
 
 
 func calc_move(current_map, current_cords, current_player, current_score, level = 1):
-	var c = level / 64.
+	var c = level / 56.
 	var depth = max(1, round(game.step * c))
+	print(depth, " - ", level)
 	var color = -2 * current_player + 1
 	var position = Position.new(current_map, current_cords, current_player, current_score)
 	return negamax(position, depth, -INF, INF, color).cords

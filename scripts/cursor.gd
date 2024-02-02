@@ -6,12 +6,19 @@ extends AnimatedSprite3D
 @export_range(0.1, 2, 0.1) var speed = 1.0
 
 var can_move = false
-var current_cords = Vector2i(4, 4)
+var current_cords: Vector2i
 var tween: Tween
 
 
 func _ready():
+	await game.ready
+	current_cords = Global.get_param("cursor", Vector2i(4, 4))
 	position = Global.cords_to_position(current_cords, 0.5)
+	if game.ai[Game.Player.FIRST] > 0 and game.turn == Game.Player.FIRST:
+		var cords = ai.calc_move(map.map, current_cords, game.turn, game.scores, game.ai[game.turn])
+		move(cords, true, true)
+	else:
+		can_move = true
 
 
 func select():
@@ -98,11 +105,3 @@ func _process(_delta):
 		)
 		if input.length() != 0:
 			move(input, false, false)
-
-
-func _on_game_ready():
-	if game.ai[Game.Player.FIRST] > 0:
-		var cords = ai.calc_move(map.map, current_cords, game.turn, game.scores, game.ai[game.turn])
-		move(cords, true, true)
-	else:
-		can_move = true

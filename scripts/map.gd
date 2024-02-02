@@ -3,12 +3,16 @@ class_name Map
 
 const SIZE = 8
 
-@export var background_texture: CompressedTexture2D
+@onready var game: Game = get_tree().get_current_scene()
 @export var cell_scene: PackedScene
 
 @onready var map_ui: MapUI = %MapUI
 
-var map = []
+var background_texture_path: String = Global.get_param(
+	"background", "res://backgrounds/background0.png"
+)
+var background_texture: CompressedTexture2D = load(background_texture_path)
+var map: Array
 var cells = []
 
 
@@ -48,13 +52,17 @@ func _draw_map():
 			var cords = Vector2i(x, y)
 			cell.set_state(cords, map[y][x], background_texture, ratio)
 			cells[y].push_back(cell)
+			if map[y][x] == 0:
+				cell.select(true)
 			add_child(cell)
 			map_ui.add_cell(cords)
 
 
 func _ready():
-	var possible_values = _generate_possible_values()
-	for i in range(SIZE):
-		var start = i * SIZE
-		map.append(possible_values.slice(start, start + SIZE))
+	map = Global.get_param("map", [])
+	if map.is_empty():
+		var possible_values = _generate_possible_values()
+		for i in range(SIZE):
+			var start = i * SIZE
+			map.append(possible_values.slice(start, start + SIZE))
 	_draw_map()
