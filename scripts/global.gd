@@ -3,11 +3,14 @@ extends Node
 const SAVE_PATH = "user://data.save"
 
 var current_game: Dictionary
+var game_stats: Array
 
 
 func cords_to_position(cords: Vector2, z = 0.0):
 	return Vector3(cords.x - 4. + 0.5 - 4. / 3., -cords.y + 4. - 0.5, z)
 
+func wait(seconds: float) -> void:
+	await get_tree().create_timer(seconds).timeout
 
 var _params = null
 
@@ -59,11 +62,17 @@ func write_save():
 		current_game = game
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	file.store_var(current_game)
+	file.store_var(game_stats)
 
 
 func load_save():
 	if FileAccess.file_exists(SAVE_PATH):
 		var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 		current_game = file.get_var(true)
+		game_stats = file.get_var(true)
 	else:
 		current_game = {}
+		game_stats = []
+		game_stats.resize(10)
+		game_stats.fill(0)
+	print(game_stats)

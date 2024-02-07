@@ -20,11 +20,12 @@ var levels = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$Label.text = str(Global.game_stats.reduce(func(i, accum): return accum + i)) + "/20"
 	for i in range(10):
 		var button = Button.new()
 		button.add_theme_font_size_override("font_size", 96)
 		button.set_custom_minimum_size(Vector2(128, 0))
-		button.text = "%s" % (i + 1)
+		button.text = "%s (%s/2)" % [i + 1, Global.game_stats[i]]
 		button.pressed.connect(_on_button_clicked.bind(i))
 		v_box_container.add_child(button)
 

@@ -52,6 +52,10 @@ func after_select(end):
 				if map.map[y][x] != 0:
 					map.map[y][x] = 0
 					map.cells[y][x].select()
+					await Global.wait(0.1)
+					#await Global.wait(1.24)
+		%EndSreen.end()
+	
 
 
 func move(cords: Vector2i, absolute, select_on_finish):
@@ -96,6 +100,8 @@ func _on_map_ui_cell_clicked(cords):
 
 
 func _process(_delta):
+	if Input.is_action_just_pressed("win"):
+		after_select(true)
 	if can_move:
 		if Input.is_action_just_released("select"):
 			select()

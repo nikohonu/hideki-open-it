@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://d0nvb0van5w8f"]
+[gd_scene load_steps=22 format=3 uid="uid://d0nvb0van5w8f"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_qwehj"]
 [ext_resource type="Script" path="res://scripts/ai.gd" id="2_0wtpv"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bha1ay6nc6xi7" path="res://scenes/cell_ui.tscn" id="5_akb4r"]
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="5_ervvd"]
 [ext_resource type="Script" path="res://scripts/map_ui.gd" id="11_ppl8s"]
+[ext_resource type="Script" path="res://scripts/end_game.gd" id="14_5svra"]
 
 [sub_resource type="Environment" id="Environment_a7m6j"]
 ambient_light_source = 2
@@ -195,10 +196,10 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="UI" type="HBoxContainer" parent="."]
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 23.0
-grow_horizontal = 2
+offset_right = 105.0
+offset_bottom = 45.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 theme = ExtResource("4_q27nq")
 
 [node name="LabelLevel" type="Label" parent="UI"]
@@ -206,5 +207,49 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Level 1"
+
+[node name="EndSreen" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_q27nq")
+script = ExtResource("14_5svra")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EndSreen"]
+layout_mode = 2
+
+[node name="LabelResult" type="Label" parent="EndSreen/HBoxContainer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0, 0.686275, 0.709804, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 96
+text = "Player 1 Wins"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="EndSreen/HBoxContainer"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 96
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Fade" type="ColorRect" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [connection signal="cell_clicked" from="GameUI/HBoxContainer/MapUI" to="Cursor" method="_on_map_ui_cell_clicked"]
