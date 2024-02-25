@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj2h73r2wgaah"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gl5di"]
+size = Vector3(1, 1, 0.167)
+
+[node name="Cell" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_gl5di")
+
+[node name="Label3D" type="Label3D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
