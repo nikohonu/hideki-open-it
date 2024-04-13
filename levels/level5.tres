@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Level" load_steps=4 format=3 uid="uid://ea0pbb348mqw"]
+
+[ext_resource type="Texture2D" uid="uid://dqp8q6tkwa5qg" path="res://backgrounds/pexels-evgeny-tchebotarev-2235302.webp" id="1_cpc7a"]
+[ext_resource type="AudioStream" uid="uid://0c76c50s6gbb" path="res://music/PerituneMaterial_Sakuya(chosic.com).mp3" id="2_pgk1c"]
+[ext_resource type="Script" path="res://resources/level.gd" id="3_u5noo"]
+
+[resource]
+script = ExtResource("3_u5noo")
+background = ExtResource("1_cpc7a")
+player1 = 0
+player2 = 8
+music = ExtResource("2_pgk1c")
+name = "Level 5"

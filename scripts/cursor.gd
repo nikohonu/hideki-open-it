@@ -1,29 +1,26 @@
+class_name Cursor
 extends AnimatedSprite3D
 
-enum {PLAYER1, PLAYER2}
 
 signal selected(Vector2i)
 
-@onready var map: Map = %Map
-@onready var timer: Timer = $Timer
-@onready var ai: AI = $AI
+enum {PLAYER1, PLAYER2}
+
 @export var game: Game
 
 var coords = Vector2i(4, 4)
 var can_move = true
 
-
-
-func _input(event):
-	if event.is_action_pressed("select"):
-		selected.emit(coords)
+@onready var map: Map = %Map
+@onready var timer: Timer = $Timer
+@onready var ai: AI = $AI
 
 
 func _ready():
 	await game.ready
 	position = map.coordinates_2d_to_3d(coords, 0.5)
 	if game.ai[PLAYER1] != 0:
-		ai_move()
+		_ai_move()
 
 
 func _process(delta):
@@ -41,7 +38,13 @@ func _process(delta):
 			timer.start()
 
 
-func ai_move():
+func _input(event):
+	if event.is_action_pressed("select"):
+		selected.emit(coords)
+		timer.stop()
+
+
+func _ai_move():
 	var dest = ai.calc(game.state, game.ai[game.state.turn])
 	var diff = dest - coords
 	if game.state.turn == PLAYER1:
@@ -65,6 +68,6 @@ func _on_timer_timeout():
 	can_move = true
 
 
-func _on_game_turn_changed():
+func _on_map_turn_changed():
 	if game.ai[game.state.turn] > 0:
-		ai_move()
+		_ai_move()

@@ -1,32 +1,31 @@
-extends Node3D
 class_name Game
+extends Node3D
 
-enum Difficulty {HUMAN = 0, EASY = 1, MEDIUM = 4, HARD = 8,	EXPERT = 16}
+@export var level: Level
 
-signal turn_changed
-
-@export var Player1AI: Difficulty 
-@export var Player2AI: Difficulty 
+var ai = []
+var Cell = preload("res://scenes/cell.tscn")
 
 @onready var map: Map = %Map
 @onready var ui: UI = $UI
 @onready var cursor = $Map/Cursor
-
-var cell_scene = preload("res://scenes/cell.tscn")
-
 @onready var state = State.new()
-var ai = []
-
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 
 func _ready():
-	ai = [Player1AI, Player2AI]
+	if Global.level != null:
+		level = Global.level
+	ai = [level.player1, level.player2]
 	state.game_ended.connect(_on_state_game_ended)
+	ui.set_level(level.name)
 	ui.set_turn(state.turn)
 	ui.set_scores(state.scores)
+	audio_stream_player.set_stream(level.music)
+	audio_stream_player.play()
 	for y in range(8):
 		for x in range(8):
-			map.add_cell(cell_scene, Vector2i(x, y), state.map[y][x])
+			map.add_cell(Cell, Vector2i(x, y), state.map[y][x])
 
 
 func _process(_delta):
@@ -41,8 +40,7 @@ func _on_cursor_selected(coords):
 		
 		ui.set_turn(state.turn)
 		ui.set_scores(state.scores)
-		
-		turn_changed.emit()
+
 
 func _on_state_game_ended(winner):
 	print(winner)

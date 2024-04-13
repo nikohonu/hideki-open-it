@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Level" load_steps=4 format=3 uid="uid://g251jfgfbhn0"]
+
+[ext_resource type="Texture2D" uid="uid://mu24tng26tw1" path="res://backgrounds/pexels-tomáš-malík-3408353.webp" id="1_l7bt8"]
+[ext_resource type="AudioStream" uid="uid://my4nv072ko72" path="res://music/yoitrax-ronin(chosic.com).mp3" id="2_ck2kv"]
+[ext_resource type="Script" path="res://resources/level.gd" id="3_pybm4"]
+
+[resource]
+script = ExtResource("3_pybm4")
+background = ExtResource("1_l7bt8")
+player1 = 0
+player2 = 4
+music = ExtResource("2_ck2kv")
+name = "Level 3"

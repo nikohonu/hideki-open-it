@@ -1,15 +1,118 @@
-[gd_scene load_steps=3 format=3 uid="uid://dyvu0ln2r222a"]
+[gd_scene load_steps=11 format=3 uid="uid://o61swwd5g336"]
 
-[ext_resource type="Script" path="res://scripts/cell.gd" id="4_681m1"]
+[ext_resource type="Shader" path="res://shader/cell.gdshader" id="1_xja0w"]
+[ext_resource type="Texture2D" uid="uid://dhlnmntmf64si" path="res://sprites/green_cell_face.png" id="2_2brt8"]
+[ext_resource type="FontFile" uid="uid://ca3255aseygbu" path="res://fonts/Shantell_Sans/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf" id="2_qlotu"]
+[ext_resource type="Texture2D" uid="uid://dipmm2bn0610v" path="res://sprites/green_cell.png" id="3_1hc5t"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_iyjht"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5qsm3"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_xja0w")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/cell = Vector2(5, 0)
+shader_parameter/ratio = null
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/texture_front = ExtResource("3_1hc5t")
+shader_parameter/texture_face = ExtResource("2_2brt8")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ar6v5"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_5qsm3")
 size = Vector3(1, 1, 0.167)
 
+[sub_resource type="GDScript" id="GDScript_o1734"]
+script/source = "extends MeshInstance3D
+class_name Cell
+
+signal animation_finished
+
+var texture_green_cell = preload(\"res://sprites/green_cell.png\")
+var texture_red_cell = preload(\"res://sprites/red_cell.png\")
+var texture_green_cell_face = preload(\"res://sprites/green_cell_face.png\")
+var texture_red_cell_face = preload(\"res://sprites/red_cell_face.png\")
+
+
+func set_state(cords, value, texture_backgroun, ratio):
+	cords.y = 7 - cords.y
+	if value < 0:
+		mesh.get_material().set_shader_parameter(\"texture_front\", texture_red_cell)
+		mesh.get_material().set_shader_parameter(\"texture_face\", texture_red_cell_face)
+	elif value > 0:
+		mesh.get_material().set_shader_parameter(\"texture_front\", texture_green_cell)
+		mesh.get_material().set_shader_parameter(\"texture_face\", texture_green_cell_face)
+	if value != 0:
+		$Label3D.text = str(abs(value))
+	mesh.get_material().set_shader_parameter(\"texture_background\", texture_backgroun)
+	mesh.get_material().set_shader_parameter(\"ratio\", ratio)
+	mesh.get_material().set_shader_parameter(\"cell\", cords)
+
+
+func select(fast = false):
+	if fast:
+		rotate_x(PI)
+		return
+	$AnimationPlayer.play(\"rotate\")
+
+
+func _on_animation_player_animation_finished(_anim_name):
+	emit_signal(\"animation_finished\")
+"
+
+[sub_resource type="Animation" id="Animation_ujbea"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_oo17r"]
+resource_name = "rotate"
+length = 1.24
+step = 0.04
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.28, 0.6, 1, 1.12, 1.24),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-3.14159, 0, 0), Vector3(-6.28319, 0, 0), Vector3(-9.42478, 0, 0), Vector3(-10.1229, 0, 0), Vector3(-9.42478, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_spbhe"]
+_data = {
+"RESET": SubResource("Animation_ujbea"),
+"rotate": SubResource("Animation_oo17r")
+}
+
 [node name="Cell" type="MeshInstance3D"]
-mesh = SubResource("BoxMesh_iyjht")
-script = ExtResource("4_681m1")
+mesh = SubResource("BoxMesh_ar6v5")
+script = SubResource("GDScript_o1734")
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.084)
+modulate = Color(0, 0, 0, 1)
 text = "11"
-font_size = 128
+font = ExtResource("2_qlotu")
+font_size = 160
+outline_size = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_spbhe")
+}
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

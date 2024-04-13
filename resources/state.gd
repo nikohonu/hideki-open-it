@@ -1,5 +1,5 @@
-extends Resource
 class_name State
+extends Resource
 
 signal game_ended(winner)
 
@@ -11,7 +11,7 @@ var map = []
 var turn = PLAYER1
 var scores = [0, 0]
 var cursor = Vector2i(4, 4)
-var step = 1
+var step = 0
 
 
 func is_possible_move(coords: Vector2i):
@@ -47,6 +47,25 @@ func select(coords: Vector2i):
 	if check_end():
 		game_ended.emit(calc_winner())
 	step += 1
+
+
+func to_dict():
+	return {
+		"map": map,
+		"turn": turn,
+		"scores": scores,
+		"cursor_x": cursor.x,
+		"cursor_y": cursor.y,
+		"step": step,
+	}
+
+
+func from_dict(dict: Dictionary):
+	map = dict.map
+	turn = dict.turn
+	scores = dict.scores
+	cursor = Vector2i(dict.cursor_x, dict.cursor_y)
+	step = dict.step
 
 
 func _generate_possible_values() -> Array:

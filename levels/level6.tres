@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Level" load_steps=4 format=3 uid="uid://bbrsgosx0hpnr"]
+
+[ext_resource type="Texture2D" uid="uid://b2ai5lsjee3b6" path="res://backgrounds/pexels-leeloo-the-first-5236398.webp" id="1_3mtfs"]
+[ext_resource type="AudioStream" uid="uid://0c76c50s6gbb" path="res://music/PerituneMaterial_Sakuya(chosic.com).mp3" id="2_q5y8r"]
+[ext_resource type="Script" path="res://resources/level.gd" id="3_wisau"]
+
+[resource]
+script = ExtResource("3_wisau")
+background = ExtResource("1_3mtfs")
+player1 = 8
+player2 = 0
+music = ExtResource("2_q5y8r")
+name = "Level 6"
