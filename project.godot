@@ -11,18 +11,19 @@ config_version=5
 [application]
 
 config/name="hideki-open-it"
-run/main_scene="res://scenes/levels.tscn"
+run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://scripts/global.gd"
+Global="*res://old/scripts/global.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/resizable=false
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_height"
 

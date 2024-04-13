@@ -1,45 +1,48 @@
 extends Node3D
 class_name Game
 
-enum Player { FIRST, SECOND }
+enum Difficulty {HUMAN = 0, EASY = 1, MEDIUM = 4, HARD = 8,	EXPERT = 16}
 
-@export_enum("Human:0", "AI 1:1", "AI 2:2", "AI 3:4", "AI 4:8", "AI 5:16") var player1: int = 0
-@export_enum("Human:0", "AI 1:1", "AI 2:2", "AI 3:4", "AI 4:8", "AI 5:16") var player2: int = 0
+signal turn_changed
 
-@onready var panel: PanelUI = %PanelUI
-@onready var map = %Map
-@onready var cursor = %Cursor
+@export var Player1AI: Difficulty 
+@export var Player2AI: Difficulty 
 
-var ai: Array
-var level: int
-var scores: Array
-var turn: Player
-var step: int
+@onready var map: Map = %Map
+@onready var ui: UI = $UI
+@onready var cursor = $Map/Cursor
+
+var cell_scene = preload("res://scenes/cell.tscn")
+
+@onready var state = State.new()
+var ai = []
+
 
 
 func _ready():
-	player1 = Global.get_param("player1", player1)
-	player2 = Global.get_param("player2", player1)
-	level = Global.get_param("level", 0)
-	scores = Global.get_param("scores", [0, 0])
-	step = Global.get_param("step", 0)
-	turn = Global.get_param("turn", Player.FIRST)
-	panel.add_score(Player.FIRST, scores[Player.FIRST])
-	panel.add_score(Player.SECOND, scores[Player.SECOND])
-	if level != 0:
-		%LabelLevel.text = "Level %s" % level
-	else:
-		%LabelLevel.text = "Undefined Fantastic Object"
-	ai = [player1, player2]
+	ai = [Player1AI, Player2AI]
+	state.game_ended.connect(_on_state_game_ended)
+	ui.set_turn(state.turn)
+	ui.set_scores(state.scores)
+	for y in range(8):
+		for x in range(8):
+			map.add_cell(cell_scene, Vector2i(x, y), state.map[y][x])
 
 
-func add_score(player: Player, score: int):
-	scores[player] += score
-	panel.add_score(player, score)
+func _process(_delta):
+	pass
 
 
-func next_turn():
-	turn = Player.SECOND if turn == Player.FIRST else Player.FIRST
-	panel.set_turn(turn)
-	step += 1
-	return turn
+func _on_cursor_selected(coords):
+	if state.is_possible_move(coords):
+		map.select(coords)
+		
+		state.select(coords)
+		
+		ui.set_turn(state.turn)
+		ui.set_scores(state.scores)
+		
+		turn_changed.emit()
+
+func _on_state_game_ended(winner):
+	print(winner)

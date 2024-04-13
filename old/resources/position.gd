@@ -1,6 +1,8 @@
 class_name Position
 extends Resource
 
+const SIZE = 8
+
 @export var map: Array
 @export var cords: Vector2i
 @export var player: Game.Player
@@ -27,13 +29,13 @@ func eval():
 func children():
 	var result = []
 	if player == Game.Player.FIRST:
-		for i in range(Map.SIZE):
+		for i in range(SIZE):
 			if map[cords.y][i] != 0:
 				var position = Position.new(map, Vector2i(i, cords.y), player, scores)
 				position.select()
 				result.push_back(position)
 	if player == Game.Player.SECOND:
-		for i in range(Map.SIZE):
+		for i in range(SIZE):
 			if map[i][cords.x] != 0:
 				var position = Position.new(map, Vector2i(cords.x, i), player, scores)
 				position.select()
