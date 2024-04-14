@@ -14,3 +14,48 @@ enum PlayerType {
 @export var player2: PlayerType
 @export var music: AudioStreamMP3
 @export var name: String
+@export var progress: int
+
+
+func get_ai(player):
+	if player == State.PLAYER1:
+		return player1
+	else:
+		return player2
+	
+
+static func load_custom(background_path, player1: PlayerType, player2: PlayerType, music_path, name: String):
+	var level = Level.new()
+	level.background = load(background_path)
+	level.player1 = player1
+	level.player2 = player2
+	level.music = load(music_path)
+	level.name = name
+	return level
+
+
+static func from_dict(dict: Dictionary):
+	if dict.has("path"):
+		return load(dict["path"])
+	else:
+		return load_custom(
+			dict["background_path"], 
+			dict["player1"],
+			dict["player2"],
+			dict["music_path"],
+			dict["name"],
+		)
+
+
+func to_dict():
+	var path = self.get_path()
+	if path:
+		return {"path": path}
+	else:
+		return {
+			"background_path": self.background.get_path(),
+			"player1": self.player1,
+			"player2": self.player2,
+			"music_path": self.music.get_path(),
+			"name": self.name,
+		}

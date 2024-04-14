@@ -10,4 +10,5 @@ background = ExtResource("1_g0oop")
 player1 = 0
 player2 = 1
 music = ExtResource("2_wpnu4")
-name = "Level 2"
+name = "Igarashi Kenji (Easy)"
+progress = 1

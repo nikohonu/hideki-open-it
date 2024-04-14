@@ -60,12 +60,14 @@ func to_dict():
 	}
 
 
-func from_dict(dict: Dictionary):
-	map = dict.map
-	turn = dict.turn
-	scores = dict.scores
-	cursor = Vector2i(dict.cursor_x, dict.cursor_y)
-	step = dict.step
+static func from_dict(dict: Dictionary):
+	var state = State.new()
+	state.map = dict.map
+	state.turn = dict.turn
+	state.scores = dict.scores
+	state.cursor = Vector2i(dict.cursor_x, dict.cursor_y)
+	state.step = dict.step
+	return state
 
 
 func _generate_possible_values() -> Array:

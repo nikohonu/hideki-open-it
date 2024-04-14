@@ -10,4 +10,5 @@ background = ExtResource("1_gxyj4")
 player1 = 4
 player2 = 0
 music = ExtResource("2_j0yxd")
-name = "Level 4"
+name = "Chino Kumiko (Medium)"
+progress = 4

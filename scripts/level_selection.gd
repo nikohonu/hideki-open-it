@@ -1,13 +1,35 @@
 extends Control
 
 
+@onready var level_buttons = [
+	$"MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer/Level 1",
+	$"MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer/Level 2",
+	$"MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer/Level 3",
+	$"MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer/Level 4",
+	$"MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer2/Level 5",
+	$"MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer2/Level 6",
+	$"MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/Level 7",
+	$"MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/Level 8",
+]
+
+
+func _ready():
+	for i in range(8):
+		level_buttons[i].status = Global.progress[i]
+
+
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 
 func _load_level(level: int):
-	Global.level = load("res://levels/level%s.tres" % level)
-	Global.state = null
+	Global.load_game()
+	if Global.level.progress != level:
+		Global.level = load("res://levels/level%s.tres" % level)
+		Global.state = null
+		print("Overwrite level")
+	else:
+		print("Load level")
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
