@@ -11,7 +11,21 @@ var map = []
 var turn = PLAYER1
 var scores = [0, 0]
 var cursor = Vector2i(4, 4)
-var step = 0
+var step = 1
+
+
+func _init(prev_state: State = null):
+	if prev_state:
+		self.map = prev_state.map.duplicate(true)
+		self.turn = prev_state.turn
+		self.scores = prev_state.scores.duplicate()
+		self.cursor = prev_state.cursor
+		self.step = prev_state.step
+	else:
+		var possible_values = _generate_possible_values()
+		for i in range(MAP_SIZE):
+			var start = i * MAP_SIZE
+			map.append(possible_values.slice(start, start + MAP_SIZE))
 
 
 func is_possible_move(coords: Vector2i):
@@ -77,38 +91,3 @@ func _generate_possible_values() -> Array:
 			possible_values += [value, -value]
 	possible_values.shuffle()
 	return possible_values.slice(0, MAP_SIZE ** 2)
-
-
-func _init(prev_state: State = null):
-	if prev_state:
-		self.map = prev_state.map.duplicate(true)
-		self.turn = prev_state.turn
-		self.scores = prev_state.scores.duplicate()
-		self.cursor = prev_state.cursor
-		self.step = prev_state.step
-	else:
-		var possible_values = _generate_possible_values()
-		for i in range(MAP_SIZE):
-			var start = i * MAP_SIZE
-			map.append(possible_values.slice(start, start + MAP_SIZE))
-
-
-func eval():
-	return scores[PLAYER1] - scores[PLAYER2]
-
-
-func children():
-	var result = []
-	if turn == PLAYER1:
-		for i in range(MAP_SIZE):
-			if map[cursor.y][i] != 0:
-				var state = State.new(self)
-				state.select(Vector2i(i, cursor.y))
-				result.push_back(state)
-	if turn == PLAYER2:
-		for i in range(MAP_SIZE):
-			if map[i][cursor.x] != 0:
-				var state = State.new(self)
-				state.select(Vector2i(cursor.x, i))
-				result.push_back(state)
-	return result

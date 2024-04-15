@@ -16,3 +16,12 @@ mono_crash.*.json
 
 # Project specific
 *.png~
+
+# for projects that use SCons for building: http://http://www.scons.org/
+.sconsign.dblite
+
+# When configure fails, SCons outputs these
+config.log
+.sconf_temp
+*.so
+*.os

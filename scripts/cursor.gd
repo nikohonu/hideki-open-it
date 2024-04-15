@@ -13,7 +13,9 @@ var can_move = true
 
 @onready var map: Map = %Map
 @onready var timer: Timer = $Timer
-@onready var ai: AI = $AI
+#@onready var ai = $AICPP
+
+var avg = 0
 
 
 func _ready():
@@ -46,8 +48,7 @@ func _input(event):
 
 
 func _ai_move():
-	var dest = ai.calc(game.state, game.level.get_ai(game.state.turn))
-	var diff = dest - coords
+	var diff = $AICPP.calc(game.state, game.level.get_ai(game.state.turn)) - coords
 	if game.state.turn == PLAYER1:
 		for i in range(abs(diff.x)):
 			var sign = diff.x/abs(diff.x)

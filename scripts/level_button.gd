@@ -26,6 +26,8 @@ enum Status {ACTIVE, LOCKED, COMPLETED}
 			$TextureButton.texture_normal = texture_complete
 		status = value
 
+func _ready():
+	$Label.set_text(text)
 
 func _on_texture_button_pressed():
 	pressed.emit()

@@ -1,10 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://buuuapqyomv2l"]
+[gd_scene load_steps=13 format=3 uid="uid://buuuapqyomv2l"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_qwehj"]
 [ext_resource type="Script" path="res://scripts/map.gd" id="2_svvqo"]
 [ext_resource type="Texture2D" uid="uid://dgt17w4xtm26o" path="res://sprites/cursor.png" id="3_7bscc"]
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="4_3s3lf"]
-[ext_resource type="Script" path="res://scripts/ai.gd" id="5_ugcyf"]
 [ext_resource type="Script" path="res://scripts/ui.gd" id="6_abnrh"]
 
 [sub_resource type="Environment" id="Environment_2y7p1"]
@@ -86,8 +85,7 @@ game = NodePath("../..")
 wait_time = 0.125
 one_shot = true
 
-[node name="AI" type="Node" parent="Map/Cursor"]
-script = ExtResource("5_ugcyf")
+[node name="AICPP" type="AICPP" parent="Map/Cursor"]
 
 [node name="UI" type="Control" parent="." node_paths=PackedStringArray("game")]
 layout_mode = 3
