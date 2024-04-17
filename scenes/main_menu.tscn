@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhqpaucmcr1kq"]
+[gd_scene load_steps=3 format=3 uid="uid://dhqpaucmcr1kq"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_ehpoh"]
+[ext_resource type="PackedScene" uid="uid://bum2srmdskmqx" path="res://scenes/test.tscn" id="2_jcuj2"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -26,9 +27,22 @@ layout_mode = 2
 layout_mode = 2
 text = "Play"
 
+[node name="Custom" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Custom"
+
+[node name="Control" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "How to control?"
+
 [node name="Exit" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Exit"
 
+[node name="Test" parent="." instance=ExtResource("2_jcuj2")]
+layout_mode = 1
+
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Custom" to="." method="_on_custom_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Control" to="." method="_on_control_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

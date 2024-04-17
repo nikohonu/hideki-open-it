@@ -55,51 +55,93 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/CenterContainer"]
 layout_mode = 2
-theme_override_constants/separation = 48
+theme_override_constants/separation = 36
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 48
+theme_override_constants/separation = 12
 
 [node name="Level 1" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_abr2k")]
 layout_mode = 2
-text = "Igarashi Kenji (Easy)"
 
 [node name="Level 2" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_abr2k")]
 layout_mode = 2
-text = "Uemura Akira (Easy)"
 status = 1
 
 [node name="Level 3" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_abr2k")]
 layout_mode = 2
-text = "Shima Ko (Medium)"
+status = 1
 
 [node name="Level 4" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer" instance=ExtResource("2_abr2k")]
 layout_mode = 2
-text = "Chino Kumiko (Medium)"
+status = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 48
+theme_override_constants/separation = 12
 alignment = 1
 
 [node name="Level 5" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer2" instance=ExtResource("2_abr2k")]
 layout_mode = 2
-text = "Oba Shiro (Hard)"
+status = 1
 
 [node name="Level 6" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer2" instance=ExtResource("2_abr2k")]
 layout_mode = 2
-text = "Sasaki Harukod (Hard)"
+status = 1
 
 [node name="Level 7" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer" instance=ExtResource("2_abr2k")]
 layout_mode = 2
-alignment = 1
-text = "Okano Momo (Expert)"
+size_flags_vertical = 4
+status = 1
 
 [node name="Level 8" parent="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer" instance=ExtResource("2_abr2k")]
 layout_mode = 2
-alignment = 1
-text = "Mukai Hideki (Expert)"
+size_flags_vertical = 4
+status = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="OverwriteLevel" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/OverwriteLevel"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+text = "Do you want to discard the current save and start this level?"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/OverwriteLevel"]
+layout_mode = 2
+alignment = 2
+
+[node name="Ok" type="Button" parent="PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer"]
+layout_mode = 2
+text = "OK"
+
+[node name="Cancel" type="Button" parent="PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer/Level 1" to="." method="_on_level_1_pressed"]
@@ -110,3 +152,5 @@ text = "Mukai Hideki (Expert)"
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer2/Level 6" to="." method="_on_level_6_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/Level 7" to="." method="_on_level_7_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/Level 8" to="." method="_on_level_8_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer/Ok" to="." method="_on_ok_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]

@@ -1,16 +1,15 @@
 class_name Game
 extends Node3D
 
-
-var ai = []
 var Cell = preload("res://scenes/cell.tscn")
-var state = null
+var ai = []
+var state: State = null
 
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var cursor = $Map/Cursor
 @onready var level: Level = Global.level
 @onready var map: Map = %Map
 @onready var ui: UI = $UI
-@onready var cursor = $Map/Cursor
-@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 
 func _ready():
@@ -47,9 +46,7 @@ func _input(event):
 func _on_cursor_selected(coords):
 	if state.is_possible_move(coords):
 		map.select(coords)
-		
 		state.select(coords)
-		
 		ui.set_turn(state.turn)
 		ui.set_scores(state.scores)
 
@@ -57,7 +54,9 @@ func _on_cursor_selected(coords):
 func mark_complete():
 	Global.progress[level.progress - 1] = Global.Status.COMPLETED
 	if level.progress < 8 and Global.progress[level.progress] != Global.Status.COMPLETED:
-			Global.progress[level.progress] = Global.Status.ACTIVE
+		Global.progress[level.progress] = Global.Status.ACTIVE
+	Global.save_progress()
+	Global.reset_save()
 
 
 func _on_state_game_ended(winner):
@@ -78,6 +77,9 @@ func _on_state_game_ended(winner):
 				$UI/PanelContainer/MarginContainer/Win.visible = true
 			else:
 				$UI/PanelContainer/MarginContainer/Lose.visible = true
+	else:
+		$UI/PanelContainer/MarginContainer/Custom/Label.set_text("Players %s win!" % (winner + 1))
+		$UI/PanelContainer/MarginContainer/Custom.visible = true
 
 
 func _on_restart_level_pressed():
@@ -90,3 +92,13 @@ func _on_next_level_pressed():
 	if level.progress < 8:
 		Global.level = load("res://levels/level%s.tres" % (level.progress + 1))
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+
+func _on_choose_level_pressed():
+	get_tree().change_scene_to_file("res://scenes/level_selection.tscn")
+
+
+func _on_change_settings_pressed():
+	Global.level = Global.prev_level
+	Global.state = Global.prev_state
+	get_tree().change_scene_to_file("res://scenes/custom.tscn")

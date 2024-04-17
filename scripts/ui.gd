@@ -1,12 +1,11 @@
 class_name UI
 extends Control
 
-
 @export var game: Game
 
 
-func set_level(name):
-	$VBoxContainer/Level.set_text(name)
+func set_level(level_name):
+	$VBoxContainer/Level.set_text(level_name)
 
 
 func set_turn(turn):
@@ -19,5 +18,10 @@ func set_scores(scores: Array):
 
 
 func _on_back_pressed():
-	Global.save_game(game.level, game.state)
-	get_tree().change_scene_to_file("res://scenes/level_selection.tscn")
+	if game.level.progress != 0:
+		Global.save_game(game.level, game.state)
+		get_tree().change_scene_to_file("res://scenes/level_selection.tscn")
+	else:
+		Global.level = Global.prev_level
+		Global.state = Global.prev_state
+		get_tree().change_scene_to_file("res://scenes/custom.tscn")

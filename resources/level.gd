@@ -1,6 +1,7 @@
 class_name Level
 extends Resource
 
+
 enum PlayerType {
 	HUMAN = 0,
 	AI_EASY = 1,
@@ -24,13 +25,14 @@ func get_ai(player):
 		return player2
 	
 
-static func load_custom(background_path, player1: PlayerType, player2: PlayerType, music_path, name: String):
+static func load_custom(background_path, player1_type: PlayerType, player2_type: PlayerType, music_path, name: String):
 	var level = Level.new()
 	level.background = load(background_path)
-	level.player1 = player1
-	level.player2 = player2
+	level.player1 = player1_type
+	level.player2 = player2_type
 	level.music = load(music_path)
 	level.name = name
+	level.progress = 0
 	return level
 
 

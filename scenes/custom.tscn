@@ -1,0 +1,176 @@
+[gd_scene load_steps=17 format=3 uid="uid://gi6k6thw2tjx"]
+
+[ext_resource type="Texture2D" uid="uid://bqd70ldy75r70" path="res://backgrounds/pexels-abby-chung-1045615.webp" id="1_b7nxf"]
+[ext_resource type="Script" path="res://scripts/custom.gd" id="1_xbrt8"]
+[ext_resource type="Texture2D" uid="uid://dtigwrf28o36n" path="res://backgrounds/pexels-casia-charlie-2425464.webp" id="3_jsmby"]
+[ext_resource type="Texture2D" uid="uid://dh7sj8m4860kl" path="res://backgrounds/pexels-dsd-1829980.webp" id="4_v50ls"]
+[ext_resource type="Texture2D" uid="uid://dqp8q6tkwa5qg" path="res://backgrounds/pexels-evgeny-tchebotarev-2235302.webp" id="5_4yt2v"]
+[ext_resource type="Texture2D" uid="uid://b2ai5lsjee3b6" path="res://backgrounds/pexels-leeloo-the-first-5236398.webp" id="6_de3pj"]
+[ext_resource type="Texture2D" uid="uid://oy0bq5152f85" path="res://backgrounds/pexels-matt-hardy-2031687.webp" id="7_smrfk"]
+[ext_resource type="Texture2D" uid="uid://dkhwiafmdwmi8" path="res://backgrounds/pexels-ryutaro-tsukata-5745864.webp" id="8_3robc"]
+[ext_resource type="Texture2D" uid="uid://cvqsoa3pdlsij" path="res://backgrounds/pexels-ryutaro-tsukata-6249546.webp" id="9_ukwo8"]
+[ext_resource type="Texture2D" uid="uid://07pi2mpqh0ak" path="res://backgrounds/pexels-sunil-poudel-2758567.webp" id="10_bcpy0"]
+[ext_resource type="Texture2D" uid="uid://mu24tng26tw1" path="res://backgrounds/pexels-tomáš-malík-3408353.webp" id="11_6h3we"]
+[ext_resource type="AudioStream" uid="uid://dox663541ok0y" path="res://music/Yugen-Emotional-Ethnic-Music(chosic.com).mp3" id="12_8mrif"]
+[ext_resource type="AudioStream" uid="uid://my4nv072ko72" path="res://music/yoitrax-ronin(chosic.com).mp3" id="13_7knrr"]
+[ext_resource type="AudioStream" uid="uid://0c76c50s6gbb" path="res://music/PerituneMaterial_Sakuya(chosic.com).mp3" id="14_b1akd"]
+[ext_resource type="AudioStream" uid="uid://do1i41bwgswdq" path="res://music/PerituneMaterial_Sakuya2(chosic.com).mp3" id="15_vocd7"]
+[ext_resource type="AudioStream" uid="uid://co86vy2pwnqg7" path="res://music/PerituneMaterial_Sakuya3(chosic.com).mp3" id="16_yx231"]
+
+[node name="Custom" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("1_xbrt8")
+backgrounds = Array[Texture2D]([ExtResource("1_b7nxf"), ExtResource("3_jsmby"), ExtResource("4_v50ls"), ExtResource("5_4yt2v"), ExtResource("6_de3pj"), ExtResource("7_smrfk"), ExtResource("8_3robc"), ExtResource("9_ukwo8"), ExtResource("10_bcpy0"), ExtResource("11_6h3we")])
+music = Array[AudioStreamMP3]([ExtResource("12_8mrif"), ExtResource("13_7knrr"), ExtResource("14_b1akd"), ExtResource("15_vocd7"), ExtResource("16_yx231")])
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Back" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 2
+text = "Back"
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Panel" type="PanelContainer" parent="VBoxContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/CenterContainer/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="LabelBackground" type="Label" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Background:"
+
+[node name="PrevBackground" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Prev"
+
+[node name="Background" type="TextureRect" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+texture = ExtResource("1_b7nxf")
+expand_mode = 1
+
+[node name="NextBackground" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Next"
+
+[node name="LabelPlayer1" type="Label" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Player 1:"
+
+[node name="PrevPlayer1" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Prev"
+
+[node name="LabelPlayer1State" type="Label" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Human"
+horizontal_alignment = 1
+
+[node name="NextPlayer1" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Next"
+
+[node name="LabelPlayer2" type="Label" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Player 2:"
+
+[node name="PrevPlayer2" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Prev"
+
+[node name="LabelPlayer2State" type="Label" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Human"
+horizontal_alignment = 1
+
+[node name="NextPlayer2" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Next"
+
+[node name="LabelMusic" type="Label" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Music:"
+
+[node name="PrevMusic" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Prev"
+
+[node name="LabelMusicState" type="Label" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Yugen Emotional Ethnic Music"
+horizontal_alignment = 1
+
+[node name="NextMusic" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Next"
+
+[node name="Start" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/PrevBackground" to="." method="_on_prev_background_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/NextBackground" to="." method="_on_next_background_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/PrevPlayer1" to="." method="_on_prev_player_1_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/NextPlayer1" to="." method="_on_next_player_1_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/PrevPlayer2" to="." method="_on_prev_player_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/NextPlayer2" to="." method="_on_next_player_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/PrevMusic" to="." method="_on_prev_music_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/NextMusic" to="." method="_on_next_music_pressed"]
+[connection signal="pressed" from="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]

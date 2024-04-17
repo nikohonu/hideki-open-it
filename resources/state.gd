@@ -11,7 +11,7 @@ var map = []
 var turn = PLAYER1
 var scores = [0, 0]
 var cursor = Vector2i(4, 4)
-var step = 1
+var step = 0
 
 
 func _init(prev_state: State = null):

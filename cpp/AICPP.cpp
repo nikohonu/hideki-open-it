@@ -90,8 +90,8 @@ int GameState::eval() { return scores[0] - scores[1]; }
 
 Vector2i AICPP::calc(Object *state, int level) {
   int step = state->get("step");
-  int depth = std::round(std::min(step / 32.0, 1.0) * level);
-  UtilityFunctions::print(depth);
+  int depth = std::max(std::round(std::min(step / 32.0, 1.0) * level), 1.0);
+  // UtilityFunctions::print("a ", depth);
   auto game_state = new GameState(state);
   auto result =
       _negamax(game_state, depth, -1000, 1000, -2 * game_state->turn + 1);
@@ -105,7 +105,6 @@ Result AICPP::_negamax(GameState *state, int depth, int alpha, int beta,
   }
   int value = -1000;
   GameState *best_child = nullptr;
-  // for (auto child : state->children()) {
   for (int i = 0; i < 8; i++) {
     GameState *child = state->child(i);
     if (child == nullptr)

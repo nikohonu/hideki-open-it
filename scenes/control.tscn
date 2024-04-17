@@ -1,0 +1,225 @@
+[gd_scene load_steps=4 format=3 uid="uid://ih37wf660pqw"]
+
+[ext_resource type="FontFile" uid="uid://ca3255aseygbu" path="res://fonts/Shantell_Sans/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf" id="1_em4re"]
+[ext_resource type="Script" path="res://scripts/control.gd" id="1_ijuh8"]
+[ext_resource type="Texture2D" uid="uid://dpxqbiyplsyfj" path="res://sprites/key.png" id="2_k2pbe"]
+
+[node name="Control" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("1_ijuh8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 2
+text = "Back"
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="GridContainer" parent="VBoxContainer/CenterContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+columns = 5
+
+[node name="Player1" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_em4re")
+theme_override_font_sizes/font_size = 128
+text = "Player 1:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureLeft" type="TextureRect" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_k2pbe")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer/TextureLeft"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_em4re")
+theme_override_font_sizes/font_size = 128
+text = "←"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRight" type="TextureRect" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_k2pbe")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer/TextureRight"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_em4re")
+theme_override_font_sizes/font_size = 128
+text = "→"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureA" type="TextureRect" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_k2pbe")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer/TextureA"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_em4re")
+theme_override_font_sizes/font_size = 128
+text = "A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureD" type="TextureRect" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_k2pbe")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer/TextureD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_em4re")
+theme_override_font_sizes/font_size = 128
+text = "D"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player2" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_em4re")
+theme_override_font_sizes/font_size = 128
+text = "Player 2:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureUP" type="TextureRect" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_k2pbe")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer/TextureUP"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_em4re")
+theme_override_font_sizes/font_size = 128
+text = "↑"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureDown" type="TextureRect" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_k2pbe")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer/TextureDown"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_em4re")
+theme_override_font_sizes/font_size = 128
+text = "↓"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureW" type="TextureRect" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_k2pbe")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer/TextureW"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_em4re")
+theme_override_font_sizes/font_size = 128
+text = "W"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureS" type="TextureRect" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_k2pbe")
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer/TextureS"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_em4re")
+theme_override_font_sizes/font_size = 128
+text = "S"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/CenterContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_em4re")
+theme_override_font_sizes/font_size = 96
+text = "Both players can also control the cursor with the mouse"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

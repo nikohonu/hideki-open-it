@@ -1,5 +1,6 @@
 extends Control
 
+var overwrite_level: int
 
 @onready var level_buttons = [
 	$"MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/VBoxContainer/Level 1",
@@ -11,11 +12,24 @@ extends Control
 	$"MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/Level 7",
 	$"MarginContainer/VBoxContainer/CenterContainer/VBoxContainer/Level 8",
 ]
+@onready var levels: Dictionary = {
+	"Igarashi Kenji (Easy)": "res://levels/level1.tres",
+	"Uemura Akira (Easy)": "res://levels/level2.tres",
+	"Shima Ko (Medium)": "res://levels/level3.tres",
+	"Chino Kumiko (Medium)": "res://levels/level4.tres",
+	"Oba Shiro (Hard)": "res://levels/level5.tres",
+	"Sasaki Harukod (Hard)": "res://levels/level6.tres",
+	"Okano Momo (Expert)": "res://levels/level7.tres",
+	"Mukai Hideki (Expert)": "res://levels/level8.tres",
+}
 
 
 func _ready():
+	if Global.state != null:
+		level_buttons[Global.level.progress - 1].has_save = true
 	for i in range(8):
 		level_buttons[i].status = Global.progress[i]
+		level_buttons[i].text = levels.keys()[i]
 
 
 func _on_back_pressed():
@@ -23,14 +37,12 @@ func _on_back_pressed():
 
 
 func _load_level(level: int):
-	Global.load_game()
-	if Global.level.progress != level:
-		Global.level = load("res://levels/level%s.tres" % level)
-		Global.state = null
-		print("Overwrite level")
+	if Global.state == null or Global.level.progress != level:
+		overwrite_level = level
+		$PanelContainer.visible = true
 	else:
 		print("Load level")
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+		get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
 func _on_level_1_pressed():
@@ -63,3 +75,14 @@ func _on_level_7_pressed():
 
 func _on_level_8_pressed():
 	_load_level(8)
+
+
+func _on_ok_pressed():
+	Global.level = load(levels.values()[overwrite_level - 1])
+	Global.state = null
+	print("Overwrite level")
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+
+func _on_cancel_pressed():
+	$PanelContainer.visible = false

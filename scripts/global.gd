@@ -1,15 +1,19 @@
 extends Node
 
+const GAME_SAVE_PATH = "user://game.save"
 
-enum Status {ACTIVE, LOCKED, COMPLETED}
+enum Status { ACTIVE, LOCKED, COMPLETED }
 
 var level: Level = null
+var prev_level: Level = null
+var prev_state: State = null
+var progress
 var state: State = null
-var progress;
 
 
 func _ready():
 	progress = load_progress()
+	load_game()
 
 
 func _notification(what):
@@ -18,21 +22,22 @@ func _notification(what):
 		if get_tree().get_current_scene().get_name() == "Game":
 			var game: Game = scene
 			save_game(game.level, game.state)
-		save_progress(progress)
+		save_progress()
 		get_tree().quit()
 
 
 func load_game():
-	var load_game = FileAccess.open("user://game.save", FileAccess.READ)
-	var data = JSON.parse_string(load_game.get_line())
-	level = Level.from_dict(data["level"])
-	state = State.from_dict(data["state"])
+	var game_save_file = FileAccess.open(GAME_SAVE_PATH, FileAccess.READ)
+	if game_save_file:
+		var data = JSON.parse_string(game_save_file.get_line())
+		level = Level.from_dict(data["level"])
+		state = State.from_dict(data["state"])
 
 
 func load_progress():
-	var load_progress = FileAccess.open("user://progress.save", FileAccess.READ)
-	if load_progress:
-		return JSON.parse_string(load_progress.get_line())
+	var load_progress_file = FileAccess.open("user://progress.save", FileAccess.READ)
+	if load_progress_file:
+		return JSON.parse_string(load_progress_file.get_line())
 	else:
 		return [
 			Status.ACTIVE,
@@ -46,14 +51,31 @@ func load_progress():
 		]
 
 
-func save_game(level: Level, state: State):
-	var save_game = FileAccess.open("user://game.save", FileAccess.WRITE)
-	save_game.store_line(JSON.stringify({
-		"level": level.to_dict(),
-		"state": state.to_dict(),
-	}))
+func save_game(current_level: Level, current_state: State):
+	level = current_level
+	state = current_state
+	var save_game_file = FileAccess.open("user://game.save", FileAccess.WRITE)
+	(
+		save_game_file
+		. store_line(
+			(
+				JSON
+				. stringify(
+					{
+						"level": current_level.to_dict(),
+						"state": current_state.to_dict(),
+					}
+				)
+			)
+		)
+	)
 
 
-func save_progress(progress):
-	var save_progress = FileAccess.open("user://progress.save", FileAccess.WRITE)
-	save_progress.store_line(JSON.stringify(progress))
+func save_progress():
+	var save_progress_file = FileAccess.open("user://progress.save", FileAccess.WRITE)
+	save_progress_file.store_line(JSON.stringify(progress))
+
+
+func reset_save():
+	OS.move_to_trash(ProjectSettings.globalize_path(Global.GAME_SAVE_PATH))
+	Global.state = null
