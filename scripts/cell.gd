@@ -1,4 +1,5 @@
 extends MeshInstance3D
+class_name Cell
 
 signal animation_finished
 
@@ -9,7 +10,6 @@ var texture_red_cell_face = preload("res://sprites/red_cell_face.png")
 
 
 func set_state(cords, value, texture_backgroun, ratio):
-	position = Global.cords_to_position(cords)
 	cords.y = 7 - cords.y
 	if value < 0:
 		mesh.get_material().set_shader_parameter("texture_front", texture_red_cell)
@@ -29,7 +29,8 @@ func select(fast = false):
 		rotate_x(PI)
 		return
 	$AnimationPlayer.play("rotate")
+	$Timer.start()	
 
 
-func _on_animation_player_animation_finished(_anim_name):
-	emit_signal("animation_finished")
+func _on_timer_timeout():
+	animation_finished.emit()

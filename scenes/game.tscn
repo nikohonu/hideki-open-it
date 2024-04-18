@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://buuuapqyomv2l"]
+[gd_scene load_steps=14 format=3 uid="uid://buuuapqyomv2l"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_qwehj"]
+[ext_resource type="AudioStream" uid="uid://dfftkp4lh1c6y" path="res://sfx/UI_SFX_Set/rollover2.wav" id="2_h00q0"]
 [ext_resource type="Script" path="res://scripts/map.gd" id="2_svvqo"]
 [ext_resource type="Texture2D" uid="uid://dgt17w4xtm26o" path="res://sprites/cursor.png" id="3_7bscc"]
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="4_3s3lf"]
@@ -57,7 +58,12 @@ animations = [{
 script = ExtResource("1_qwehj")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -25.0
 autoplay = true
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_h00q0")
+volume_db = 5.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_2y7p1")
@@ -109,6 +115,10 @@ alignment = 2
 [node name="Back" type="Button" parent="UI/VBoxContainer"]
 layout_mode = 2
 text = "Back"
+
+[node name="Restart" type="Button" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
 
 [node name="Level" type="Label" parent="UI/VBoxContainer"]
 layout_mode = 2
@@ -210,6 +220,7 @@ text = "Restart"
 [connection signal="selected" from="Map/Cursor" to="." method="_on_cursor_selected"]
 [connection signal="timeout" from="Map/Cursor/Timer" to="Map/Cursor" method="_on_timer_timeout"]
 [connection signal="pressed" from="UI/VBoxContainer/Back" to="UI" method="_on_back_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/Restart" to="." method="_on_restart_level_pressed"]
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/Win/HBoxContainer/ChooseLevel" to="." method="_on_choose_level_pressed"]
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/Win/HBoxContainer/NextLevel" to="." method="_on_next_level_pressed"]
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/Lose/HBoxContainer/ChooseLevel" to="UI" method="_on_back_pressed"]

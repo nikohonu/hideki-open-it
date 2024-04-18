@@ -14,6 +14,7 @@ var coords = null
 @onready var ai = $AICPP
 @onready var map: Map = %Map
 @onready var timer: Timer = $Timer
+@onready var sfx: AudioStreamPlayer = $"../../SFX"
 
 
 func _ready():
@@ -23,6 +24,10 @@ func _ready():
 	if game.level.get_ai(game.state.turn) > 0:
 		_ai_move()
 
+func move_cursor():
+	sfx.stop()
+	sfx.play()
+	timer.start()
 
 func _process(_delta):
 	if can_move:
@@ -40,7 +45,7 @@ func _process(_delta):
 			coords.y = clamp(coords.y + move.y, 0, 7)
 			position = map.coordinates_2d_to_3d(coords, 0.5)
 			can_move = false
-			timer.start()
+			move_cursor()
 
 
 func _input(event):
@@ -75,13 +80,13 @@ func move_and_click(move: Vector2i):
 		for i in range(abs(diff.x)):
 			coords.x += diff.x / abs(diff.x)
 			position = map.coordinates_2d_to_3d(coords, 0.5)
-			timer.start()
+			move_cursor()
 			await timer.timeout
 	if game.state.turn == PLAYER2:
 		for i in range(abs(diff.y)):
 			coords.y += diff.y / abs(diff.y)
 			position = map.coordinates_2d_to_3d(coords, 0.5)
-			timer.start()
+			move_cursor()
 			await timer.timeout
 	selected.emit(coords)
 
