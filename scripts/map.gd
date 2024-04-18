@@ -40,3 +40,4 @@ func _on_cell_animation_finished():
 	cursor.can_move = true
 	cursor.visible = true
 	turn_changed.emit()
+	game.color()

@@ -1,7 +1,7 @@
 class_name Game
 extends Node3D
 
-var Cell = preload("res://scenes/cell.tscn")
+var CellScene = preload("res://scenes/cell.tscn")
 var ai = []
 var state: State = null
 
@@ -27,7 +27,8 @@ func _ready():
 	audio_stream_player.play()
 	for y in range(8):
 		for x in range(8):
-			map.add_cell(Cell, Vector2i(x, y), state.map[y][x])
+			map.add_cell(CellScene, Vector2i(x, y), state.map[y][x])
+	color()
 
 
 func _input(event):
@@ -57,6 +58,18 @@ func mark_complete():
 		Global.progress[level.progress] = Global.Status.ACTIVE
 	Global.save_progress()
 	Global.reset_save()
+
+
+func color():
+	for i in range(8):
+		for j in range(8):
+			map.cells[Vector2i(i, j)].set_active(false)
+	if state.turn == state.PLAYER1:
+		for i in range(8):
+			map.cells[Vector2i(i, state.cursor.y)].set_active(true)
+	if state.turn == state.PLAYER2:
+		for i in range(8):
+			map.cells[Vector2i(state.cursor.x, i)].set_active(true)
 
 
 func _on_state_game_ended(winner):
@@ -102,3 +115,7 @@ func _on_change_settings_pressed():
 	Global.level = Global.prev_level
 	Global.state = Global.prev_state
 	get_tree().change_scene_to_file("res://scenes/custom.tscn")
+
+
+func _on_audio_stream_player_finished():
+	audio_stream_player.play()

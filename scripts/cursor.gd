@@ -14,7 +14,8 @@ var coords = null
 @onready var ai = $AICPP
 @onready var map: Map = %Map
 @onready var timer: Timer = $Timer
-@onready var sfx: AudioStreamPlayer = $"../../SFX"
+@onready var sfx_move: AudioStreamPlayer = $"../../SFXMove"
+@onready var sfx_select: AudioStreamPlayer = $"../../SFXSelect"
 
 
 func _ready():
@@ -24,10 +25,16 @@ func _ready():
 	if game.level.get_ai(game.state.turn) > 0:
 		_ai_move()
 
-func move_cursor():
-	sfx.stop()
-	sfx.play()
+func move_cursor(new_coords: Vector2i):
+	sfx_move.stop()
+	sfx_move.play()
 	timer.start()
+	position = map.coordinates_2d_to_3d(new_coords, 0.5)
+
+func select():
+	sfx_select.stop()
+	sfx_select.play()
+	selected.emit(coords)
 
 func _process(_delta):
 	if can_move:
@@ -43,15 +50,13 @@ func _process(_delta):
 		if move:
 			coords.x = clamp(coords.x + move.x, 0, 7)
 			coords.y = clamp(coords.y + move.y, 0, 7)
-			position = map.coordinates_2d_to_3d(coords, 0.5)
 			can_move = false
-			move_cursor()
+			move_cursor(coords)
 
 
 func _input(event):
 	if can_move and event.is_action_pressed("select"):
-		selected.emit(coords)
-		timer.stop()
+		select()
 	if can_move and event.is_action_pressed("click"):
 		var click_position = -round(
 			(Vector2(get_viewport().size / 2) - event.position) / 96 - Vector2(3.5, 3.5)
@@ -79,16 +84,14 @@ func move_and_click(move: Vector2i):
 	if game.state.turn == PLAYER1:
 		for i in range(abs(diff.x)):
 			coords.x += diff.x / abs(diff.x)
-			position = map.coordinates_2d_to_3d(coords, 0.5)
-			move_cursor()
+			move_cursor(coords)
 			await timer.timeout
 	if game.state.turn == PLAYER2:
 		for i in range(abs(diff.y)):
 			coords.y += diff.y / abs(diff.y)
-			position = map.coordinates_2d_to_3d(coords, 0.5)
-			move_cursor()
+			move_cursor(coords)
 			await timer.timeout
-	selected.emit(coords)
+	select()
 
 
 func _on_timer_timeout():

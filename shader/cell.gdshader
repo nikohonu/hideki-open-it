@@ -16,7 +16,7 @@ void vertex() {
 
 void fragment() {
 	vec2 base_uv = UV;
-	vec2 c1 = vec2(0, 00);
+	vec2 c1 = vec2(0, 0);
 	vec2 c2 = vec2(1./3., 0);
 	vec2 c3 = vec2(2./3., 0);
 	
