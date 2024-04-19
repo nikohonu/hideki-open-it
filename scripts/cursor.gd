@@ -100,5 +100,5 @@ func _on_timer_timeout():
 
 
 func _on_map_turn_changed():
-	if game.level.get_ai(game.state.turn) > 0:
+	if game.level.get_ai(game.state.turn) > 0 or game.state.possible_move_count() == 1:
 		_ai_move()

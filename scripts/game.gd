@@ -10,6 +10,7 @@ var state: State = null
 @onready var level: Level = Global.level
 @onready var map: Map = %Map
 @onready var ui: UI = $UI
+@onready var arrows: Array[AnimatedSprite2D] = [$Arrow1, $Arrow2]
 
 
 func _ready():
@@ -61,13 +62,27 @@ func mark_complete():
 
 
 func color():
+	var center = Vector2i(get_viewport().size / 2)
+	var cell_size = 96
 	for i in range(8):
 		for j in range(8):
 			map.cells[Vector2i(i, j)].set_active(false)
 	if state.turn == state.PLAYER1:
+		arrows[0].position.x = center.x - 4 * cell_size - cell_size / 2
+		arrows[1].position.x = center.x + 4 * cell_size + cell_size / 2
+		arrows[0].position.y = center.y - (cell_size * 4) + cell_size * state.cursor.y + cell_size / 2
+		arrows[1].position.y = center.y - (cell_size * 4) + cell_size * state.cursor.y + cell_size / 2
+		arrows[0].rotation = 0
+		arrows[1].rotation = PI
 		for i in range(8):
 			map.cells[Vector2i(i, state.cursor.y)].set_active(true)
 	if state.turn == state.PLAYER2:
+		arrows[0].position.y = center.y - 4 * cell_size - cell_size / 2
+		arrows[1].position.y = center.y + 4 * cell_size + cell_size / 2
+		arrows[0].position.x = center.x - (cell_size * 4) + cell_size * state.cursor.x + cell_size / 2
+		arrows[1].position.x = center.x - (cell_size * 4) + cell_size * state.cursor.x + cell_size / 2
+		arrows[0].rotation = PI / 2
+		arrows[1].rotation = PI / 2 * 3
 		for i in range(8):
 			map.cells[Vector2i(state.cursor.x, i)].set_active(true)
 

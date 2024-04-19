@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://buuuapqyomv2l"]
+[gd_scene load_steps=20 format=3 uid="uid://buuuapqyomv2l"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_qwehj"]
 [ext_resource type="AudioStream" uid="uid://dfftkp4lh1c6y" path="res://sfx/UI_SFX_Set/rollover2.wav" id="2_h00q0"]
@@ -7,6 +7,8 @@
 [ext_resource type="AudioStream" uid="uid://d1rqre2i8pouw" path="res://sfx/UI_SFX_Set/switch10.wav" id="3_8dixj"]
 [ext_resource type="Script" path="res://scripts/cursor.gd" id="4_3s3lf"]
 [ext_resource type="Script" path="res://scripts/ui.gd" id="6_abnrh"]
+[ext_resource type="Texture2D" uid="uid://b3sd2dfwdqtc5" path="res://sprites/arrow-sheet.png" id="8_2o3r3"]
+[ext_resource type="Texture2D" uid="uid://b0aj1h00dyaa4" path="res://sprites/board.png" id="9_5uejr"]
 
 [sub_resource type="Environment" id="Environment_2y7p1"]
 ambient_light_source = 2
@@ -55,8 +57,34 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fbpyt"]
+atlas = ExtResource("8_2o3r3")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m10vi"]
+atlas = ExtResource("8_2o3r3")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_obeph"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fbpyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m10vi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Game" type="Node3D"]
 script = ExtResource("1_qwehj")
+
+[node name="Board" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+texture = ExtResource("9_5uejr")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = -10.0
@@ -220,6 +248,18 @@ text = "Change settings"
 [node name="RestartLevel" type="Button" parent="UI/PanelContainer/MarginContainer/Custom/HBoxContainer"]
 layout_mode = 2
 text = "Restart"
+
+[node name="Arrow1" type="AnimatedSprite2D" parent="."]
+position = Vector2(512, 512)
+sprite_frames = SubResource("SpriteFrames_obeph")
+autoplay = "default"
+speed_scale = 0.5
+
+[node name="Arrow2" type="AnimatedSprite2D" parent="."]
+position = Vector2(512, 512)
+sprite_frames = SubResource("SpriteFrames_obeph")
+autoplay = "default"
+speed_scale = 0.5
 
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]
 [connection signal="turn_changed" from="Map" to="Map/Cursor" method="_on_map_turn_changed"]

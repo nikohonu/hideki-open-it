@@ -28,6 +28,17 @@ func _init(prev_state: State = null):
 			map.append(possible_values.slice(start, start + MAP_SIZE))
 
 
+func possible_move_count():
+	var total = 0
+	if turn == PLAYER1:
+		for x in range(MAP_SIZE):
+			total += 1 if map[cursor.y][x] != 0 else 0
+	else:
+		for y in range(MAP_SIZE):
+			total += 1 if map[y][cursor.x] != 0 else 0
+	return total
+
+
 func is_possible_move(coords: Vector2i):
 	return map[coords.y][coords.x] != 0
 
@@ -58,7 +69,7 @@ func select(coords: Vector2i):
 		turn = PLAYER2
 	else:
 		turn = PLAYER1
-	if check_end():
+	if possible_move_count() == 0:
 		game_ended.emit(calc_winner())
 	step += 1
 
