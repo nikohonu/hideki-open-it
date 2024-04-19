@@ -1,12 +1,14 @@
-[gd_scene load_steps=20 format=3 uid="uid://buuuapqyomv2l"]
+[gd_scene load_steps=22 format=3 uid="uid://buuuapqyomv2l"]
 
-[ext_resource type="Script" path="res://scripts/game.gd" id="1_qwehj"]
+[ext_resource type="Script" path="res://scripts/game/game.gd" id="1_qwehj"]
 [ext_resource type="AudioStream" uid="uid://dfftkp4lh1c6y" path="res://sfx/UI_SFX_Set/rollover2.wav" id="2_h00q0"]
-[ext_resource type="Script" path="res://scripts/map.gd" id="2_svvqo"]
+[ext_resource type="Script" path="res://scripts/game/map.gd" id="2_svvqo"]
+[ext_resource type="PackedScene" uid="uid://bum2srmdskmqx" path="res://scenes/test.tscn" id="2_tdnum"]
+[ext_resource type="Script" path="res://scripts/game/audio.gd" id="3_4bajl"]
 [ext_resource type="Texture2D" uid="uid://dgt17w4xtm26o" path="res://sprites/cursor.png" id="3_7bscc"]
 [ext_resource type="AudioStream" uid="uid://d1rqre2i8pouw" path="res://sfx/UI_SFX_Set/switch10.wav" id="3_8dixj"]
-[ext_resource type="Script" path="res://scripts/cursor.gd" id="4_3s3lf"]
-[ext_resource type="Script" path="res://scripts/ui.gd" id="6_abnrh"]
+[ext_resource type="Script" path="res://scripts/game/cursor.gd" id="4_3s3lf"]
+[ext_resource type="Script" path="res://scripts/game/ui.gd" id="6_abnrh"]
 [ext_resource type="Texture2D" uid="uid://b3sd2dfwdqtc5" path="res://sprites/arrow-sheet.png" id="8_2o3r3"]
 [ext_resource type="Texture2D" uid="uid://b0aj1h00dyaa4" path="res://sprites/board.png" id="9_5uejr"]
 
@@ -82,19 +84,25 @@ animations = [{
 [node name="Game" type="Node3D"]
 script = ExtResource("1_qwehj")
 
-[node name="Board" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
-texture = ExtResource("9_5uejr")
+[node name="Test" parent="." node_paths=PackedStringArray("game") instance=ExtResource("2_tdnum")]
+game = NodePath("..")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Audio" type="Node" parent="." node_paths=PackedStringArray("game", "music", "move", "select")]
+script = ExtResource("3_4bajl")
+game = NodePath("..")
+music = NodePath("Music")
+move = NodePath("Move")
+select = NodePath("Select")
+
+[node name="Music" type="AudioStreamPlayer" parent="Audio"]
 volume_db = -10.0
 autoplay = true
 
-[node name="SFXMove" type="AudioStreamPlayer" parent="."]
+[node name="Move" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("2_h00q0")
 volume_db = 10.0
 
-[node name="SFXSelect" type="AudioStreamPlayer" parent="."]
+[node name="Select" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource("3_8dixj")
 volume_db = 5.0
 
@@ -106,24 +114,42 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 projection = 1
 size = 11.25
 
-[node name="Map" type="Node3D" parent="." node_paths=PackedStringArray("game")]
+[node name="Map" type="Node3D" parent="." node_paths=PackedStringArray("game", "arrows")]
 unique_name_in_owner = true
 script = ExtResource("2_svvqo")
 game = NodePath("..")
+arrows = [NodePath("Arrow1"), NodePath("Arrow2")]
 
-[node name="Cursor" type="AnimatedSprite3D" parent="Map" node_paths=PackedStringArray("game")]
+[node name="Board" type="Sprite3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+texture = ExtResource("9_5uejr")
+
+[node name="Cursor" type="AnimatedSprite3D" parent="Map" node_paths=PackedStringArray("game", "audio")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_4di82")
 autoplay = "default"
 script = ExtResource("4_3s3lf")
 game = NodePath("../..")
+audio = NodePath("../../Audio")
 
 [node name="Timer" type="Timer" parent="Map/Cursor"]
 wait_time = 0.125
 one_shot = true
 
 [node name="AICPP" type="AICPP" parent="Map/Cursor"]
+
+[node name="Arrow1" type="AnimatedSprite2D" parent="Map"]
+position = Vector2(512, 512)
+sprite_frames = SubResource("SpriteFrames_obeph")
+autoplay = "default"
+speed_scale = 0.5
+
+[node name="Arrow2" type="AnimatedSprite2D" parent="Map"]
+position = Vector2(512, 512)
+sprite_frames = SubResource("SpriteFrames_obeph")
+autoplay = "default"
+speed_scale = 0.5
 
 [node name="UI" type="Control" parent="." node_paths=PackedStringArray("game")]
 layout_mode = 3
@@ -226,7 +252,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Choose level"
 
-[node name="RestartLevel" type="Button" parent="UI/PanelContainer/MarginContainer/Lose/HBoxContainer"]
+[node name="Restart" type="Button" parent="UI/PanelContainer/MarginContainer/Lose/HBoxContainer"]
 layout_mode = 2
 text = "Restart"
 
@@ -245,31 +271,22 @@ layout_mode = 2
 layout_mode = 2
 text = "Change settings"
 
-[node name="RestartLevel" type="Button" parent="UI/PanelContainer/MarginContainer/Custom/HBoxContainer"]
+[node name="Restart" type="Button" parent="UI/PanelContainer/MarginContainer/Custom/HBoxContainer"]
 layout_mode = 2
 text = "Restart"
 
-[node name="Arrow1" type="AnimatedSprite2D" parent="."]
-position = Vector2(512, 512)
-sprite_frames = SubResource("SpriteFrames_obeph")
-autoplay = "default"
-speed_scale = 0.5
-
-[node name="Arrow2" type="AnimatedSprite2D" parent="."]
-position = Vector2(512, 512)
-sprite_frames = SubResource("SpriteFrames_obeph")
-autoplay = "default"
-speed_scale = 0.5
-
-[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]
+[connection signal="state_changed" from="." to="UI" method="_on_game_state_changed"]
+[connection signal="finished" from="Audio/Music" to="." method="_on_audio_stream_player_finished"]
+[connection signal="finished" from="Audio/Music" to="Audio" method="_on_music_finished"]
 [connection signal="turn_changed" from="Map" to="Map/Cursor" method="_on_map_turn_changed"]
-[connection signal="selected" from="Map/Cursor" to="." method="_on_cursor_selected"]
+[connection signal="cell_selected" from="Map/Cursor" to="." method="_on_cursor_cell_selected"]
+[connection signal="cell_selected" from="Map/Cursor" to="Map" method="_on_cursor_cell_selected"]
 [connection signal="timeout" from="Map/Cursor/Timer" to="Map/Cursor" method="_on_timer_timeout"]
 [connection signal="pressed" from="UI/VBoxContainer/Back" to="UI" method="_on_back_pressed"]
-[connection signal="pressed" from="UI/VBoxContainer/Restart" to="." method="_on_restart_level_pressed"]
+[connection signal="pressed" from="UI/VBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/Win/HBoxContainer/ChooseLevel" to="." method="_on_choose_level_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Win/HBoxContainer/NextLevel" to="." method="_on_next_level_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Win/HBoxContainer/NextLevel" to="UI" method="_on_next_level_pressed"]
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/Lose/HBoxContainer/ChooseLevel" to="UI" method="_on_back_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Lose/HBoxContainer/RestartLevel" to="." method="_on_restart_level_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Lose/HBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
 [connection signal="pressed" from="UI/PanelContainer/MarginContainer/Custom/HBoxContainer/ChangeSettings" to="." method="_on_change_settings_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Custom/HBoxContainer/RestartLevel" to="." method="_on_restart_level_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Custom/HBoxContainer/Restart" to="UI" method="_on_restart_pressed"]

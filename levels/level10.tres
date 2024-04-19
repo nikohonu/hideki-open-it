@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Level" load_steps=2 format=3 uid="uid://bqw35ahstbl3r"]
+
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_3fo13"]
+
+[resource]
+script = ExtResource("1_3fo13")
+name = "Enigmatic Elegance"
+background_path = "res://backgrounds/pexels-abby-chung-1045615.webp"
+music_path = "res://music/Yugen-Emotional-Ethnic-Music(chosic.com).mp3"
+ai = Array[int]([9, 0])

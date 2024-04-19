@@ -1,19 +1,41 @@
 extends Node
 
-const GAME_SAVE_PATH = "user://game.save"
+const STATE_SAVE_PATH = "user://state.json"
+const GAME_SAVE_PATH = "user://save.dat"
 
-enum Status { ACTIVE, LOCKED, COMPLETED }
+const levels: Array[Level] = [
+	preload("res://levels/level1.tres"),
+	preload("res://levels/level2.tres"),
+	preload("res://levels/level3.tres"),
+	preload("res://levels/level4.tres"),
+	preload("res://levels/level5.tres"),
+	preload("res://levels/level6.tres"),
+	preload("res://levels/level7.tres"),
+	preload("res://levels/level8.tres"),
+	preload("res://levels/level9.tres"),
+	preload("res://levels/level10.tres"),
+	preload("res://levels/level11.tres"),
+	preload("res://levels/level12.tres"),
+	preload("res://levels/level13.tres"),
+	preload("res://levels/level14.tres"),
+	preload("res://levels/level15.tres"),
+	preload("res://levels/level16.tres"),
+	preload("res://levels/level17.tres"),
+	preload("res://levels/level18.tres"),
+]
 
-var level: Level = null
-var prev_level: Level = null
-var prev_state: State = null
-var progress
-var state: State = null
+
+var progress: int = 0
+var saved_level: int = -1
+var saved_state: State = null
+var should_load_saved_state: bool = false
+
+var current_level: int = -1
 
 
 func _ready():
-	progress = load_progress()
 	load_game()
+	load_state()
 
 
 func _notification(what):
@@ -21,59 +43,34 @@ func _notification(what):
 		var scene = get_tree().get_current_scene()
 		if get_tree().get_current_scene().get_name() == "Game":
 			var game: Game = scene
-			save_game(game.level, game.state)
-		save_progress()
+			save_state(game.state)
+		save_game()
 		get_tree().quit()
+
+
+func save_game():
+	var game_save_file = FileAccess.open(GAME_SAVE_PATH, FileAccess.WRITE)
+	game_save_file.store_8(progress)
+	game_save_file.store_64(saved_level)
 
 
 func load_game():
 	var game_save_file = FileAccess.open(GAME_SAVE_PATH, FileAccess.READ)
 	if game_save_file:
-		var data = JSON.parse_string(game_save_file.get_line())
-		level = Level.from_dict(data["level"])
-		state = State.from_dict(data["state"])
+		progress = game_save_file.get_8()
+		saved_level = game_save_file.get_64()
 
 
-func load_progress():
-	var load_progress_file = FileAccess.open("user://progress.save", FileAccess.READ)
-	if load_progress_file:
-		return JSON.parse_string(load_progress_file.get_line())
-	else:
-		return [
-			Status.ACTIVE,
-			Status.LOCKED,
-			Status.LOCKED,
-			Status.LOCKED,
-			Status.LOCKED,
-			Status.LOCKED,
-			Status.LOCKED,
-			Status.LOCKED,
-		]
+func save_state(current_state: State):
+	var state_save_file = FileAccess.open(STATE_SAVE_PATH, FileAccess.WRITE)
+	state_save_file.store_line(JSON.stringify(current_state.to_dict()))
+	Global.saved_state = current_state
 
 
-func save_game(current_level: Level, current_state: State):
-	level = current_level
-	state = current_state
-	var save_game_file = FileAccess.open("user://game.save", FileAccess.WRITE)
-	(
-		save_game_file
-		. store_line(
-			(
-				JSON
-				. stringify(
-					{
-						"level": current_level.to_dict(),
-						"state": current_state.to_dict(),
-					}
-				)
-			)
-		)
-	)
-
-
-func save_progress():
-	var save_progress_file = FileAccess.open("user://progress.save", FileAccess.WRITE)
-	save_progress_file.store_line(JSON.stringify(progress))
+func load_state():
+	var state_save_file = FileAccess.open(STATE_SAVE_PATH, FileAccess.READ)
+	if state_save_file:
+		saved_state = State.from_dict(JSON.parse_string(state_save_file.get_line()))
 
 
 func reset_save():

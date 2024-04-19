@@ -1,36 +1,39 @@
 @tool
-extends Control
+class_name LevelButton
+extends VBoxContainer
 
 signal pressed
+
 enum Status { ACTIVE, LOCKED, COMPLETED }
 
-@export var texture_button: TextureButton
-@export var label: Label
-@export var texture_active: CompressedTexture2D
-@export var texture_locked: CompressedTexture2D:
-	set(texture):
-		texture_locked = texture
-@export var texture_complete: CompressedTexture2D
+@onready var texture_button: TextureButton = $TextureButton
+@onready var label: Label = $Label
+@onready var icon_label: Label = $TextureButton/Label
+
 @export var text: String = "Name":
 	set(new_text):
 		text = new_text
 		label.set_text(text)
+@export var icon_text: String = "字":
+	set(new_text):
+		icon_text = new_text
+		icon_label.set_text(icon_text)
 @export var status: Status = Status.ACTIVE:
 	set(value):
 		if value == Status.ACTIVE:
 			texture_button.disabled = false
-			texture_button.texture_normal = texture_active
+			texture_button.texture_normal.region.position.x = 384 if has_save else 256
 		elif value == Status.LOCKED:
 			texture_button.disabled = true
-			texture_button.texture_disabled = texture_locked
 		else:
 			texture_button.disabled = false
-			texture_button.texture_normal = texture_complete
+			texture_button.texture_normal.region.position.x = 128 if has_save else 0
 		status = value
 @export var has_save: bool = false:
 	set(value):
-		$TextureRect.visible = value
+		print(value)
 		has_save = value
+		status = status
 
 
 func _ready():

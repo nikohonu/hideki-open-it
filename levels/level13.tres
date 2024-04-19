@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Level" load_steps=2 format=3 uid="uid://rsxpvimm54bo"]
+
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_4u1ev"]
+
+[resource]
+script = ExtResource("1_4u1ev")
+name = "Wandering Blades"
+background_path = "res://backgrounds/pexels-abby-chung-1045615.webp"
+music_path = "res://music/Yugen-Emotional-Ethnic-Music(chosic.com).mp3"
+ai = Array[int]([0, 12])

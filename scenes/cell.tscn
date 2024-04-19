@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dhlnmntmf64si" path="res://sprites/green_cell_face.png" id="2_2brt8"]
 [ext_resource type="FontFile" uid="uid://ca3255aseygbu" path="res://fonts/Shantell_Sans/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf" id="2_qlotu"]
 [ext_resource type="Texture2D" uid="uid://dipmm2bn0610v" path="res://sprites/green_cell.png" id="3_1hc5t"]
-[ext_resource type="Script" path="res://scripts/cell.gd" id="4_n4nyt"]
+[ext_resource type="Script" path="res://scripts/game/cell.gd" id="4_n4nyt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5qsm3"]
 resource_local_to_scene = true

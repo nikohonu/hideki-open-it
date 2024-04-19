@@ -2,6 +2,7 @@ class_name State
 extends Resource
 
 signal game_ended(winner)
+signal state_changed(changed_state)
 
 enum {PLAYER1, PLAYER2}
 
@@ -43,17 +44,6 @@ func is_possible_move(coords: Vector2i):
 	return map[coords.y][coords.x] != 0
 
 
-func check_end():
-	var total = 0
-	if turn == PLAYER1:
-		for x in range(MAP_SIZE):
-			total += 1 if map[cursor.y][x] != 0 else 0
-	else:
-		for y in range(MAP_SIZE):
-			total += 1 if map[y][cursor.x] != 0 else 0
-	return total == 0
-
-
 func calc_winner():
 	if scores[PLAYER1] == scores[PLAYER2]:
 		return -1
@@ -61,17 +51,18 @@ func calc_winner():
 		return PLAYER1 if scores[PLAYER1] > scores[PLAYER2] else PLAYER2
 
 
-func select(coords: Vector2i):
-	cursor = coords
-	scores[turn] += map[coords.y][coords.x]
-	map[coords.y][coords.x] = 0
+func select(cell_coords: Vector2i):
+	cursor = cell_coords
+	scores[turn] += map[cursor.y][cursor.x]
+	map[cursor.y][cursor.x] = 0
 	if turn == PLAYER1:
 		turn = PLAYER2
 	else:
 		turn = PLAYER1
+	step += 1
+	state_changed.emit(self)
 	if possible_move_count() == 0:
 		game_ended.emit(calc_winner())
-	step += 1
 
 
 func to_dict():

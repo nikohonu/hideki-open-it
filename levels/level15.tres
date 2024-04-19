@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Level" load_steps=2 format=3 uid="uid://xl627c4rtkfe"]
+
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_rijkv"]
+
+[resource]
+script = ExtResource("1_rijkv")
+name = "Samurai's Solitude"
+background_path = "res://backgrounds/pexels-abby-chung-1045615.webp"
+music_path = "res://music/Yugen-Emotional-Ethnic-Music(chosic.com).mp3"
+ai = Array[int]([0, 14])
