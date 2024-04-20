@@ -8,16 +8,11 @@ func _input(event):
 	if event.is_action_pressed("test"):
 		visible = !visible
 	if game:
+		var result = 0 if Global.current_level % 2 == 0 else 1
 		if event.is_action_pressed("win"):
-			if Global.current_level % 2 == 0:
-				game.state.game_ended.emit(1)
-			else:
-				game.state.game_ended.emit(0)
+			game.state.game_ended.emit(result)
 		if event.is_action_pressed("lose"):
-			if Global.current_level % 2 == 0:
-				game.state.game_ended.emit(0)
-			else:
-				game.state.game_ended.emit(1)
+			game.state.game_ended.emit(1 - result)
 
 
 func _on_reset_progress_pressed():

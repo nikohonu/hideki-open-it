@@ -2,6 +2,7 @@ class_name UI
 extends Control
 
 @export var game: Game
+@export var panel: PanelContainer
 
 
 func _ready() -> void:
@@ -45,3 +46,25 @@ func _on_restart_pressed() -> void:
 
 func _on_next_level_pressed() -> void:
 	game.next_level()
+
+
+func _on_choose_level_pressed() -> void:
+	game.back()
+
+
+func _on_change_settings_pressed() -> void:
+	game.back(true)
+
+
+func _on_game_game_ended(winner: int, is_player_win: bool) -> void:
+	panel.visible = true
+	if Global.current_level == len(Global.levels):
+		$Panel/MarginContainer/Win/HBoxContainer/NextLevel.visible = false
+	if Global.current_level == -1:
+		$Panel/MarginContainer/Custom/Label.set_text("Players %s win!" % (winner + 1))
+		$Panel/MarginContainer/Custom.visible = true
+		return
+	if is_player_win:
+		$Panel/MarginContainer/Win.visible = true
+	else:
+		$Panel/MarginContainer/Lose.visible = true

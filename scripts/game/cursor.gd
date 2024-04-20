@@ -105,3 +105,7 @@ func _on_timer_timeout():
 func _on_map_turn_changed():
 	if game.level.ai[game.state.turn] > 0 or game.state.possible_move_count() == 1:
 		_ai_move()
+
+
+func _on_game_game_ended(winner: int, _is_player_win: bool) -> void:
+	can_move = false

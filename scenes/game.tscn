@@ -151,7 +151,7 @@ sprite_frames = SubResource("SpriteFrames_obeph")
 autoplay = "default"
 speed_scale = 0.5
 
-[node name="UI" type="Control" parent="." node_paths=PackedStringArray("game")]
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("game", "panel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -160,6 +160,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("6_abnrh")
 game = NodePath("..")
+panel = NodePath("Panel")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI"]
 layout_mode = 1
@@ -195,7 +196,7 @@ text = "Player 1 Score:"
 layout_mode = 2
 text = "Player 2 Score:"
 
-[node name="PanelContainer" type="PanelContainer" parent="UI"]
+[node name="Panel" type="PanelContainer" parent="UI"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -210,73 +211,74 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Panel"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="Win" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer"]
+[node name="Win" type="VBoxContainer" parent="UI/Panel/MarginContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="UI/PanelContainer/MarginContainer/Win"]
+[node name="Label" type="Label" parent="UI/Panel/MarginContainer/Win"]
 layout_mode = 2
 text = "You win!"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/Win"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/MarginContainer/Win"]
 layout_mode = 2
 
-[node name="ChooseLevel" type="Button" parent="UI/PanelContainer/MarginContainer/Win/HBoxContainer"]
+[node name="ChooseLevel" type="Button" parent="UI/Panel/MarginContainer/Win/HBoxContainer"]
 layout_mode = 2
 text = "Choose level"
 
-[node name="NextLevel" type="Button" parent="UI/PanelContainer/MarginContainer/Win/HBoxContainer"]
+[node name="NextLevel" type="Button" parent="UI/Panel/MarginContainer/Win/HBoxContainer"]
 layout_mode = 2
 text = "Next level"
 
-[node name="Lose" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer"]
+[node name="Lose" type="VBoxContainer" parent="UI/Panel/MarginContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="UI/PanelContainer/MarginContainer/Lose"]
+[node name="Label" type="Label" parent="UI/Panel/MarginContainer/Lose"]
 layout_mode = 2
 text = "You lose!"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/Lose"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/MarginContainer/Lose"]
 layout_mode = 2
 
-[node name="ChooseLevel" type="Button" parent="UI/PanelContainer/MarginContainer/Lose/HBoxContainer"]
+[node name="ChooseLevel" type="Button" parent="UI/Panel/MarginContainer/Lose/HBoxContainer"]
 layout_mode = 2
 text = "Choose level"
 
-[node name="Restart" type="Button" parent="UI/PanelContainer/MarginContainer/Lose/HBoxContainer"]
+[node name="Restart" type="Button" parent="UI/Panel/MarginContainer/Lose/HBoxContainer"]
 layout_mode = 2
 text = "Restart"
 
-[node name="Custom" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer"]
+[node name="Custom" type="VBoxContainer" parent="UI/Panel/MarginContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="UI/PanelContainer/MarginContainer/Custom"]
+[node name="Label" type="Label" parent="UI/Panel/MarginContainer/Custom"]
 layout_mode = 2
 text = "Players %s win!"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/Custom"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/MarginContainer/Custom"]
 layout_mode = 2
 
-[node name="ChangeSettings" type="Button" parent="UI/PanelContainer/MarginContainer/Custom/HBoxContainer"]
+[node name="ChangeSettings" type="Button" parent="UI/Panel/MarginContainer/Custom/HBoxContainer"]
 layout_mode = 2
 text = "Change settings"
 
-[node name="Restart" type="Button" parent="UI/PanelContainer/MarginContainer/Custom/HBoxContainer"]
+[node name="Restart" type="Button" parent="UI/Panel/MarginContainer/Custom/HBoxContainer"]
 layout_mode = 2
 text = "Restart"
 
+[connection signal="game_ended" from="." to="Map/Cursor" method="_on_game_game_ended"]
+[connection signal="game_ended" from="." to="UI" method="_on_game_game_ended"]
 [connection signal="state_changed" from="." to="UI" method="_on_game_state_changed"]
-[connection signal="finished" from="Audio/Music" to="." method="_on_audio_stream_player_finished"]
 [connection signal="finished" from="Audio/Music" to="Audio" method="_on_music_finished"]
 [connection signal="turn_changed" from="Map" to="Map/Cursor" method="_on_map_turn_changed"]
 [connection signal="cell_selected" from="Map/Cursor" to="." method="_on_cursor_cell_selected"]
@@ -284,9 +286,9 @@ text = "Restart"
 [connection signal="timeout" from="Map/Cursor/Timer" to="Map/Cursor" method="_on_timer_timeout"]
 [connection signal="pressed" from="UI/VBoxContainer/Back" to="UI" method="_on_back_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Win/HBoxContainer/ChooseLevel" to="." method="_on_choose_level_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Win/HBoxContainer/NextLevel" to="UI" method="_on_next_level_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Lose/HBoxContainer/ChooseLevel" to="UI" method="_on_back_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Lose/HBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Custom/HBoxContainer/ChangeSettings" to="." method="_on_change_settings_pressed"]
-[connection signal="pressed" from="UI/PanelContainer/MarginContainer/Custom/HBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/Win/HBoxContainer/ChooseLevel" to="UI" method="_on_choose_level_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/Win/HBoxContainer/NextLevel" to="UI" method="_on_next_level_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/Lose/HBoxContainer/ChooseLevel" to="UI" method="_on_choose_level_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/Lose/HBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/Custom/HBoxContainer/ChangeSettings" to="UI" method="_on_change_settings_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/Custom/HBoxContainer/Restart" to="UI" method="_on_restart_pressed"]

@@ -1,16 +1,12 @@
 class_name Game
 extends Node3D
 
+
 signal state_changed(new_state: State)
-signal game_ended(winner: int)
+signal game_ended(winner: int, is_player_win: bool)
 
-var ai = []
-var state: State = null
-
-@onready var cursor = $Map/Cursor
-@onready var level: Level
-@onready var map: Map = %Map
-@onready var ui: UI = $UI
+var state: State
+var level: Level
 
 
 func _ready():
@@ -24,7 +20,6 @@ func _ready():
 		level = Global.levels[Global.current_level]
 	state.game_ended.connect(_on_state_game_ended)
 	state.state_changed.connect(_on_state_changed)
-	
 
 
 func restart():
@@ -37,18 +32,11 @@ func next_level():
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
-func _on_choose_level_pressed():
-	get_tree().change_scene_to_file("res://scenes/level_selection.tscn")
-
-
-func _on_change_settings_pressed():
-	Global.level = Global.prev_level
-	Global.state = Global.prev_state
-	get_tree().change_scene_to_file("res://scenes/custom.tscn")
-
-
-func _on_cursor_cell_selected(coords: Vector2i) -> void:
-	state.select(coords)
+func back(custom = false):
+	if custom:
+		get_tree().change_scene_to_file("res://scenes/custom.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/level_selection.tscn")
 
 
 func _on_state_changed(new_state):
@@ -56,30 +44,13 @@ func _on_state_changed(new_state):
 
 
 func _on_state_game_ended(winner):
-	game_ended.emit(winner)
-	cursor.can_move = false
-	$UI/PanelContainer.visible = true
-	if Global.current_level == len(Global.levels):
-		$UI/PanelContainer/MarginContainer/Win/HBoxContainer/NextLevel.visible = false
-	if Global.current_level >= 0:
-		if Global.current_level % 2 == 0:
-			if winner == 1:
-				_mark_complete()
-				$UI/PanelContainer/MarginContainer/Win.visible = true
-			else:
-				$UI/PanelContainer/MarginContainer/Lose.visible = true
-		else:
-			if winner == 0:
-				_mark_complete()
-				$UI/PanelContainer/MarginContainer/Win.visible = true
-			else:
-				$UI/PanelContainer/MarginContainer/Lose.visible = true
-	else:
-		$UI/PanelContainer/MarginContainer/Custom/Label.set_text("Players %s win!" % (winner + 1))
-		$UI/PanelContainer/MarginContainer/Custom.visible = true
+	var is_player_win =  level.ai[winner] == 0
+	game_ended.emit(winner, is_player_win)
+	if Global.current_level >= 0 and is_player_win:
+		if Global.current_level == Global.progress:
+			Global.progress += 1
+			Global.save_game()
 
 
-func _mark_complete():
-	if Global.current_level == Global.progress:
-		Global.progress += 1
-		Global.save_game()
+func _on_cursor_cell_selected(coords: Vector2i) -> void:
+	state.select(coords)
