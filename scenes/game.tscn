@@ -280,7 +280,7 @@ text = "Restart"
 [connection signal="game_ended" from="." to="UI" method="_on_game_game_ended"]
 [connection signal="state_changed" from="." to="UI" method="_on_game_state_changed"]
 [connection signal="finished" from="Audio/Music" to="Audio" method="_on_music_finished"]
-[connection signal="turn_changed" from="Map" to="Map/Cursor" method="_on_map_turn_changed"]
+[connection signal="cell_animation_finished" from="Map" to="Map/Cursor" method="_on_map_cell_animation_finished"]
 [connection signal="cell_selected" from="Map/Cursor" to="." method="_on_cursor_cell_selected"]
 [connection signal="cell_selected" from="Map/Cursor" to="Map" method="_on_cursor_cell_selected"]
 [connection signal="timeout" from="Map/Cursor/Timer" to="Map/Cursor" method="_on_timer_timeout"]

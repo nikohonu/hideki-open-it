@@ -19,6 +19,7 @@ var coords = null
 
 func _ready():
 	await game.ready
+	await map.ready
 	coords = game.state.cursor
 	position = map.coordinates_2d_to_3d(coords, 0.5)
 	if game.level.ai[game.state.turn] > 0:
@@ -102,10 +103,13 @@ func _on_timer_timeout():
 		can_move = true
 
 
-func _on_map_turn_changed():
-	if game.level.ai[game.state.turn] > 0 or game.state.possible_move_count() == 1:
-		_ai_move()
-
-
 func _on_game_game_ended(winner: int, _is_player_win: bool) -> void:
 	can_move = false
+
+
+func _on_map_cell_animation_finished() -> void:
+	visible = true
+	if game.level.ai[game.state.turn] > 0 or game.state.possible_move_count() == 1:
+		_ai_move()
+	else:
+		can_move = true
