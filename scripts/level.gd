@@ -12,9 +12,11 @@ static func from_parameters(_name: String, _background_path: String, _music_path
 	level.name = _name
 	level.background_path = _background_path
 	level.music_path = _music_path
-	level.ai = _ai
+	level.ai[0] = _ai[0]
+	level.ai[1] = _ai[1]
 	return level
-	
+
+
 static func from_dict(dict: Dictionary):
 	if dict.has("path"):
 		return load(dict["path"])

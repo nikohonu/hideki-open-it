@@ -16,8 +16,7 @@ func _ready():
 		Global.should_load_saved_state = false
 	else:
 		state = State.new()
-	if Global.current_level >= 0:
-		level = Global.levels[Global.current_level]
+	level = Global.load_level()
 	state.game_ended.connect(_on_state_game_ended)
 	state.selected.connect(_on_state_changed)
 
@@ -40,7 +39,7 @@ func back():
 			Global.save_state(state)
 			Global.saved_level = Global.current_level
 			Global.save_game()
-		get_tree().change_scene_to_file("res://scenes/level_selection.tscn")
+		get_tree().change_scene_to_file("res://scenes/level_selection/level_selection.tscn")
 
 
 func _on_state_changed(new_state):

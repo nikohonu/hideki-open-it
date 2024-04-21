@@ -24,13 +24,18 @@ const levels: Array[Level] = [
 	preload("res://levels/level18.tres"),
 ]
 
-
 var progress: int = 0
 var saved_level: int = -1
 var saved_state: State = null
 var should_load_saved_state: bool = false
-
 var current_level: int = -1
+var custom_level: Level
+var custom = {
+	"background_index": 0,
+	"music_index": 0,
+	"ai1": 0,
+	"ai2": 0,
+}
 
 
 func _ready():
@@ -84,3 +89,10 @@ func is_custom_level():
 
 func coordinates_2d_to_3d(coordinates: Vector2i, z = 0.0):
 	return Vector3(coordinates.x - 3.5, 3.5 - coordinates.y, z)
+
+
+func load_level():
+	if is_custom_level():
+		return custom_level
+	else:
+		return Global.levels[Global.current_level]

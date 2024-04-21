@@ -33,9 +33,6 @@ func _ready() -> void:
 	ready.emit()
 
 
-
-
-
 func _highlight_possible_moves():
 	var center = Vector2i(get_viewport().size / 2)
 	var cursor = game.state.cursor

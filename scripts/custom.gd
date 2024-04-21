@@ -1,109 +1,115 @@
 extends MarginContainer
 
-@export var backgrounds: Array[Texture2D]
-@export var music: Array[AudioStreamMP3]
-
-var current_background_index: int = 0
-var current_music_index: int = 0
-var current_player_1: int = Level.PlayerType.HUMAN
-var current_player_2: int = Level.PlayerType.HUMAN
-
-@onready var music_dict = {
-	"res://music/Yugen-Emotional-Ethnic-Music(chosic.com).mp3": "Yugen Emotional Ethnic Music",
-	"res://music/yoitrax-ronin(chosic.com).mp3": "Yoitrax Ronin",
-	"res://music/PerituneMaterial_Sakuya(chosic.com).mp3": "Sakuya",
-	"res://music/PerituneMaterial_Sakuya2(chosic.com).mp3": "Sakuya 2",
-	"res://music/PerituneMaterial_Sakuya3(chosic.com).mp3": "Sakuya 3",
+const MAX_AI = 18
+const BACKGROUNDS = {
+	"Background 1": "pexels-abby-chung-1045615.webp",
+	"Background 2": "pexels-casia-charlie-2425464.webp",
+	"Background 3": "pexels-dsd-1829980.webp",
+	"Background 4": "pexels-evgeny-tchebotarev-2235302.webp",
+	"Background 5": "pexels-leeloo-the-first-5236398.webp",
+	"Background 6": "pexels-matt-hardy-2031687.webp",
+	"Background 7": "pexels-ryutaro-tsukata-5745864.webp",
+	"Background 8": "pexels-ryutaro-tsukata-6249546.webp",
+	"Background 9": "pexels-sunil-poudel-2758567.webp",
+	"Background 10": "pexels-tomáš-malík-3408353.webp",
 }
+const MUSIC = {
+	"Yugen Emotional Ethnic Music": "Yugen-Emotional-Ethnic-Music(chosic.com).mp3",
+	"Yoitrax Ronin": "yoitrax-ronin(chosic.com).mp3",
+	"Sakuya": "PerituneMaterial_Sakuya(chosic.com).mp3",
+	"Sakuya 2": "PerituneMaterial_Sakuya2(chosic.com).mp3",
+	"Sakuya 3": "PerituneMaterial_Sakuya3(chosic.com).mp3",
+}
+
+@export var music: AudioStreamPlayer
+@export var background: TextureRect
+
+@export var background_label: Label
+@export var label_ai1: Label
+@export var label_ai2: Label
+@export var music_label: Label
+
+var background_index: int:
+	set(index):
+		background.texture = load("res://backgrounds/" + BACKGROUNDS.values()[index])
+		background_label.set_text(BACKGROUNDS.keys()[index])
+		Global.custom.background_index = index
+		background_index = index
+var ai1: int:
+	set(ai):
+		label_ai1.set_text(ai_to_str(ai))
+		Global.custom.ai1 = ai
+		ai1 = ai
+var ai2: int:
+	set(ai):
+		label_ai2.set_text(ai_to_str(ai))
+		Global.custom.ai2 = ai
+		ai2 = ai
+var music_index: int:
+	set(index):
+		music.stream = load("res://music/" + MUSIC.values()[index])
+		music.play()
+		music_label.set_text(MUSIC.keys()[index])
+		Global.custom.music_index = index
+		music_index = index
 
 
 func _ready():
-	%AudioStreamPlayer.stream = music[0]
-	%AudioStreamPlayer.play()
+	background_index = Global.custom.background_index
+	music_index = Global.custom.music_index
+	ai1 = Global.custom.ai1
+	ai2 = Global.custom.ai2
 
 
-func _on_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+func ai_to_str(ai: int):
+	if ai == 0:
+		return "Human"
+	else:
+		return "AI - %s" % ai
 
 
 func _on_prev_background_pressed():
-	current_background_index = max(current_background_index - 1, 0)
-	%Background.texture = backgrounds[current_background_index]
+	background_index = wrap(background_index - 1, 0, len(BACKGROUNDS))
 
 
 func _on_next_background_pressed():
-	current_background_index = min(current_background_index + 1, len(backgrounds) - 1)
-	%Background.texture = backgrounds[current_background_index]
+	background_index = wrap(background_index + 1, 0, len(BACKGROUNDS))
 
 
-func int_to_str_player(player: int):
-	var player_type = Level.PlayerType.keys()[player]
-	match player_type:
-		"HUMAN":
-			return "Human"
-		"AI_EASY":
-			return "AI Easy"
-		"AI_MEDIUM":
-			return "AI Medium"
-		"AI_HARD":
-			return "AI Hard"
-		"AI_EXPERT":
-			return "AI Expert"
+func _on_prev_ai_1_pressed():
+	ai1 = wrap(ai1 - 2, 0, MAX_AI)
 
 
-func _on_prev_player_1_pressed():
-	current_player_1 = max(current_player_1 - 1, 0)
-	%LabelPlayer1State.set_text(int_to_str_player(current_player_1))
+func _on_next_ai_1_pressed():
+	ai1 = wrap(ai1 + 2, 0, MAX_AI)
 
 
-func _on_next_player_1_pressed():
-	current_player_1 = min(current_player_1 + 1, 4)
-	%LabelPlayer1State.set_text(int_to_str_player(current_player_1))
+func _on_prev_ai_2_pressed():
+	ai2 = wrap(ai2 - 2, 0, MAX_AI)
 
 
-func _on_prev_player_2_pressed():
-	current_player_2 = max(current_player_2 - 1, 0)
-	%LabelPlayer2State.set_text(int_to_str_player(current_player_2))
-
-
-func _on_next_player_2_pressed():
-	current_player_2 = min(current_player_2 + 1, 4)
-	%LabelPlayer2State.set_text(int_to_str_player(current_player_2))
+func _on_next_ai_2_pressed():
+	ai2 = wrap(ai2 + 2, 0, MAX_AI)
 
 
 func _on_prev_music_pressed():
-	current_music_index = max(current_music_index - 1, 0)
-	%LabelMusicState.set_text(music_dict[music[current_music_index].get_path()])
-	%AudioStreamPlayer.stream = music[current_music_index]
-	%AudioStreamPlayer.play()
+	music_index = wrap(music_index - 1, 0, len(MUSIC))
 
 
 func _on_next_music_pressed():
-	current_music_index = min(current_music_index + 1, len(music) - 1)
-	%LabelMusicState.set_text(music_dict[music[current_music_index].get_path()])
-	%AudioStreamPlayer.stream = music[current_music_index]
-	%AudioStreamPlayer.play()
+	music_index = wrap(music_index + 1, 0, len(MUSIC))
 
 
 func _on_start_pressed():
-	var player_type_1 = Level.PlayerType.keys()[current_player_1]
-	var player_type_2 = Level.PlayerType.keys()[current_player_2]
-	var level = (
-		Level
-		. load_custom(
-			backgrounds[current_background_index].get_path(),
-			Level.PlayerType.get(player_type_1),
-			Level.PlayerType.get(player_type_2),
-			music[current_music_index].get_path(),
-			"Custom",
-		)
+	Global.custom_level =  Level.from_parameters(
+		"Custom",
+		"res://backgrounds/" + BACKGROUNDS.values()[background_index],
+		"res://music/" + MUSIC.values()[music_index],
+		[ai1, ai2],
 	)
-	Global.prev_level = Global.level
-	Global.prev_state = Global.state
-	Global.level = level
-	Global.state = null
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	Global.current_level = -1
+	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 
 
-func _on_back_pressed():
+func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
