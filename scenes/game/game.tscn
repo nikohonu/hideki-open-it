@@ -287,11 +287,12 @@ text = "Change settings"
 layout_mode = 2
 text = "Restart"
 
+[connection signal="ended" from="." to="Map" method="_on_game_ended"]
 [connection signal="ended" from="." to="Map/Cursor" method="_on_game_ended"]
-[connection signal="ended" from="." to="UI" method="_on_game_ended"]
 [connection signal="state_changed" from="." to="UI" method="_on_game_state_changed"]
 [connection signal="finished" from="Audio/Music" to="Audio" method="_on_music_finished"]
 [connection signal="cell_animation_finished" from="Map" to="Map/Cursor" method="_on_map_cell_animation_finished"]
+[connection signal="opened" from="Map" to="UI" method="_on_map_opened"]
 [connection signal="cell_selected" from="Map/Cursor" to="." method="_on_cursor_cell_selected"]
 [connection signal="cell_selected" from="Map/Cursor" to="Audio" method="_on_cursor_cell_selected"]
 [connection signal="cell_selected" from="Map/Cursor" to="Map" method="_on_cursor_cell_selected"]

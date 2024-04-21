@@ -10,7 +10,7 @@ signal moved
 @export var map: Map
 @export var timer: Timer
 
-var can_move = true
+var can_move := true
 var coords = null
 
 
@@ -94,3 +94,4 @@ func _on_map_cell_animation_finished() -> void:
 
 func _on_game_ended(_winner: int, _is_player_win: bool) -> void:
 	can_move = false
+	visible = false

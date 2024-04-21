@@ -16,6 +16,7 @@ var texture_red = preload("res://sprites/game/red_cell.png")
 var texture_red_active = preload("res://sprites/game/red_cell_active.png")
 var temture_red_face = preload("res://sprites/game/red_cell_face.png")
 
+var selected = false
 var value: int:
 	set(_value):
 		value = _value
@@ -54,6 +55,7 @@ func setup(coords, setup_value, texture_backgroun, ratio):
 
 
 func select(fast: bool = false):
+	selected = true
 	if fast:
 		rotate_x(PI)
 		return

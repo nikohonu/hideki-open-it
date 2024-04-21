@@ -3,6 +3,7 @@ extends Node3D
 
 
 signal cell_animation_finished
+signal opened(winner: int, is_player_win: bool)
 
 @export var game: Game
 @export var arrows: Array[AnimatedSprite2D]
@@ -71,3 +72,17 @@ func _on_cell_animation_finished():
 
 func _on_cursor_cell_selected(coords: Vector2i) -> void:
 	cells[coords].select()
+
+
+func _on_game_ended(winner: int, is_player_win: bool) -> void:
+	for y in range(State.MAP_SIZE):
+		for x in range(State.MAP_SIZE):
+			var coords = Vector2i(x, y)
+			if not cells[coords].selected:
+				cells[coords].animation_finished.disconnect(_on_cell_animation_finished)
+				# uncomment in release
+				#cells[coords].select()
+				#await cells[coords].timer.timeout
+				# comment in release
+				cells[coords].select(true)
+	opened.emit(winner, is_player_win)

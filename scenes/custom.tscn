@@ -21,7 +21,7 @@ label_ai1 = NodePath("VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxCo
 label_ai2 = NodePath("VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/LabelAI2State")
 music_label = NodePath("VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/LabelMusicState")
 
-[node name="Background2" type="TextureRect" parent="."]
+[node name="Board" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(768, 768)
 layout_mode = 2
 size_flags_horizontal = 4

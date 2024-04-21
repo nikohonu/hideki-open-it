@@ -1,4 +1,4 @@
-extends Control
+extends Control # need refectoring 
 
 var overwrite_level: int
 
@@ -6,7 +6,7 @@ var overwrite_level: int
 
 
 func _ready():
-	if Global.saved_state != null:
+	if Global.saved_level != -1:
 		level_buttons[Global.saved_level].has_save = true
 	var level_count = len(Global.levels)
 	for i in range(level_count):

@@ -1,4 +1,4 @@
-extends Node
+extends Node # need refectoring 
 
 const STATE_SAVE_PATH = "user://state.json"
 const GAME_SAVE_PATH = "user://save.dat"

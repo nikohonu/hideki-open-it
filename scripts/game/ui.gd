@@ -51,9 +51,9 @@ func _on_next_level_pressed() -> void:
 	game.next_level()
 
 
-func _on_game_ended(winner: int, is_player_win: bool) -> void:
+func _on_map_opened(winner: int, is_player_win: bool) -> void:
 	panel.visible = true
-	if Global.current_level == len(Global.levels):
+	if Global.current_level == len(Global.levels) - 1:
 		next_level_button.visible = false
 	if Global.current_level == -1:
 		custom_result_label.set_text("Players %s win!" % (winner + 1))
