@@ -17,7 +17,7 @@ func _input(event):
 
 func _on_reset_progress_pressed():
 	Global.progress = 0
-	Global.save_progress()
+	Global.save_game()
 
 
 func _on_reset_state_pressed():

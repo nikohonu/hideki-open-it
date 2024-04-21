@@ -153,7 +153,7 @@ sprite_frames = SubResource("SpriteFrames_obeph")
 autoplay = "default"
 speed_scale = 0.5
 
-[node name="UI" type="Control" parent="." node_paths=PackedStringArray("game", "panel")]
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("game", "panel", "level_name_label", "turn_label", "player1_score_label", "player2_score_label", "win_message", "lose_message", "custom_message", "custom_result_label", "next_level_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -163,6 +163,15 @@ grow_vertical = 2
 script = ExtResource("6_abnrh")
 game = NodePath("..")
 panel = NodePath("Panel")
+level_name_label = NodePath("VBoxContainer/Level")
+turn_label = NodePath("VBoxContainer/Turn")
+player1_score_label = NodePath("VBoxContainer/Player1Score")
+player2_score_label = NodePath("VBoxContainer/Player2Score")
+win_message = NodePath("Panel/MarginContainer/Win")
+lose_message = NodePath("Panel/MarginContainer/Lose")
+custom_message = NodePath("Panel/MarginContainer/Custom")
+custom_result_label = NodePath("Panel/MarginContainer/Custom/Label")
+next_level_button = NodePath("Panel/MarginContainer/Win/HBoxContainer/NextLevel")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI"]
 layout_mode = 1
@@ -232,7 +241,7 @@ horizontal_alignment = 1
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/MarginContainer/Win"]
 layout_mode = 2
 
-[node name="ChooseLevel" type="Button" parent="UI/Panel/MarginContainer/Win/HBoxContainer"]
+[node name="Back" type="Button" parent="UI/Panel/MarginContainer/Win/HBoxContainer"]
 layout_mode = 2
 text = "Choose level"
 
@@ -251,7 +260,7 @@ text = "You lose!"
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/MarginContainer/Lose"]
 layout_mode = 2
 
-[node name="ChooseLevel" type="Button" parent="UI/Panel/MarginContainer/Lose/HBoxContainer"]
+[node name="Back" type="Button" parent="UI/Panel/MarginContainer/Lose/HBoxContainer"]
 layout_mode = 2
 text = "Choose level"
 
@@ -270,7 +279,7 @@ text = "Players %s win!"
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/MarginContainer/Custom"]
 layout_mode = 2
 
-[node name="ChangeSettings" type="Button" parent="UI/Panel/MarginContainer/Custom/HBoxContainer"]
+[node name="Back" type="Button" parent="UI/Panel/MarginContainer/Custom/HBoxContainer"]
 layout_mode = 2
 text = "Change settings"
 
@@ -278,20 +287,20 @@ text = "Change settings"
 layout_mode = 2
 text = "Restart"
 
-[connection signal="game_ended" from="." to="Map/Cursor" method="_on_game_game_ended"]
-[connection signal="game_ended" from="." to="UI" method="_on_game_game_ended"]
+[connection signal="ended" from="." to="Map/Cursor" method="_on_game_ended"]
+[connection signal="ended" from="." to="UI" method="_on_game_ended"]
 [connection signal="state_changed" from="." to="UI" method="_on_game_state_changed"]
 [connection signal="finished" from="Audio/Music" to="Audio" method="_on_music_finished"]
 [connection signal="cell_animation_finished" from="Map" to="Map/Cursor" method="_on_map_cell_animation_finished"]
 [connection signal="cell_selected" from="Map/Cursor" to="." method="_on_cursor_cell_selected"]
 [connection signal="cell_selected" from="Map/Cursor" to="Audio" method="_on_cursor_cell_selected"]
 [connection signal="cell_selected" from="Map/Cursor" to="Map" method="_on_cursor_cell_selected"]
-[connection signal="cursor_moved" from="Map/Cursor" to="Audio" method="_on_cursor_cursor_moved"]
+[connection signal="moved" from="Map/Cursor" to="Audio" method="_on_cursor_moved"]
 [connection signal="pressed" from="UI/VBoxContainer/Back" to="UI" method="_on_back_pressed"]
 [connection signal="pressed" from="UI/VBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
-[connection signal="pressed" from="UI/Panel/MarginContainer/Win/HBoxContainer/ChooseLevel" to="UI" method="_on_choose_level_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/Win/HBoxContainer/Back" to="UI" method="_on_back_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/Win/HBoxContainer/NextLevel" to="UI" method="_on_next_level_pressed"]
-[connection signal="pressed" from="UI/Panel/MarginContainer/Lose/HBoxContainer/ChooseLevel" to="UI" method="_on_choose_level_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/Lose/HBoxContainer/Back" to="UI" method="_on_back_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/Lose/HBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
-[connection signal="pressed" from="UI/Panel/MarginContainer/Custom/HBoxContainer/ChangeSettings" to="UI" method="_on_change_settings_pressed"]
+[connection signal="pressed" from="UI/Panel/MarginContainer/Custom/HBoxContainer/Back" to="UI" method="_on_back_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/Custom/HBoxContainer/Restart" to="UI" method="_on_restart_pressed"]

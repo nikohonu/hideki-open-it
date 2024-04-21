@@ -3,7 +3,7 @@ extends Node3D
 
 
 signal state_changed(new_state: State)
-signal game_ended(winner: int, is_player_win: bool)
+signal ended(winner: int, is_player_win: bool)
 
 var state: State
 var level: Level
@@ -32,10 +32,14 @@ func next_level():
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 
 
-func back(custom = false):
-	if custom:
+func back():
+	if Global.is_custom_level():
 		get_tree().change_scene_to_file("res://scenes/custom.tscn")
 	else:
+		if state.possible_move_count() > 0:
+			Global.save_state(state)
+			Global.saved_level = Global.current_level
+			Global.save_game()
 		get_tree().change_scene_to_file("res://scenes/level_selection.tscn")
 
 
@@ -45,7 +49,7 @@ func _on_state_changed(new_state):
 
 func _on_state_game_ended(winner):
 	var is_player_win =  level.ai[winner] == 0
-	game_ended.emit(winner, is_player_win)
+	ended.emit(winner, is_player_win)
 	if Global.current_level >= 0 and is_player_win:
 		if Global.current_level == Global.progress:
 			Global.progress += 1

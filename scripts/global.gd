@@ -76,3 +76,7 @@ func load_state():
 func reset_save():
 	OS.move_to_trash(ProjectSettings.globalize_path(Global.GAME_SAVE_PATH))
 	Global.state = null
+
+
+func is_custom_level():
+	return Global.current_level == -1 

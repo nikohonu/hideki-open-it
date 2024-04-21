@@ -18,7 +18,7 @@ func _on_music_finished() -> void:
 	music.play()
 
 
-func _on_cursor_cursor_moved() -> void:
+func _on_cursor_moved() -> void:
 	move.stop()
 	move.play()
 

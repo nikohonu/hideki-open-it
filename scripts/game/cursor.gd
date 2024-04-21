@@ -1,8 +1,9 @@
 class_name Cursor
 extends AnimatedSprite3D
 
+
 signal cell_selected(coords: Vector2i)
-signal cursor_moved
+signal moved
 
 enum { PLAYER1, PLAYER2 }
 
@@ -50,7 +51,7 @@ func _move(destination: Vector2i, select_cell: bool = false):
 	var move = func():
 		timer.start()
 		position = map.coordinates_2d_to_3d(coords, 0.5)
-		cursor_moved.emit()
+		moved.emit()
 		await timer.timeout
 	if destination.x > 7 or destination.x < 0 or destination.y > 7 or destination.y < 0:
 		return false
@@ -83,13 +84,13 @@ func _ai_move():
 	_move(ai.calc(game.state, game.level.ai[game.state.turn]), true)
 
 
-func _on_game_game_ended(winner: int, _is_player_win: bool) -> void:
-	can_move = false
-
-
 func _on_map_cell_animation_finished() -> void:
 	visible = true
 	if game.level.ai[game.state.turn] > 0 or game.state.possible_move_count() == 1:
 		_ai_move()
 	else:
 		can_move = true
+
+
+func _on_game_ended(winner: int, _is_player_win: bool) -> void:
+	can_move = false
