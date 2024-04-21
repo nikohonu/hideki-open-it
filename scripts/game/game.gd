@@ -19,7 +19,7 @@ func _ready():
 	if Global.current_level >= 0:
 		level = Global.levels[Global.current_level]
 	state.game_ended.connect(_on_state_game_ended)
-	state.state_changed.connect(_on_state_changed)
+	state.selected.connect(_on_state_changed)
 
 
 func restart():

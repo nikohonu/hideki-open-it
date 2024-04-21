@@ -5,8 +5,6 @@ extends AnimatedSprite3D
 signal cell_selected(coords: Vector2i)
 signal moved
 
-enum { PLAYER1, PLAYER2 }
-
 @export var game: Game
 @export var ai: AICPP
 @export var map: Map
@@ -28,9 +26,9 @@ func _ready():
 func _process(_delta):
 	if can_move:
 		var move = Vector2i.ZERO
-		if game.state.turn == PLAYER1 and not game.level.ai[PLAYER1]:
+		if game.state.turn == State.PLAYER1 and not game.level.ai[State.PLAYER1]:
 			move.x = int(Input.get_action_strength("right") - Input.get_action_strength("left"))
-		elif game.state.turn == PLAYER2 and not game.level.ai[PLAYER2]:
+		elif game.state.turn == State.PLAYER2 and not game.level.ai[State.PLAYER2]:
 			move.y = int(Input.get_action_strength("down") - Input.get_action_strength("up"))
 		if not move:
 			return
@@ -57,11 +55,11 @@ func _move(destination: Vector2i, select_cell: bool = false):
 		return false
 	var diff = destination - coords
 	can_move = false
-	if game.state.turn == PLAYER1 and diff.y == 0:
+	if game.state.turn == State.PLAYER1 and diff.y == 0:
 		for _i in range(abs(diff.x)):
 			coords.x += diff.x / abs(diff.x)
 			await move.call()
-	elif game.state.turn == PLAYER2 and diff.x == 0:
+	elif game.state.turn == State.PLAYER2 and diff.x == 0:
 		for _i in range(abs(diff.y)):
 			coords.y += diff.y / abs(diff.y)
 			await move.call()

@@ -19,8 +19,8 @@ func _ready() -> void:
 	var background: CompressedTexture2D = load(game.level.background_path)
 	var size = background.get_size()
 	var aspect_ratio = Vector2(size.y, size.x) / max(size.x, size.y)
-	for y in range(8):
-		for x in range(8):
+	for y in range(State.MAP_SIZE):
+		for x in range(State.MAP_SIZE):
 			var cell_position = Vector2i(x, y)
 			var cell = CellScene.instantiate()
 			cell.setup(cell_position, game.state.map[y][x], background, aspect_ratio)
@@ -50,7 +50,7 @@ func _highlight_possible_moves():
 		arrows[1].position = Vector2(center.x + 4 * CELL_SIZE + CELL_SIZE / 2, y_offset)
 		arrows[0].rotation = 0
 		arrows[1].rotation = PI
-		for i in range(8):
+		for i in range(State.MAP_SIZE):
 			cells[Vector2i(i, cursor.y)].active = true
 			highlighted_cells.append(cells[Vector2i(i, cursor.y)])
 	elif game.state.turn == State.PLAYER2:
@@ -62,7 +62,7 @@ func _highlight_possible_moves():
 		arrows[1].position = Vector2(x_offset, center.y + 4 * CELL_SIZE + CELL_SIZE / 2)
 		arrows[0].rotation = PI / 2
 		arrows[1].rotation = PI / 2 * 3
-		for i in range(8):
+		for i in range(State.MAP_SIZE):
 			cells[Vector2i(cursor.x, i)].active = true
 			highlighted_cells.append(cells[Vector2i(cursor.x, i)])
 
