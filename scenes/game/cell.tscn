@@ -1,22 +1,22 @@
 [gd_scene load_steps=11 format=3 uid="uid://o61swwd5g336"]
 
-[ext_resource type="Shader" path="res://shader/cell.gdshader" id="1_xja0w"]
-[ext_resource type="Texture2D" uid="uid://dhlnmntmf64si" path="res://sprites/green_cell_face.png" id="2_2brt8"]
-[ext_resource type="FontFile" uid="uid://ca3255aseygbu" path="res://fonts/Shantell_Sans/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf" id="2_qlotu"]
-[ext_resource type="Texture2D" uid="uid://dipmm2bn0610v" path="res://sprites/green_cell.png" id="3_1hc5t"]
-[ext_resource type="Script" path="res://scripts/game/cell.gd" id="4_n4nyt"]
+[ext_resource type="Shader" path="res://shader/cell.gdshader" id="1_bsc04"]
+[ext_resource type="Texture2D" uid="uid://dhlnmntmf64si" path="res://sprites/game/green_cell_face.png" id="2_f0mk5"]
+[ext_resource type="Texture2D" uid="uid://dipmm2bn0610v" path="res://sprites/game/green_cell.png" id="3_2mqd8"]
+[ext_resource type="Script" path="res://scripts/game/cell.gd" id="4_qimch"]
+[ext_resource type="FontFile" uid="uid://ca3255aseygbu" path="res://fonts/Shantell_Sans/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf" id="5_yg8nv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5qsm3"]
 resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource("1_xja0w")
+shader = ExtResource("1_bsc04")
 shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/cell = Vector2(5, 0)
+shader_parameter/coords = null
 shader_parameter/ratio = null
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/texture_front = ExtResource("3_1hc5t")
-shader_parameter/texture_face = ExtResource("2_2brt8")
+shader_parameter/texture_front = ExtResource("3_2mqd8")
+shader_parameter/texture_face = ExtResource("2_f0mk5")
 
 [sub_resource type="BoxMesh" id="BoxMesh_ar6v5"]
 resource_local_to_scene = true
@@ -61,15 +61,18 @@ _data = {
 "rotate": SubResource("Animation_oo17r")
 }
 
-[node name="Cell" type="MeshInstance3D"]
+[node name="Cell" type="MeshInstance3D" node_paths=PackedStringArray("label", "timer", "animation_player")]
 mesh = SubResource("BoxMesh_ar6v5")
-script = ExtResource("4_n4nyt")
+script = ExtResource("4_qimch")
+label = NodePath("Label3D")
+timer = NodePath("Timer")
+animation_player = NodePath("AnimationPlayer")
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.084)
 modulate = Color(0, 0, 0, 1)
 text = "11"
-font = ExtResource("2_qlotu")
+font = ExtResource("5_yg8nv")
 font_size = 160
 outline_size = 2
 

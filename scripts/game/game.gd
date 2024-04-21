@@ -23,13 +23,13 @@ func _ready():
 
 
 func restart():
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 
 
 func next_level():
 	if Global.current_level < len(Global.levels) - 1:
 		Global.current_level += 1
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 
 
 func back():
@@ -48,7 +48,7 @@ func _on_state_changed(new_state):
 
 
 func _on_state_game_ended(winner):
-	var is_player_win =  level.ai[winner] == 0
+	var is_player_win := level.ai[winner] == 0
 	ended.emit(winner, is_player_win)
 	if Global.current_level >= 0 and is_player_win:
 		if Global.current_level == Global.progress:

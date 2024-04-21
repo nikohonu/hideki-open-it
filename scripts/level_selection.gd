@@ -7,7 +7,6 @@ var overwrite_level: int
 
 func _ready():
 	if Global.saved_state != null:
-		print(Global.saved_level)
 		level_buttons[Global.saved_level].has_save = true
 	var level_count = len(Global.levels)
 	for i in range(level_count):
@@ -24,6 +23,7 @@ func _ready():
 
 func _level_to_kanji(level: int):
 	if level < 12:
+		@warning_ignore("integer_division")
 		var j = level / 3
 		if j == 0:
 			return "春"
@@ -54,18 +54,18 @@ func _on_back_pressed():
 func _start_level(level: int):
 	Global.current_level = level
 	if Global.saved_state == null:
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 		return
 	if Global.saved_level == level and Global.saved_level != null:
 		Global.should_load_saved_state = true
-		get_tree().change_scene_to_file("res://scenes/game.tscn")
+		get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 	else:
 		$PanelContainer.visible = true
 
 
 func _on_ok_pressed():
 	print("Overwrite level")
-	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	get_tree().change_scene_to_file("res://scenes/game/game.tscn")
 
 
 func _on_cancel_pressed():

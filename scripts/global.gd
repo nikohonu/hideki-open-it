@@ -80,3 +80,7 @@ func reset_save():
 
 func is_custom_level():
 	return Global.current_level == -1 
+
+
+func coordinates_2d_to_3d(coordinates: Vector2i, z = 0.0):
+	return Vector3(coordinates.x - 3.5, 3.5 - coordinates.y, z)

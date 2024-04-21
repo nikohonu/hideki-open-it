@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://l70sn1nd8igm"
-path="res://.godot/imported/green_cell_active.png-adb0b0cf0ef76e5da066170a12f634ec.ctex"
+path="res://.godot/imported/green_cell_active.png-fd956647b9143c97c0e414acd62d06e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/green_cell_active.png"
-dest_files=["res://.godot/imported/green_cell_active.png-adb0b0cf0ef76e5da066170a12f634ec.ctex"]
+source_file="res://sprites/game/green_cell_active.png"
+dest_files=["res://.godot/imported/green_cell_active.png-fd956647b9143c97c0e414acd62d06e7.ctex"]
 
 [params]
 

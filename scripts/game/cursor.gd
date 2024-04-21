@@ -20,7 +20,7 @@ func _ready():
 	await game.ready
 	await map.ready
 	coords = game.state.cursor
-	position = map.coordinates_2d_to_3d(coords, 0.5)
+	position = Global.coordinates_2d_to_3d(coords, 0.5)
 	if game.level.ai[game.state.turn] > 0:
 		_ai_move()
 
@@ -50,7 +50,7 @@ func _input(event):
 func _move(destination: Vector2i, select_cell: bool = false):
 	var move = func():
 		timer.start()
-		position = map.coordinates_2d_to_3d(coords, 0.5)
+		position = Global.coordinates_2d_to_3d(coords, 0.5)
 		moved.emit()
 		await timer.timeout
 	if destination.x > 7 or destination.x < 0 or destination.y > 7 or destination.y < 0:
@@ -78,6 +78,8 @@ func _select_cell():
 		can_move = false
 		visible = false
 		cell_selected.emit(coords)
+		return
+	can_move = true
 
 
 func _ai_move():
@@ -92,5 +94,5 @@ func _on_map_cell_animation_finished() -> void:
 		can_move = true
 
 
-func _on_game_ended(winner: int, _is_player_win: bool) -> void:
+func _on_game_ended(_winner: int, _is_player_win: bool) -> void:
 	can_move = false

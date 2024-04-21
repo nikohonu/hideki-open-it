@@ -31,7 +31,6 @@ enum Status { ACTIVE, LOCKED, COMPLETED }
 		status = value
 @export var has_save: bool = false:
 	set(value):
-		print(value)
 		has_save = value
 		status = status
 

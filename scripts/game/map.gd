@@ -15,7 +15,7 @@ const CELL_SIZE = 96
 
 func _ready() -> void:
 	await game.ready
-	var CellScene = preload("res://scenes/cell.tscn")
+	var CellScene = preload("res://scenes/game/cell.tscn")
 	var background: CompressedTexture2D = load(game.level.background_path)
 	var size = background.get_size()
 	var aspect_ratio = Vector2(size.y, size.x) / max(size.x, size.y)
@@ -23,8 +23,7 @@ func _ready() -> void:
 		for x in range(8):
 			var cell_position = Vector2i(x, y)
 			var cell = CellScene.instantiate()
-			cell.position = coordinates_2d_to_3d(cell_position)
-			cell.set_state(cell_position, game.state.map[y][x], background, aspect_ratio)
+			cell.setup(cell_position, game.state.map[y][x], background, aspect_ratio)
 			cells[cell_position] = cell
 			if game.state.map[y][x] == 0:
 				cell.select(true)
@@ -34,32 +33,37 @@ func _ready() -> void:
 	ready.emit()
 
 
-func coordinates_2d_to_3d(coordinates: Vector2i, z = 0.0):
-	return Vector3(coordinates.x - 3.5, 3.5 - coordinates.y, z)
+
 
 
 func _highlight_possible_moves():
 	var center = Vector2i(get_viewport().size / 2)
 	var cursor = game.state.cursor
 	while not highlighted_cells.is_empty():
-		highlighted_cells.pop_back().set_active(false)
+		highlighted_cells.pop_back().active = false
 	if game.state.turn == State.PLAYER1:
+		@warning_ignore("integer_division")
 		var y_offset = center.y - (CELL_SIZE * 4) + CELL_SIZE * cursor.y + CELL_SIZE / 2
+		@warning_ignore("integer_division")
 		arrows[0].position = Vector2(center.x - 4 * CELL_SIZE - CELL_SIZE / 2, y_offset)
+		@warning_ignore("integer_division")
 		arrows[1].position = Vector2(center.x + 4 * CELL_SIZE + CELL_SIZE / 2, y_offset)
 		arrows[0].rotation = 0
 		arrows[1].rotation = PI
 		for i in range(8):
-			cells[Vector2i(i, cursor.y)].set_active(true)
+			cells[Vector2i(i, cursor.y)].active = true
 			highlighted_cells.append(cells[Vector2i(i, cursor.y)])
 	elif game.state.turn == State.PLAYER2:
+		@warning_ignore("integer_division")
 		var x_offset = center.x - (CELL_SIZE * 4) + CELL_SIZE * cursor.x + CELL_SIZE / 2
+		@warning_ignore("integer_division")
 		arrows[0].position = Vector2(x_offset, center.y - 4 * CELL_SIZE - CELL_SIZE / 2)
+		@warning_ignore("integer_division")
 		arrows[1].position = Vector2(x_offset, center.y + 4 * CELL_SIZE + CELL_SIZE / 2)
 		arrows[0].rotation = PI / 2
 		arrows[1].rotation = PI / 2 * 3
 		for i in range(8):
-			cells[Vector2i(cursor.x, i)].set_active(true)
+			cells[Vector2i(cursor.x, i)].active = true
 			highlighted_cells.append(cells[Vector2i(cursor.x, i)])
 
 

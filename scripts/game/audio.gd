@@ -23,5 +23,5 @@ func _on_cursor_moved() -> void:
 	move.play()
 
 
-func _on_cursor_cell_selected(coords: Vector2i) -> void:
+func _on_cursor_cell_selected(_coords: Vector2i) -> void:
 	select.play()
