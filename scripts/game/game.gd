@@ -41,7 +41,7 @@ func back():
 			Global.saved_level = Global.current_level
 			Global.save_game()
 		else:
-			Global.saved_level = -1
+			Global.reset_state()
 		get_tree().change_scene_to_file("res://scenes/level_selection/level_selection.tscn")
 
 
