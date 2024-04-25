@@ -21,5 +21,6 @@ func _on_reset_progress_pressed():
 
 
 func _on_reset_state_pressed():
-	Global.reset_save()
+	Global.reset_state()
+	Global.reset_game()
 

@@ -1,29 +1,11 @@
-extends Node # need refectoring 
+extends Node
+
 
 const STATE_SAVE_PATH = "user://state.json"
 const GAME_SAVE_PATH = "user://save.dat"
+const LEVEL_COUNT = 18
 
-const levels: Array[Level] = [
-	preload("res://levels/level1.tres"),
-	preload("res://levels/level2.tres"),
-	preload("res://levels/level3.tres"),
-	preload("res://levels/level4.tres"),
-	preload("res://levels/level5.tres"),
-	preload("res://levels/level6.tres"),
-	preload("res://levels/level7.tres"),
-	preload("res://levels/level8.tres"),
-	preload("res://levels/level9.tres"),
-	preload("res://levels/level10.tres"),
-	preload("res://levels/level11.tres"),
-	preload("res://levels/level12.tres"),
-	preload("res://levels/level13.tres"),
-	preload("res://levels/level14.tres"),
-	preload("res://levels/level15.tres"),
-	preload("res://levels/level16.tres"),
-	preload("res://levels/level17.tres"),
-	preload("res://levels/level18.tres"),
-]
-
+var levels: Array[Level]
 var progress: int = 0
 var saved_level: int = -1
 var saved_state: State = null
@@ -39,6 +21,8 @@ var custom = {
 
 
 func _ready():
+	for i in range(LEVEL_COUNT):
+		levels.append(load("res://levels/level%s.tres" % (i + 1)))
 	load_game()
 	load_state()
 
@@ -69,7 +53,7 @@ func load_game():
 func save_state(current_state: State):
 	var state_save_file = FileAccess.open(STATE_SAVE_PATH, FileAccess.WRITE)
 	state_save_file.store_line(JSON.stringify(current_state.to_dict()))
-	Global.saved_state = current_state
+	saved_state = current_state
 
 
 func load_state():
@@ -78,29 +62,27 @@ func load_state():
 		saved_state = State.from_dict(JSON.parse_string(state_save_file.get_line()))
 
 
-func reset_save():
-	reset_state()
-	reset_game()
-
 func reset_state():
-	DirAccess.remove_absolute(Global.STATE_SAVE_PATH)
-	Global.saved_state = null
-	Global.saved_level = -1
+	DirAccess.remove_absolute(STATE_SAVE_PATH)
+	saved_state = null
+	saved_level = -1
+
 
 func reset_game():
-	DirAccess.remove_absolute(Global.STATE_SAVE_PATH)
-	Global.progress = 0
+	DirAccess.remove_absolute(STATE_SAVE_PATH)
+	progress = 0
+
 
 func is_custom_level():
-	return Global.current_level == -1 
-
-
-func coordinates_2d_to_3d(coordinates: Vector2i, z = 0.0):
-	return Vector3(coordinates.x - 3.5, 3.5 - coordinates.y, z)
+	return current_level == -1 
 
 
 func load_level():
 	if is_custom_level():
 		return custom_level
 	else:
-		return Global.levels[Global.current_level]
+		return levels[current_level]
+
+
+func coordinates_2d_to_3d(coordinates: Vector2i, z = 0.0):
+	return Vector3(coordinates.x - 3.5, 3.5 - coordinates.y, z)
