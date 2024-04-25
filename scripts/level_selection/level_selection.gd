@@ -10,7 +10,7 @@ func _ready():
 		level_buttons[Global.saved_level].has_save = true
 	var level_count = len(Global.levels)
 	for i in range(level_count):
-		level_buttons[i].icon_text = _level_to_kanji(i)
+		level_buttons[i].icon = _level_to_kanji(i)
 		if i < Global.progress:
 			level_buttons[i].status = LevelButton.Status.COMPLETED
 		elif i == Global.progress :
