@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/level_selection/level_selection.gd" id="1_t0q7u"]
 [ext_resource type="PackedScene" uid="uid://cicxy4mbcsrsf" path="res://scenes/level_selection/level_button.tscn" id="2_abr2k"]
 
-[node name="LevelSelection" type="Control"]
+[node name="LevelSelection" type="Control" node_paths=PackedStringArray("level_button_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_t0q7u")
+level_button_container = NodePath("MarginContainer/VBoxContainer/GridContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
