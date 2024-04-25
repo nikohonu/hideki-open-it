@@ -84,9 +84,6 @@ animations = [{
 [node name="Game" type="Node3D"]
 script = ExtResource("1_6gikw")
 
-[node name="Test" parent="." node_paths=PackedStringArray("game") instance=ExtResource("2_ffrov")]
-game = NodePath("..")
-
 [node name="Audio" type="Node" parent="." node_paths=PackedStringArray("game", "music", "move", "select")]
 script = ExtResource("3_3n12y")
 game = NodePath("..")
@@ -286,6 +283,9 @@ text = "Change settings"
 [node name="Restart" type="Button" parent="UI/Panel/MarginContainer/Custom/HBoxContainer"]
 layout_mode = 2
 text = "Restart"
+
+[node name="Test" parent="." node_paths=PackedStringArray("game") instance=ExtResource("2_ffrov")]
+game = NodePath("..")
 
 [connection signal="ended" from="." to="Map" method="_on_game_ended"]
 [connection signal="ended" from="." to="Map/Cursor" method="_on_game_ended"]

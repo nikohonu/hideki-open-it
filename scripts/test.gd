@@ -1,4 +1,4 @@
-extends Control # need refectoring 
+extends Control
 
 
 @export var game: Game
@@ -16,11 +16,9 @@ func _input(event):
 
 
 func _on_reset_progress_pressed():
-	Global.progress = 0
-	Global.save_game()
+	Global.reset_game()
 
 
 func _on_reset_state_pressed():
 	Global.reset_state()
-	Global.reset_game()
 

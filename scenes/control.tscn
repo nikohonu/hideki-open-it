@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ih37wf660pqw"]
+[gd_scene load_steps=5 format=3 uid="uid://ih37wf660pqw"]
 
 [ext_resource type="FontFile" uid="uid://ca3255aseygbu" path="res://fonts/Shantell_Sans/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf" id="1_em4re"]
 [ext_resource type="Script" path="res://scripts/control.gd" id="1_ijuh8"]
 [ext_resource type="Texture2D" uid="uid://dpxqbiyplsyfj" path="res://sprites/key.png" id="2_k2pbe"]
+[ext_resource type="PackedScene" uid="uid://bum2srmdskmqx" path="res://scenes/test.tscn" id="4_qk0kj"]
 
 [node name="Control" type="MarginContainer"]
 anchors_preset = 15
@@ -221,5 +222,8 @@ autowrap_mode = 2
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="Test" parent="." instance=ExtResource("4_qk0kj")]
+layout_mode = 2
 
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
