@@ -64,6 +64,7 @@ func _move(destination: Vector2i, select_cell: bool = false):
 			coords.y += diff.y / abs(diff.y)
 			await move.call()
 	else:
+		can_move = true
 		return
 	if select_cell:
 		_select_cell()

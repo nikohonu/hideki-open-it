@@ -4,6 +4,7 @@ extends Node3D
 
 signal state_changed(new_state: State)
 signal ended(winner: int, is_player_win: bool)
+signal logged(turn: int, value: int)
 
 var state: State
 var level: Level
@@ -20,6 +21,7 @@ func _ready():
 	level = Global.load_level()
 	state.game_ended.connect(_on_state_game_ended)
 	state.selected.connect(_on_state_changed)
+	state.logged.connect(_on_logged)
 
 
 func restart():
@@ -62,3 +64,6 @@ func _on_state_game_ended(winner):
 
 func _on_cursor_cell_selected(coords: Vector2i) -> void:
 	state.select(coords)
+	
+func _on_logged(turn, value):
+	logged.emit(turn, value)

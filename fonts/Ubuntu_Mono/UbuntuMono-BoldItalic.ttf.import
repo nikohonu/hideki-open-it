@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://b8jywheeihtfq"
-path="res://.godot/imported/ShantellSans-SemiBold.ttf-3e4ee718874d27d6be42f7f216855bb0.fontdata"
+uid="uid://cu4nrrtc3jgpe"
+path="res://.godot/imported/UbuntuMono-BoldItalic.ttf-8adf1f6291dc87a33bc42e76262b2e10.fontdata"
 
 [deps]
 
-source_file="res://fonts/Shantell_Sans/static/ShantellSans-SemiBold.ttf"
-dest_files=["res://.godot/imported/ShantellSans-SemiBold.ttf-3e4ee718874d27d6be42f7f216855bb0.fontdata"]
+source_file="res://fonts/Ubuntu_Mono/UbuntuMono-BoldItalic.ttf"
+dest_files=["res://.godot/imported/UbuntuMono-BoldItalic.ttf-8adf1f6291dc87a33bc42e76262b2e10.fontdata"]
 
 [params]
 

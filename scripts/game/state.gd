@@ -4,6 +4,7 @@ extends Resource
 
 signal game_ended(winner)
 signal selected(changed_state)
+signal logged(turn, value)
 
 enum {PLAYER1, PLAYER2}
 
@@ -48,6 +49,7 @@ func calc_winner():
 func select(coords: Vector2i):
 	cursor = coords
 	scores[turn] += map[cursor.y][cursor.x]
+	logged.emit(turn, map[cursor.y][cursor.x])
 	map[cursor.y][cursor.x] = 0
 	turn = PLAYER2 if turn == PLAYER1 else PLAYER1
 	step += 1

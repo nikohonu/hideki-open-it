@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://clushkhqa3am4"
-path="res://.godot/imported/ShantellSans-Italic-VariableFont_BNCE,INFM,SPAC,wght.ttf-79b897875b0d6da52b089299af59c049.fontdata"
+uid="uid://cux63qxvudi6k"
+path="res://.godot/imported/UbuntuMono-Bold.ttf-eeec59ec9ec4bb28aa09d0ec1a9dbae7.fontdata"
 
 [deps]
 
-source_file="res://fonts/Shantell_Sans/ShantellSans-Italic-VariableFont_BNCE,INFM,SPAC,wght.ttf"
-dest_files=["res://.godot/imported/ShantellSans-Italic-VariableFont_BNCE,INFM,SPAC,wght.ttf-79b897875b0d6da52b089299af59c049.fontdata"]
+source_file="res://fonts/Ubuntu_Mono/UbuntuMono-Bold.ttf"
+dest_files=["res://.godot/imported/UbuntuMono-Bold.ttf-eeec59ec9ec4bb28aa09d0ec1a9dbae7.fontdata"]
 
 [params]
 

@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://ip8wibuigvga"
-path="res://.godot/imported/ShantellSans-Italic.ttf-0318556cd5c85d5423edd2ab9bb180a5.fontdata"
+uid="uid://c7fyade7si1tg"
+path="res://.godot/imported/UbuntuMono-Regular.ttf-c4dbd99167f4333eb1a02df90d9851fe.fontdata"
 
 [deps]
 
-source_file="res://fonts/Shantell_Sans/static/ShantellSans-Italic.ttf"
-dest_files=["res://.godot/imported/ShantellSans-Italic.ttf-0318556cd5c85d5423edd2ab9bb180a5.fontdata"]
+source_file="res://fonts/Ubuntu_Mono/UbuntuMono-Regular.ttf"
+dest_files=["res://.godot/imported/UbuntuMono-Regular.ttf-c4dbd99167f4333eb1a02df90d9851fe.fontdata"]
 
 [params]
 

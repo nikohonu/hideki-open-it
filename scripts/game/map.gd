@@ -35,31 +35,31 @@ func _ready() -> void:
 
 
 func _highlight_possible_moves():
-	var center = Vector2i(get_viewport().size / 2)
+	#var center = Vector2i(get_viewport().size / 2)
 	var cursor = game.state.cursor
 	while not highlighted_cells.is_empty():
 		highlighted_cells.pop_back().active = false
 	if game.state.turn == State.PLAYER1:
-		@warning_ignore("integer_division")
-		var y_offset = center.y - (CELL_SIZE * 4) + CELL_SIZE * cursor.y + CELL_SIZE / 2
-		@warning_ignore("integer_division")
-		arrows[0].position = Vector2(center.x - 4 * CELL_SIZE - CELL_SIZE / 2, y_offset)
-		@warning_ignore("integer_division")
-		arrows[1].position = Vector2(center.x + 4 * CELL_SIZE + CELL_SIZE / 2, y_offset)
-		arrows[0].rotation = 0
-		arrows[1].rotation = PI
+		#@warning_ignore("integer_division")
+		#var y_offset = center.y - (CELL_SIZE * 4) + CELL_SIZE * cursor.y + CELL_SIZE / 2
+		#@warning_ignore("integer_division")
+		#arrows[0].position = Vector2(center.x - 4 * CELL_SIZE - CELL_SIZE / 2, y_offset)
+		#@warning_ignore("integer_division")
+		#arrows[1].position = Vector2(center.x + 4 * CELL_SIZE + CELL_SIZE / 2, y_offset)
+		#arrows[0].rotation = 0
+		#arrows[1].rotation = PI
 		for i in range(State.MAP_SIZE):
 			cells[Vector2i(i, cursor.y)].active = true
 			highlighted_cells.append(cells[Vector2i(i, cursor.y)])
 	elif game.state.turn == State.PLAYER2:
-		@warning_ignore("integer_division")
-		var x_offset = center.x - (CELL_SIZE * 4) + CELL_SIZE * cursor.x + CELL_SIZE / 2
-		@warning_ignore("integer_division")
-		arrows[0].position = Vector2(x_offset, center.y - 4 * CELL_SIZE - CELL_SIZE / 2)
-		@warning_ignore("integer_division")
-		arrows[1].position = Vector2(x_offset, center.y + 4 * CELL_SIZE + CELL_SIZE / 2)
-		arrows[0].rotation = PI / 2
-		arrows[1].rotation = PI / 2 * 3
+		#@warning_ignore("integer_division")
+		#var x_offset = center.x - (CELL_SIZE * 4) + CELL_SIZE * cursor.x + CELL_SIZE / 2
+		#@warning_ignore("integer_division")
+		#arrows[0].position = Vector2(x_offset, center.y - 4 * CELL_SIZE - CELL_SIZE / 2)
+		#@warning_ignore("integer_division")
+		#arrows[1].position = Vector2(x_offset, center.y + 4 * CELL_SIZE + CELL_SIZE / 2)
+		#arrows[0].rotation = PI / 2
+		#arrows[1].rotation = PI / 2 * 3
 		for i in range(State.MAP_SIZE):
 			cells[Vector2i(cursor.x, i)].active = true
 			highlighted_cells.append(cells[Vector2i(cursor.x, i)])

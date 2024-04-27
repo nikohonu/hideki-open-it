@@ -57,4 +57,10 @@
 - https://creativecommons.org/licenses/by/3.0/
 
 ### SFX
+
 - 51 UI sound effects by Kenney | https://kenney.nl
+
+### Fonts
+
+- Ubuntu font | https://design.ubuntu.com/font
+- Kosugi Maru | https://github.com/googlefonts/kosugi-maru

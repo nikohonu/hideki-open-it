@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://c5jwxodyk8uig"
-path="res://.godot/imported/ShantellSans-ExtraBoldItalic.ttf-730e3c95d83c1be5a48cb479e55ab345.fontdata"
+uid="uid://by45m2phqm4cs"
+path="res://.godot/imported/KosugiMaru-Regular.ttf-f90b54241f3aee26727711cbebf1bfc4.fontdata"
 
 [deps]
 
-source_file="res://fonts/Shantell_Sans/static/ShantellSans-ExtraBoldItalic.ttf"
-dest_files=["res://.godot/imported/ShantellSans-ExtraBoldItalic.ttf-730e3c95d83c1be5a48cb479e55ab345.fontdata"]
+source_file="res://fonts/Kosugi_Maru/KosugiMaru-Regular.ttf"
+dest_files=["res://.godot/imported/KosugiMaru-Regular.ttf-f90b54241f3aee26727711cbebf1bfc4.fontdata"]
 
 [params]
 

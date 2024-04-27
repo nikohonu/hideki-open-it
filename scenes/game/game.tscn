@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://buuuapqyomv2l"]
+[gd_scene load_steps=24 format=3 uid="uid://buuuapqyomv2l"]
 
 [ext_resource type="Script" path="res://scripts/game/game.gd" id="1_6gikw"]
 [ext_resource type="PackedScene" uid="uid://bum2srmdskmqx" path="res://scenes/test.tscn" id="2_ffrov"]
@@ -7,9 +7,11 @@
 [ext_resource type="AudioStream" uid="uid://d1rqre2i8pouw" path="res://sfx/UI_SFX_Set/switch10.wav" id="5_wluvp"]
 [ext_resource type="Script" path="res://scripts/game/map.gd" id="6_b26n4"]
 [ext_resource type="Texture2D" uid="uid://b0aj1h00dyaa4" path="res://sprites/board.png" id="7_2s6pa"]
+[ext_resource type="FontFile" uid="uid://c7fyade7si1tg" path="res://fonts/Ubuntu_Mono/UbuntuMono-Regular.ttf" id="7_xlw06"]
 [ext_resource type="Texture2D" uid="uid://dgt17w4xtm26o" path="res://sprites/cursor.png" id="8_k4qop"]
 [ext_resource type="Script" path="res://scripts/game/cursor.gd" id="9_nw7xf"]
 [ext_resource type="Texture2D" uid="uid://b3sd2dfwdqtc5" path="res://sprites/arrow-sheet.png" id="10_6wnyi"]
+[ext_resource type="Theme" uid="uid://cgt1hkm7km46h" path="res://themes/main.tres" id="10_e0eca"]
 [ext_resource type="Script" path="res://scripts/game/ui.gd" id="11_mb5h7"]
 
 [sub_resource type="Environment" id="Environment_2y7p1"]
@@ -119,7 +121,22 @@ arrows = [NodePath("Arrow1"), NodePath("Arrow2")]
 
 [node name="Board" type="Sprite3D" parent="Map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+visible = false
 texture = ExtResource("7_2s6pa")
+
+[node name="Player1" type="Label3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.5, 0)
+text = "Player 1"
+font = ExtResource("7_xlw06")
+font_size = 128
+outline_size = 0
+
+[node name="Player2" type="Label3D" parent="Map"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 4.5, 0, 0)
+text = "Player 2"
+font = ExtResource("7_xlw06")
+font_size = 128
+outline_size = 0
 
 [node name="Cursor" type="AnimatedSprite3D" parent="Map" node_paths=PackedStringArray("game", "ai", "map", "timer")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
@@ -139,70 +156,156 @@ one_shot = true
 [node name="AICPP" type="AICPP" parent="Map/Cursor"]
 
 [node name="Arrow1" type="AnimatedSprite2D" parent="Map"]
+visible = false
 position = Vector2(512, 512)
 sprite_frames = SubResource("SpriteFrames_obeph")
 autoplay = "default"
 speed_scale = 0.5
 
 [node name="Arrow2" type="AnimatedSprite2D" parent="Map"]
+visible = false
 position = Vector2(512, 512)
 sprite_frames = SubResource("SpriteFrames_obeph")
 autoplay = "default"
 speed_scale = 0.5
 
-[node name="UI" type="Control" parent="." node_paths=PackedStringArray("game", "panel", "level_name_label", "turn_label", "player1_score_label", "player2_score_label", "win_message", "lose_message", "custom_message", "custom_result_label", "next_level_button")]
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("game", "panel", "level_number_label", "level_name_label", "player_top_label", "player_bottom_label", "win_message", "lose_message", "custom_message", "custom_result_label", "next_level_button", "history0_label", "history1_label", "player1_indicator", "player2_indicator")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("10_e0eca")
 script = ExtResource("11_mb5h7")
 game = NodePath("..")
 panel = NodePath("Panel")
-level_name_label = NodePath("VBoxContainer/Level")
-turn_label = NodePath("VBoxContainer/Turn")
-player1_score_label = NodePath("VBoxContainer/Player1Score")
-player2_score_label = NodePath("VBoxContainer/Player2Score")
+level_number_label = NodePath("Game/VBoxContainer/Top/Level/Number")
+level_name_label = NodePath("Game/VBoxContainer/Top/Level/Name")
+player_top_label = NodePath("Game/VBoxContainer/Mid/Scores/VBoxContainer/PlayerTop")
+player_bottom_label = NodePath("Game/VBoxContainer/Mid/Scores/VBoxContainer/PlayerBottom")
 win_message = NodePath("Panel/MarginContainer/Win")
 lose_message = NodePath("Panel/MarginContainer/Lose")
 custom_message = NodePath("Panel/MarginContainer/Custom")
 custom_result_label = NodePath("Panel/MarginContainer/Custom/Label")
 next_level_button = NodePath("Panel/MarginContainer/Win/HBoxContainer/NextLevel")
+history0_label = NodePath("Game/VBoxContainer/Mid/History/VBoxContainer/History0")
+history1_label = NodePath("Game/VBoxContainer/Mid/History/VBoxContainer/History1")
+player1_indicator = NodePath("../Map/Player1")
+player2_indicator = NodePath("../Map/Player2")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+[node name="Game" type="MarginContainer" parent="UI"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = -113.0
-offset_bottom = 139.0
-grow_horizontal = 0
-alignment = 2
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="Back" type="Button" parent="UI/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Game"]
 layout_mode = 2
-text = "Back"
 
-[node name="Restart" type="Button" parent="UI/VBoxContainer"]
+[node name="Top" type="HBoxContainer" parent="UI/Game/VBoxContainer"]
 layout_mode = 2
+
+[node name="Restart" type="Button" parent="UI/Game/VBoxContainer/Top"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_vertical = 0
 text = "Restart"
 
-[node name="Level" type="Label" parent="UI/VBoxContainer"]
+[node name="Level" type="VBoxContainer" parent="UI/Game/VBoxContainer/Top"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Number" type="Label" parent="UI/Game/VBoxContainer/Top/Level"]
 layout_mode = 2
 text = "Level 1"
+horizontal_alignment = 1
 
-[node name="Turn" type="Label" parent="UI/VBoxContainer"]
+[node name="Name" type="Label" parent="UI/Game/VBoxContainer/Top/Level"]
 layout_mode = 2
-text = "Turn:"
+text = "Ronin's Redemption"
+horizontal_alignment = 1
 
-[node name="Player1Score" type="Label" parent="UI/VBoxContainer"]
+[node name="Back" type="Button" parent="UI/Game/VBoxContainer/Top"]
+custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
-text = "Player 1 Score:"
+size_flags_vertical = 0
+text = "Back"
 
-[node name="Player2Score" type="Label" parent="UI/VBoxContainer"]
+[node name="Mid" type="HBoxContainer" parent="UI/Game/VBoxContainer"]
 layout_mode = 2
-text = "Player 2 Score:"
+size_flags_vertical = 3
+
+[node name="Scores" type="PanelContainer" parent="UI/Game/VBoxContainer/Mid"]
+custom_minimum_size = Vector2(384, 256)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Game/VBoxContainer/Mid/Scores"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="UI/Game/VBoxContainer/Mid/Scores/VBoxContainer"]
+layout_mode = 2
+text = "Score"
+
+[node name="PlayerTop" type="Label" parent="UI/Game/VBoxContainer/Mid/Scores/VBoxContainer"]
+layout_mode = 2
+text = "Player 2: 32"
+
+[node name="PlayerBottom" type="Label" parent="UI/Game/VBoxContainer/Mid/Scores/VBoxContainer"]
+layout_mode = 2
+text = "Player 1: 10"
+
+[node name="VSeparator" type="VSeparator" parent="UI/Game/VBoxContainer/Mid"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="History" type="PanelContainer" parent="UI/Game/VBoxContainer/Mid"]
+custom_minimum_size = Vector2(384, 256)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Game/VBoxContainer/Mid/History"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="UI/Game/VBoxContainer/Mid/History/VBoxContainer"]
+layout_mode = 2
+text = "History"
+
+[node name="History0" type="Label" parent="UI/Game/VBoxContainer/Mid/History/VBoxContainer"]
+layout_mode = 2
+
+[node name="History1" type="Label" parent="UI/Game/VBoxContainer/Mid/History/VBoxContainer"]
+layout_mode = 2
+
+[node name="Bottom" type="HBoxContainer" parent="UI/Game/VBoxContainer"]
+layout_mode = 2
+
+[node name="Author" type="Label" parent="UI/Game/VBoxContainer/Bottom"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Niko Honu"
+
+[node name="VSeparator2" type="VSeparator" parent="UI/Game/VBoxContainer/Bottom"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Version" type="Label" parent="UI/Game/VBoxContainer/Bottom"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Beta 1.0"
 
 [node name="Panel" type="PanelContainer" parent="UI"]
 visible = false
@@ -289,16 +392,18 @@ game = NodePath("..")
 
 [connection signal="ended" from="." to="Map" method="_on_game_ended"]
 [connection signal="ended" from="." to="Map/Cursor" method="_on_game_ended"]
+[connection signal="logged" from="." to="UI" method="_on_game_logged"]
 [connection signal="state_changed" from="." to="UI" method="_on_game_state_changed"]
 [connection signal="finished" from="Audio/Music" to="Audio" method="_on_music_finished"]
 [connection signal="cell_animation_finished" from="Map" to="Map/Cursor" method="_on_map_cell_animation_finished"]
+[connection signal="cell_animation_finished" from="Map" to="UI" method="_on_map_cell_animation_finished"]
 [connection signal="opened" from="Map" to="UI" method="_on_map_opened"]
 [connection signal="cell_selected" from="Map/Cursor" to="." method="_on_cursor_cell_selected"]
 [connection signal="cell_selected" from="Map/Cursor" to="Audio" method="_on_cursor_cell_selected"]
 [connection signal="cell_selected" from="Map/Cursor" to="Map" method="_on_cursor_cell_selected"]
 [connection signal="moved" from="Map/Cursor" to="Audio" method="_on_cursor_moved"]
-[connection signal="pressed" from="UI/VBoxContainer/Back" to="UI" method="_on_back_pressed"]
-[connection signal="pressed" from="UI/VBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/Game/VBoxContainer/Top/Restart" to="UI" method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/Game/VBoxContainer/Top/Back" to="UI" method="_on_back_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/Win/HBoxContainer/Back" to="UI" method="_on_back_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/Win/HBoxContainer/NextLevel" to="UI" method="_on_next_level_pressed"]
 [connection signal="pressed" from="UI/Panel/MarginContainer/Lose/HBoxContainer/Back" to="UI" method="_on_back_pressed"]
