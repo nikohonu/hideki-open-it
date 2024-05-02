@@ -2,16 +2,16 @@ extends MarginContainer
 
 const MAX_AI = 18
 const BACKGROUNDS = {
-	"Background 1": "pexels-abby-chung-1045615.webp",
-	"Background 2": "pexels-casia-charlie-2425464.webp",
-	"Background 3": "pexels-dsd-1829980.webp",
-	"Background 4": "pexels-evgeny-tchebotarev-2235302.webp",
-	"Background 5": "pexels-leeloo-the-first-5236398.webp",
-	"Background 6": "pexels-matt-hardy-2031687.webp",
-	"Background 7": "pexels-ryutaro-tsukata-5745864.webp",
-	"Background 8": "pexels-ryutaro-tsukata-6249546.webp",
-	"Background 9": "pexels-sunil-poudel-2758567.webp",
-	"Background 10": "pexels-tomáš-malík-3408353.webp",
+	1: "pexels-abby-chung-1045615.webp",
+	2: "pexels-casia-charlie-2425464.webp",
+	3: "pexels-dsd-1829980.webp",
+	4: "pexels-evgeny-tchebotarev-2235302.webp",
+	5: "pexels-leeloo-the-first-5236398.webp",
+	6: "pexels-matt-hardy-2031687.webp",
+	7: "pexels-ryutaro-tsukata-5745864.webp",
+	8: "pexels-ryutaro-tsukata-6249546.webp",
+	9: "pexels-sunil-poudel-2758567.webp",
+	10: "pexels-tomáš-malík-3408353.webp",
 }
 const MUSIC = {
 	"Yugen Emotional Ethnic Music": "Yugen-Emotional-Ethnic-Music(chosic.com).mp3",
@@ -32,7 +32,7 @@ const MUSIC = {
 var background_index: int:
 	set(index):
 		background.texture = load("res://backgrounds/" + BACKGROUNDS.values()[index])
-		background_label.set_text(BACKGROUNDS.keys()[index])
+		background_label.set_text(tr("BACKGROUND")+ " %s" % BACKGROUNDS.keys()[index])
 		Global.custom.background_index = index
 		background_index = index
 var ai1: int:
@@ -63,9 +63,9 @@ func _ready():
 
 func ai_to_str(ai: int):
 	if ai == 0:
-		return "Human"
+		return tr("HUMAN")
 	else:
-		return "AI - %s" % ai
+		return tr("AI") + " - %s" % ai
 
 
 func _on_prev_background_pressed():

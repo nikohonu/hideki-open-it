@@ -38,7 +38,7 @@ alignment = 2
 
 [node name="Back" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Back"
+text = "BACK"
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -134,7 +134,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/OverwriteLevel"]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
-text = "Do you want to discard the current save and start this level?"
+text = "LEVEL_DISCARD"
 horizontal_alignment = 1
 autowrap_mode = 2
 

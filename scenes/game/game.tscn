@@ -169,7 +169,7 @@ sprite_frames = SubResource("SpriteFrames_obeph")
 autoplay = "default"
 speed_scale = 0.5
 
-[node name="UI" type="Control" parent="." node_paths=PackedStringArray("game", "panel", "level_number_label", "level_name_label", "player_top_label", "player_bottom_label", "win_message", "lose_message", "custom_message", "custom_result_label", "next_level_button", "history0_label", "history1_label", "player1_indicator", "player2_indicator")]
+[node name="UI" type="Control" parent="." node_paths=PackedStringArray("game", "panel", "level_number_label", "level_name_label", "player_top_label", "player_bottom_label", "win_message", "lose_message", "custom_message", "custom_result_label", "next_level_button", "player1_indicator", "player2_indicator")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -189,8 +189,6 @@ lose_message = NodePath("Panel/MarginContainer/Lose")
 custom_message = NodePath("Panel/MarginContainer/Custom")
 custom_result_label = NodePath("Panel/MarginContainer/Custom/Label")
 next_level_button = NodePath("Panel/MarginContainer/Win/HBoxContainer/NextLevel")
-history0_label = NodePath("Game/VBoxContainer/Mid/History/VBoxContainer/History0")
-history1_label = NodePath("Game/VBoxContainer/Mid/History/VBoxContainer/History1")
 player1_indicator = NodePath("../Map/Player1")
 player2_indicator = NodePath("../Map/Player2")
 
@@ -216,7 +214,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 size_flags_vertical = 0
-text = "Restart"
+text = "RESTART"
 
 [node name="Level" type="VBoxContainer" parent="UI/Game/VBoxContainer/Top"]
 layout_mode = 2
@@ -236,7 +234,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 size_flags_vertical = 0
-text = "Back"
+text = "BACK"
 
 [node name="Mid" type="HBoxContainer" parent="UI/Game/VBoxContainer"]
 layout_mode = 2
@@ -254,7 +252,7 @@ size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="UI/Game/VBoxContainer/Mid/Scores/VBoxContainer"]
 layout_mode = 2
-text = "Score"
+text = "SCORE"
 
 [node name="PlayerTop" type="Label" parent="UI/Game/VBoxContainer/Mid/Scores/VBoxContainer"]
 layout_mode = 2
@@ -268,26 +266,6 @@ text = "Player 1: 10"
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="History" type="PanelContainer" parent="UI/Game/VBoxContainer/Mid"]
-custom_minimum_size = Vector2(384, 256)
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Game/VBoxContainer/Mid/History"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="Label" type="Label" parent="UI/Game/VBoxContainer/Mid/History/VBoxContainer"]
-layout_mode = 2
-text = "History"
-
-[node name="History0" type="Label" parent="UI/Game/VBoxContainer/Mid/History/VBoxContainer"]
-layout_mode = 2
-
-[node name="History1" type="Label" parent="UI/Game/VBoxContainer/Mid/History/VBoxContainer"]
-layout_mode = 2
 
 [node name="Bottom" type="HBoxContainer" parent="UI/Game/VBoxContainer"]
 layout_mode = 2
@@ -335,7 +313,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="UI/Panel/MarginContainer/Win"]
 layout_mode = 2
-text = "You win!"
+text = "YOU_WIN"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/MarginContainer/Win"]
@@ -343,11 +321,11 @@ layout_mode = 2
 
 [node name="Back" type="Button" parent="UI/Panel/MarginContainer/Win/HBoxContainer"]
 layout_mode = 2
-text = "Choose level"
+text = "CHOOSE_LEVEL"
 
 [node name="NextLevel" type="Button" parent="UI/Panel/MarginContainer/Win/HBoxContainer"]
 layout_mode = 2
-text = "Next level"
+text = "NEXT_LEVEL"
 
 [node name="Lose" type="VBoxContainer" parent="UI/Panel/MarginContainer"]
 visible = false
@@ -355,18 +333,18 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="UI/Panel/MarginContainer/Lose"]
 layout_mode = 2
-text = "You lose!"
+text = "YOU_LOSE"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/MarginContainer/Lose"]
 layout_mode = 2
 
 [node name="Back" type="Button" parent="UI/Panel/MarginContainer/Lose/HBoxContainer"]
 layout_mode = 2
-text = "Choose level"
+text = "CHOOSE_LEVEL"
 
 [node name="Restart" type="Button" parent="UI/Panel/MarginContainer/Lose/HBoxContainer"]
 layout_mode = 2
-text = "Restart"
+text = "RESTART"
 
 [node name="Custom" type="VBoxContainer" parent="UI/Panel/MarginContainer"]
 visible = false
@@ -374,18 +352,18 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="UI/Panel/MarginContainer/Custom"]
 layout_mode = 2
-text = "Players %s win!"
+text = "PLAYER_%s_WIN"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/Panel/MarginContainer/Custom"]
 layout_mode = 2
 
 [node name="Back" type="Button" parent="UI/Panel/MarginContainer/Custom/HBoxContainer"]
 layout_mode = 2
-text = "Change settings"
+text = "CUSTOMIZE_LEVEL"
 
 [node name="Restart" type="Button" parent="UI/Panel/MarginContainer/Custom/HBoxContainer"]
 layout_mode = 2
-text = "Restart"
+text = "RESTART"
 
 [node name="Test" parent="." node_paths=PackedStringArray("game") instance=ExtResource("2_ffrov")]
 game = NodePath("..")

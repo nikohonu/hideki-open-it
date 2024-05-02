@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ih37wf660pqw"]
 
-[ext_resource type="FontFile" uid="uid://ca3255aseygbu" path="res://fonts/Shantell_Sans/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf" id="1_em4re"]
+[ext_resource type="FontFile" uid="uid://c7fyade7si1tg" path="res://fonts/Ubuntu_Mono/UbuntuMono-Regular.ttf" id="1_em4re"]
 [ext_resource type="Script" path="res://scripts/control.gd" id="1_ijuh8"]
 [ext_resource type="Texture2D" uid="uid://dpxqbiyplsyfj" path="res://sprites/key.png" id="2_k2pbe"]
 [ext_resource type="PackedScene" uid="uid://bum2srmdskmqx" path="res://scenes/test.tscn" id="4_qk0kj"]
@@ -24,7 +24,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 2
-text = "Back"
+text = "BACK"
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -43,7 +43,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_em4re")
 theme_override_font_sizes/font_size = 128
-text = "Player 1:"
+text = "PLAYER_1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -128,7 +128,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_em4re")
 theme_override_font_sizes/font_size = 128
-text = "Player 2:"
+text = "PLAYER_2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -213,7 +213,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_em4re")
 theme_override_font_sizes/font_size = 96
-text = "Both players can also control the cursor with the mouse"
+text = "CONTROL_HINT"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2

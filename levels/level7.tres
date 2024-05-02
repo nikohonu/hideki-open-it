@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("2_6kf22")
-name = "The Zen Garden"
+name = "LEVEL7"
 background_path = "res://backgrounds/pexels-abby-chung-1045615.webp"
 music_path = "res://music/Yugen-Emotional-Ethnic-Music(chosic.com).mp3"
 ai = Array[int]([0, 7])

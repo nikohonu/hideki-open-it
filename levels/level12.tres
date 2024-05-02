@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_gokph")
-name = "Kitsune's Dance"
+name = "LEVEL12"
 background_path = "res://backgrounds/pexels-abby-chung-1045615.webp"
 music_path = "res://music/Yugen-Emotional-Ethnic-Music(chosic.com).mp3"
 ai = Array[int]([11, 0])

@@ -43,7 +43,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 2
-text = "Back"
+text = "BACK"
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -71,7 +71,7 @@ columns = 4
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-text = "Background:"
+text = "BACKGROUND:"
 
 [node name="PrevBackground" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -95,7 +95,7 @@ text = "→"
 [node name="LabelAI1" type="Label" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 0
-text = "Player 1:"
+text = "PLAYER_1"
 
 [node name="PrevAI1" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -117,7 +117,7 @@ text = "→"
 [node name="LabelAI2" type="Label" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 0
-text = "Player 2:"
+text = "PLAYER_2"
 
 [node name="PrevAI2" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -139,7 +139,7 @@ text = "→"
 [node name="LabelMusic" type="Label" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 size_flags_vertical = 0
-text = "Music:"
+text = "MUSIC"
 
 [node name="PrevMusic" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -161,7 +161,7 @@ text = "→"
 
 [node name="Start" type="Button" parent="VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Start"
+text = "START"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 modulate = Color(1, 1, 1, 0)

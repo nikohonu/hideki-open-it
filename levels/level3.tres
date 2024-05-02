@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("3_pybm4")
-name = "Frozen Fortress"
+name = "LEVEL3"
 background_path = "res://backgrounds/pexels-abby-chung-1045615.webp"
 music_path = "res://music/Yugen-Emotional-Ethnic-Music(chosic.com).mp3"
 ai = Array[int]([0, 3])

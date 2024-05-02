@@ -19,7 +19,7 @@ func _ready():
 			level_buttons[i].status = LevelButton.Status.ACTIVE
 		else:
 			level_buttons[i].status = LevelButton.Status.LOCKED
-		level_buttons[i].text = Global.levels[i].name
+		level_buttons[i].text = tr(Global.levels[i].name)
 		level_buttons[i].pressed.connect(_start_level.bind(i))
 
 

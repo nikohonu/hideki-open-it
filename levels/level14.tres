@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_40j7g")
-name = "Twilight's Tale"
+name = "LEVEL14"
 background_path = "res://backgrounds/pexels-abby-chung-1045615.webp"
 music_path = "res://music/Yugen-Emotional-Ethnic-Music(chosic.com).mp3"
 ai = Array[int]([13, 0])

@@ -1,0 +1,45 @@
+keys,en,uk
+AI,AI,ШІ
+BACK,Back,Назад
+BACKGROUND,Background,Фон
+BACKGROUND:,Background:,Фон:
+CHOOSE_LEVEL,Choose level,Вибрати рівень
+CONTROL,Control,Керування
+CONTROL_HINT,The cursor can be controlled by either player using the mouse.,Курсором може керувати будь-який гравець за допомогою миші.
+CUSTOMIZE_LEVEL,Customize level,Налаштувати рівень
+EXIT,Exit,Вихід
+HUMAN,Human,Людина
+LEVEL,Level,Рівень
+LEVEL_DISCARD,Would you like to discard the current save and begin this level?,Бажаєте скинути поточне збереження і почати цей рівень?
+LEVEL1,Ronin's Redemption,Спокута роніна
+LEVEL10,Enigmatic Elegance,Загадкова елегантність
+LEVEL11,Shadows of the Geisha,Тіні гейш
+LEVEL12,Kitsune's Dance,Танець кіцуне
+LEVEL13,Wandering Blades,Блукаючі клинки
+LEVEL14,Twilight's Tale,Казка сутінків
+LEVEL15,Samurai's Solitude,Самітність самурая
+LEVEL16,Shadowed Shogun,Тінь сьоґуна
+LEVEL17,Eternal Blossoms,Вічне цвітіння
+LEVEL18,Samurai's Fate,Доля самурая
+LEVEL2,Silent Serenity,Мовчазна безтурботність
+LEVEL3,Frozen Fortress,Застигла фортеця
+LEVEL4,Whispers of the Sakura,Шепіт сакури
+LEVEL5,Journey to the Rising Sun,Подорож до східного сонця
+LEVEL6,Harmony's Edge,Край гармонії
+LEVEL7,The Zen Garden,Сад дзен
+LEVEL8,Echoes of Edo,Відлуння Едо
+LEVEL9,Tempest of Tranquility,Буря спокою
+MUSIC,Music:,Музика:
+NEXT_LEVEL,Next level,Наступний рівень
+PLAY,Play,Грати
+PLAYER,Player,Гравець
+PLAYER_1,Player 1:,Гравець 1:
+PLAYER_1_WIN,Player 1 win!,Гравець 1 переміг!
+PLAYER_2,Player 2:,Гравець 2:
+PLAYER_2_WIN,Player 2 win!,Гравець 2 переміг!
+RESTART,Restart,Перезапуск
+SCORE,Score,Рахунок
+START,Start,Старт
+YOU_LOSE,You lose!,Ти програв!
+YOU_WIN,You win!,Ти виграв!
+СUSTOMIZED_GAME,Сustomized game,Спеціальна гра
