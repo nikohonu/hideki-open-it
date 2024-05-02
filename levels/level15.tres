@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_rijkv")
 name = "LEVEL15"
-background_path = "res://backgrounds/pexels-abby-chung-1045615.webp"
-music_path = "res://music/Yugen-Emotional-Ethnic-Music(chosic.com).mp3"
+background_path = "res://backgrounds/pexels-ryutaro-tsukata-5745864.webp"
+music_path = "res://music/PerituneMaterial_Sakuya2(chosic.com).mp3"
 ai = Array[int]([0, 14])

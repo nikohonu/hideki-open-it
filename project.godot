@@ -84,4 +84,3 @@ click={
 [internationalization]
 
 locale/translations=PackedStringArray("res://translations/translations.en.translation", "res://translations/translations.uk.translation")
-locale/test="uk"

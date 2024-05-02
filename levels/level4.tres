@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("3_mqtag")
 name = "LEVEL4"
-background_path = "res://backgrounds/pexels-abby-chung-1045615.webp"
+background_path = "res://backgrounds/pexels-evgeny-tchebotarev-2235302.webp"
 music_path = "res://music/Yugen-Emotional-Ethnic-Music(chosic.com).mp3"
 ai = Array[int]([4, 0])

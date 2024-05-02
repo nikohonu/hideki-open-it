@@ -28,3 +28,4 @@ config.log
 
 # Project specific
 *.csv#
+*.ods#
