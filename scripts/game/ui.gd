@@ -77,7 +77,8 @@ func _on_next_level_pressed() -> void:
 func _on_map_opened(winner: int, is_player_win: bool) -> void:
 	panel.visible = true
 	if Global.current_level == len(Global.levels) - 1:
-		next_level_button.visible = false
+		get_tree().change_scene_to_file("res://scenes/credits.tscn")
+		#next_level_button.visible = false
 	if Global.current_level == -1:
 		custom_result_label.set_text(tr("PLAYER_%s_WIN" % (winner + 1)))
 		custom_message.visible = true

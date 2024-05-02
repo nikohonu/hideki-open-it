@@ -6,6 +6,7 @@ BACKGROUND:,Background:,Фон:
 CHOOSE_LEVEL,Choose level,Вибрати рівень
 CONTROL,Control,Керування
 CONTROL_HINT,The cursor can be controlled by either player using the mouse.,Курсором може керувати будь-який гравець за допомогою миші.
+CREDITS,Credits,Титри
 CUSTOMIZE_LEVEL,Customize level,Налаштувати рівень
 EXIT,Exit,Вихід
 HUMAN,Human,Людина
@@ -43,3 +44,8 @@ START,Start,Старт
 YOU_LOSE,You lose!,Ти програв!
 YOU_WIN,You win!,Ти виграв!
 СUSTOMIZED_GAME,Сustomized game,Спеціальна гра
+PHOTOS,Photos,Фотографії
+FONTS,Fonts,Шрифти
+MUSIC,Music,Музика
+SFX,SFX,SFX
+CONTINUE,Continue,Продовжити

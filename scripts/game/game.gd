@@ -64,6 +64,7 @@ func _on_state_game_ended(winner):
 
 func _on_cursor_cell_selected(coords: Vector2i) -> void:
 	state.select(coords)
-	
+
+
 func _on_logged(turn, value):
 	logged.emit(turn, value)

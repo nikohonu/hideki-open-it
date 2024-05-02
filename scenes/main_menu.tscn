@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_ehpoh"]
 [ext_resource type="PackedScene" uid="uid://bum2srmdskmqx" path="res://scenes/test.tscn" id="2_jcuj2"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("continue_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ehpoh")
+continue_button = NodePath("CenterContainer/VBoxContainer/Continue")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -22,6 +23,10 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
+
+[node name="Continue" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "CONTINUE"
 
 [node name="Play" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
@@ -35,6 +40,10 @@ text = "СUSTOMIZED_GAME"
 layout_mode = 2
 text = "CONTROL"
 
+[node name="Credits" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "CREDITS"
+
 [node name="Exit" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "EXIT"
@@ -42,7 +51,9 @@ text = "EXIT"
 [node name="Test" parent="." instance=ExtResource("2_jcuj2")]
 layout_mode = 1
 
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Custom" to="." method="_on_custom_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Control" to="." method="_on_control_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

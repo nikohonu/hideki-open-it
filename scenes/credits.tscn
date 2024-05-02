@@ -1,4 +1,44 @@
-Photos
+[gd_scene load_steps=3 format=3 uid="uid://bb7qd7yxmkocc"]
+
+[ext_resource type="Script" path="res://scripts/credits.gd" id="1_k1d32"]
+[ext_resource type="Theme" uid="uid://cgt1hkm7km46h" path="res://themes/main.tres" id="1_tnsk4"]
+
+[node name="Credits" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_tnsk4")
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_k1d32")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Credits" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "CREDITS"
+horizontal_alignment = 1
+
+[node name="Back" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Back"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 40
+bbcode_enabled = true
+text = "[b]Photos[/b]
 
 Photo by Abby Chung | https://www.pexels.com/photo/selective-focus-photography-of-pink-flowers-1045615
 Photo by Casia Charlie | https://www.pexels.com/photo/white-and-teal-5-storey-castle-2425464
@@ -11,12 +51,12 @@ Photo by Ryutaro Tsukata | https://www.pexels.com/photo/autumn-leaves-in-puddle-
 Photo by Sunil Poudel | https://www.pexels.com/photo/beige-and-brown-temple-2758567
 Photo by Tomáš Malík | https://www.pexels.com/photo/mt-fuji-3408353
 
-Fonts
+[b]Fonts[/b]
 
 Ubuntu font | https://design.ubuntu.com/font
 Kosugi Maru | https://github.com/googlefonts/kosugi-maru
 
-Music
+[b]Music[/b]
 
 Sakuya by PeriTune | https://peritune.com/ - Music promoted by https://www.chosic.com/free-music/all/
 Creative Commons Attribution 3.0 Unported License - https://creativecommons.org/licenses/by/4.0/
@@ -33,6 +73,8 @@ Attribution 4.0 International (CC BY 4.0) - https://creativecommons.org/licenses
 Ronin by yoitrax | https://soundcloud.com/yoitrax - Music promoted on https://www.chosic.com/free-music/all/
 Creative Commons Attribution 3.0 Unported (CC BY 3.0) - https://creativecommons.org/licenses/by/3.0/
 
-SFX
+[b]SFX[/b]
 
-51 UI sound effects by Kenney | https://kenney.nl
+51 UI sound effects by Kenney | https://kenney.nl"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]
