@@ -32,6 +32,17 @@ func _ready() -> void:
 	_set_turn(game.state.turn)
 	_set_scores(game.state.scores)
 
+
+func _input(event):
+	if win_message.visible == true:
+		if event.is_action_pressed("ui_accept"):
+			game.next_level()
+	if event.is_action_pressed("ui_cancel"):
+		game.back()
+	if event.is_action_pressed("ui_restart"):
+		game.restart()
+
+
 func _get_player_text(turn, ai):
 	if ai == 0:
 		return (tr("PLAYER") + " %s -  " + tr("HUMAN")) % (turn + 1)
@@ -76,14 +87,13 @@ func _on_next_level_pressed() -> void:
 
 func _on_map_opened(winner: int, is_player_win: bool) -> void:
 	panel.visible = true
-	if Global.current_level == len(Global.levels) - 1:
-		get_tree().change_scene_to_file("res://scenes/credits.tscn")
-		#next_level_button.visible = false
 	if Global.current_level == -1:
 		custom_result_label.set_text(tr("PLAYER_%s_WIN" % (winner + 1)))
 		custom_message.visible = true
 		return
 	if is_player_win:
+		if Global.current_level == 17:
+			next_level_button.set_text(tr("CREDITS"))
 		win_message.visible = true
 	else:
 		lose_message.visible = true

@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ih37wf660pqw"]
+[gd_scene load_steps=7 format=3 uid="uid://ih37wf660pqw"]
 
 [ext_resource type="FontFile" uid="uid://c7fyade7si1tg" path="res://fonts/Ubuntu_Mono/UbuntuMono-Regular.ttf" id="1_em4re"]
 [ext_resource type="Script" path="res://scripts/control.gd" id="1_ijuh8"]
+[ext_resource type="Theme" uid="uid://cgt1hkm7km46h" path="res://themes/main.tres" id="1_mlbey"]
 [ext_resource type="Texture2D" uid="uid://dpxqbiyplsyfj" path="res://sprites/key.png" id="2_k2pbe"]
+[ext_resource type="Texture2D" uid="uid://bske2kvngf6d6" path="res://icons/Xbox Series/XboxSeriesX_B.png" id="3_khej4"]
 [ext_resource type="PackedScene" uid="uid://bum2srmdskmqx" path="res://scenes/test.tscn" id="4_qk0kj"]
 
 [node name="Control" type="MarginContainer"]
@@ -11,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_mlbey")
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -20,11 +23,12 @@ script = ExtResource("1_ijuh8")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="Back" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 2
 text = "BACK"
+icon = ExtResource("3_khej4")
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -226,4 +230,4 @@ size_flags_vertical = 3
 [node name="Test" parent="." instance=ExtResource("4_qk0kj")]
 layout_mode = 2
 
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

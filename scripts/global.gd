@@ -19,6 +19,8 @@ var custom = {
 	"ai2": 0,
 }
 
+@onready var is_joypad_connected = not Input.get_connected_joypads().is_empty()
+
 
 func _ready():
 	for i in range(LEVEL_COUNT):

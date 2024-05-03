@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://buuuapqyomv2l"]
+[gd_scene load_steps=27 format=3 uid="uid://buuuapqyomv2l"]
 
 [ext_resource type="Script" path="res://scripts/game/game.gd" id="1_6gikw"]
 [ext_resource type="PackedScene" uid="uid://bum2srmdskmqx" path="res://scenes/test.tscn" id="2_ffrov"]
@@ -13,6 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://b3sd2dfwdqtc5" path="res://sprites/arrow-sheet.png" id="10_6wnyi"]
 [ext_resource type="Theme" uid="uid://cgt1hkm7km46h" path="res://themes/main.tres" id="10_e0eca"]
 [ext_resource type="Script" path="res://scripts/game/ui.gd" id="11_mb5h7"]
+[ext_resource type="Texture2D" uid="uid://c5pjmpl8w4npf" path="res://icons/Xbox Series/XboxSeriesX_Y.png" id="13_8w7um"]
+[ext_resource type="Texture2D" uid="uid://bske2kvngf6d6" path="res://icons/Xbox Series/XboxSeriesX_B.png" id="14_ybfqh"]
+[ext_resource type="Texture2D" uid="uid://bu5b67hibyw8f" path="res://icons/Xbox Series/XboxSeriesX_A.png" id="15_e8c58"]
 
 [sub_resource type="Environment" id="Environment_2y7p1"]
 ambient_light_source = 2
@@ -215,6 +218,7 @@ custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 size_flags_vertical = 0
 text = "RESTART"
+icon = ExtResource("13_8w7um")
 
 [node name="Level" type="VBoxContainer" parent="UI/Game/VBoxContainer/Top"]
 layout_mode = 2
@@ -235,6 +239,7 @@ custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 size_flags_vertical = 0
 text = "BACK"
+icon = ExtResource("14_ybfqh")
 
 [node name="Mid" type="HBoxContainer" parent="UI/Game/VBoxContainer"]
 layout_mode = 2
@@ -322,10 +327,12 @@ layout_mode = 2
 [node name="Back" type="Button" parent="UI/Panel/MarginContainer/Win/HBoxContainer"]
 layout_mode = 2
 text = "CHOOSE_LEVEL"
+icon = ExtResource("14_ybfqh")
 
 [node name="NextLevel" type="Button" parent="UI/Panel/MarginContainer/Win/HBoxContainer"]
 layout_mode = 2
 text = "NEXT_LEVEL"
+icon = ExtResource("15_e8c58")
 
 [node name="Lose" type="VBoxContainer" parent="UI/Panel/MarginContainer"]
 visible = false
@@ -341,10 +348,12 @@ layout_mode = 2
 [node name="Back" type="Button" parent="UI/Panel/MarginContainer/Lose/HBoxContainer"]
 layout_mode = 2
 text = "CHOOSE_LEVEL"
+icon = ExtResource("14_ybfqh")
 
 [node name="Restart" type="Button" parent="UI/Panel/MarginContainer/Lose/HBoxContainer"]
 layout_mode = 2
 text = "RESTART"
+icon = ExtResource("13_8w7um")
 
 [node name="Custom" type="VBoxContainer" parent="UI/Panel/MarginContainer"]
 visible = false
@@ -360,10 +369,12 @@ layout_mode = 2
 [node name="Back" type="Button" parent="UI/Panel/MarginContainer/Custom/HBoxContainer"]
 layout_mode = 2
 text = "CUSTOMIZE_LEVEL"
+icon = ExtResource("14_ybfqh")
 
 [node name="Restart" type="Button" parent="UI/Panel/MarginContainer/Custom/HBoxContainer"]
 layout_mode = 2
 text = "RESTART"
+icon = ExtResource("13_8w7um")
 
 [node name="Test" parent="." node_paths=PackedStringArray("game") instance=ExtResource("2_ffrov")]
 game = NodePath("..")

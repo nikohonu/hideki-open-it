@@ -15,6 +15,7 @@ func _ready():
 	if Global.should_load_saved_state:
 		state = Global.saved_state
 		Global.saved_state = null
+		Global.saved_level = -1
 		Global.should_load_saved_state = false
 	else:
 		state = State.new()
@@ -32,6 +33,8 @@ func next_level():
 	if Global.current_level < len(Global.levels) - 1:
 		Global.current_level += 1
 		get_tree().change_scene_to_file("res://scenes/game/game.tscn")
+	if Global.current_level == 17:
+		get_tree().change_scene_to_file.bind("res://scenes/credits.tscn").call_deferred()
 
 
 func back():
@@ -57,7 +60,8 @@ func _on_state_game_ended(winner):
 	ended.emit(winner, is_player_win)
 	if Global.current_level >= 0 and is_player_win:
 		if Global.current_level == Global.progress:
-			Global.progress += 1
+			if Global.current_level != 18:
+				Global.progress += 1
 			Global.saved_level = -1
 			Global.save_game()
 

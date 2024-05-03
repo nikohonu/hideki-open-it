@@ -4,6 +4,7 @@ extends VBoxContainer
 
 
 signal pressed
+signal focus_changed
 
 enum Status { ACTIVE, LOCKED, COMPLETED }
 
@@ -38,6 +39,27 @@ enum Status { ACTIVE, LOCKED, COMPLETED }
 		has_save = value
 		status = status
 
+var focused = false
+
+
+func focus():
+	texture_button.grab_focus()
+
+
+func unfocus():
+	texture_button.release_focus()
+
 
 func _on_texture_button_pressed():
 	pressed.emit()
+
+
+func _on_texture_button_focus_entered() -> void:
+	focused = true
+	icon_label.modulate = Color(0, 0, 0)
+	focus_changed.emit()
+
+
+func _on_texture_button_focus_exited() -> void:
+	focused = false
+	icon_label.modulate = Color(1, 1, 1)

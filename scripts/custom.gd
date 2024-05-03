@@ -29,6 +29,8 @@ const MUSIC = {
 @export var label_ai2: Label
 @export var music_label: Label
 
+@export var first_button: Control
+
 var background_index: int:
 	set(index):
 		background.texture = load("res://backgrounds/" + BACKGROUNDS.values()[index])
@@ -59,6 +61,13 @@ func _ready():
 	music_index = Global.custom.music_index
 	ai1 = Global.custom.ai1
 	ai2 = Global.custom.ai2
+	if Global.is_joypad_connected:
+		first_button.grab_focus()
+
+
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		_on_back_pressed()
 
 
 func ai_to_str(ai: int):

@@ -1,17 +1,34 @@
-[gd_scene load_steps=3 format=3 uid="uid://dhqpaucmcr1kq"]
+[gd_scene load_steps=5 format=3 uid="uid://dhqpaucmcr1kq"]
 
+[ext_resource type="Theme" uid="uid://cgt1hkm7km46h" path="res://themes/main.tres" id="1_4vwa8"]
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_ehpoh"]
 [ext_resource type="PackedScene" uid="uid://bum2srmdskmqx" path="res://scenes/test.tscn" id="2_jcuj2"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("continue_button")]
+[sub_resource type="GDScript" id="GDScript_kr4ew"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	grab_focus()
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("continue_button", "play_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_4vwa8")
 script = ExtResource("1_ehpoh")
 continue_button = NodePath("CenterContainer/VBoxContainer/Continue")
+play_button = NodePath("CenterContainer/VBoxContainer/Play")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -26,7 +43,9 @@ layout_mode = 2
 
 [node name="Continue" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../Exit")
 text = "CONTINUE"
+script = SubResource("GDScript_kr4ew")
 
 [node name="Play" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
@@ -46,6 +65,7 @@ text = "CREDITS"
 
 [node name="Exit" type="Button" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../Continue")
 text = "EXIT"
 
 [node name="Test" parent="." instance=ExtResource("2_jcuj2")]

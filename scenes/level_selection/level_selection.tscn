@@ -1,18 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtd83xhh7g7rm"]
+[gd_scene load_steps=7 format=3 uid="uid://dtd83xhh7g7rm"]
 
+[ext_resource type="Theme" uid="uid://cgt1hkm7km46h" path="res://themes/main.tres" id="1_bo2vu"]
 [ext_resource type="Script" path="res://scripts/level_selection/level_selection.gd" id="1_t0q7u"]
 [ext_resource type="PackedScene" uid="uid://cicxy4mbcsrsf" path="res://scenes/level_selection/level_button.tscn" id="2_abr2k"]
 [ext_resource type="PackedScene" uid="uid://bum2srmdskmqx" path="res://scenes/test.tscn" id="3_detrt"]
+[ext_resource type="Texture2D" uid="uid://bske2kvngf6d6" path="res://icons/Xbox Series/XboxSeriesX_B.png" id="3_yynmq"]
+[ext_resource type="Texture2D" uid="uid://bu5b67hibyw8f" path="res://icons/Xbox Series/XboxSeriesX_A.png" id="5_vumnx"]
 
-[node name="LevelSelection" type="Control" node_paths=PackedStringArray("level_button_container")]
+[node name="LevelSelection" type="Control" node_paths=PackedStringArray("level_button_container", "panel_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_bo2vu")
 script = ExtResource("1_t0q7u")
 level_button_container = NodePath("MarginContainer/VBoxContainer/GridContainer")
+panel_container = NodePath("CanvasLayer/PanelContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -38,7 +43,9 @@ alignment = 2
 
 [node name="Back" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+focus_mode = 1
 text = "BACK"
+icon = ExtResource("3_yynmq")
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -106,53 +113,58 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
 visible = false
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -136.0
+offset_top = -37.0
+offset_right = 136.0
+offset_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_bo2vu")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="OverwriteLevel" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="OverwriteLevel" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/OverwriteLevel"]
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/OverwriteLevel"]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 text = "LEVEL_DISCARD"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/OverwriteLevel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/OverwriteLevel"]
 layout_mode = 2
 alignment = 2
 
-[node name="Ok" type="Button" parent="PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer"]
+[node name="Ok" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer"]
 layout_mode = 2
 text = "OK"
+icon = ExtResource("5_vumnx")
 
-[node name="Cancel" type="Button" parent="PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer"]
+[node name="Cancel" type="Button" parent="CanvasLayer/PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer"]
 layout_mode = 2
-text = "Cancel"
+text = "CANCEL"
+icon = ExtResource("3_yynmq")
 
 [node name="Test" parent="." instance=ExtResource("3_detrt")]
 layout_mode = 1
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer/Ok" to="." method="_on_ok_pressed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer/Ok" to="." method="_on_ok_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/MarginContainer/OverwriteLevel/HBoxContainer/Cancel" to="." method="_on_cancel_pressed"]

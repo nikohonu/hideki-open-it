@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://cicxy4mbcsrsf"]
+[gd_scene load_steps=7 format=3 uid="uid://cicxy4mbcsrsf"]
 
+[ext_resource type="Theme" uid="uid://cgt1hkm7km46h" path="res://themes/main.tres" id="1_rmyqn"]
 [ext_resource type="Script" path="res://scripts/level_selection/level_button.gd" id="1_sq12b"]
 [ext_resource type="Texture2D" uid="uid://drqvvv55o8t7l" path="res://sprites/circle_atlas.png" id="2_j0amr"]
 
@@ -18,6 +19,7 @@ region = Rect2(512, 0, 128, 128)
 [node name="LevelButton" type="VBoxContainer" node_paths=PackedStringArray("texture_button", "label", "icon_label")]
 offset_right = 128.0
 offset_bottom = 155.0
+theme = ExtResource("1_rmyqn")
 script = ExtResource("1_sq12b")
 texture_button = NodePath("TextureButton")
 label = NodePath("Label")
@@ -44,9 +46,12 @@ vertical_alignment = 1
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "Name"
 horizontal_alignment = 1
 autowrap_mode = 2
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="focus_entered" from="TextureButton" to="." method="_on_texture_button_focus_entered"]
+[connection signal="focus_exited" from="TextureButton" to="." method="_on_texture_button_focus_exited"]
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

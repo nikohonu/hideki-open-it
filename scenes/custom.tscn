@@ -1,15 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://gi6k6thw2tjx"]
+[gd_scene load_steps=6 format=3 uid="uid://gi6k6thw2tjx"]
 
+[ext_resource type="Theme" uid="uid://cgt1hkm7km46h" path="res://themes/main.tres" id="1_un2h6"]
 [ext_resource type="Script" path="res://scripts/custom.gd" id="1_xbrt8"]
 [ext_resource type="Texture2D" uid="uid://b0aj1h00dyaa4" path="res://sprites/board.png" id="2_g5jua"]
 [ext_resource type="PackedScene" uid="uid://bum2srmdskmqx" path="res://scenes/test.tscn" id="3_fv55a"]
+[ext_resource type="Texture2D" uid="uid://bske2kvngf6d6" path="res://icons/Xbox Series/XboxSeriesX_B.png" id="4_2ukl2"]
 
-[node name="Custom" type="MarginContainer" node_paths=PackedStringArray("music", "background", "background_label", "label_ai1", "label_ai2", "music_label")]
+[node name="Custom" type="MarginContainer" node_paths=PackedStringArray("music", "background", "background_label", "label_ai1", "label_ai2", "music_label", "first_button")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_un2h6")
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -21,6 +24,7 @@ background_label = NodePath("VBoxContainer/CenterContainer/Panel/MarginContainer
 label_ai1 = NodePath("VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/LabelAI1State")
 label_ai2 = NodePath("VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/LabelAI2State")
 music_label = NodePath("VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/LabelMusicState")
+first_button = NodePath("VBoxContainer/CenterContainer/Panel/MarginContainer/VBoxContainer/GridContainer/PrevBackground")
 
 [node name="Board" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(768, 768)
@@ -43,7 +47,9 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 2
+focus_mode = 1
 text = "BACK"
+icon = ExtResource("4_2ukl2")
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
 layout_mode = 2

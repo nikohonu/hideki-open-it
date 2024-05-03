@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bb7qd7yxmkocc"]
+[gd_scene load_steps=4 format=3 uid="uid://bb7qd7yxmkocc"]
 
 [ext_resource type="Script" path="res://scripts/credits.gd" id="1_k1d32"]
 [ext_resource type="Theme" uid="uid://cgt1hkm7km46h" path="res://themes/main.tres" id="1_tnsk4"]
+[ext_resource type="Texture2D" uid="uid://bske2kvngf6d6" path="res://icons/Xbox Series/XboxSeriesX_B.png" id="3_kne6i"]
 
 [node name="Credits" type="MarginContainer"]
 anchors_preset = 15
@@ -31,12 +32,13 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 10
 text = "Back"
+icon = ExtResource("3_kne6i")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/normal_font_size = 20
-theme_override_font_sizes/bold_font_size = 40
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 30
 bbcode_enabled = true
 text = "[b]Photos[/b]
 
@@ -75,6 +77,9 @@ Creative Commons Attribution 3.0 Unported (CC BY 3.0) - https://creativecommons.
 
 [b]SFX[/b]
 
-51 UI sound effects by Kenney | https://kenney.nl"
+51 UI sound effects by Kenney | https://kenney.nl
+
+[b]Icons[/b]
+Xelu's FREE Controller Prompts | https://thoseawesomeguys.com/prompts/"
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]

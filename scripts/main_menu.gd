@@ -1,10 +1,19 @@
 extends Control
 
 @export var continue_button: Button 
+@export var play_button: Button 
+
 
 func _ready() -> void:
 	if Global.saved_level == -1:
 		continue_button.visible = false
+		if Global.is_joypad_connected:
+			play_button.grab_focus()
+	else:
+		continue_button.visible = true
+		if Global.is_joypad_connected:
+			continue_button.grab_focus()
+		
 
 
 func _on_play_pressed():
