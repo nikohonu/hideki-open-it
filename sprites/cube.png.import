@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ca4yca1wi7f4p"
 path.s3tc="res://.godot/imported/cube.png-e260214673feba36ac20f6849b7601df.s3tc.ctex"
+path.etc2="res://.godot/imported/cube.png-e260214673feba36ac20f6849b7601df.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://sprites/cube.png"
-dest_files=["res://.godot/imported/cube.png-e260214673feba36ac20f6849b7601df.s3tc.ctex"]
+dest_files=["res://.godot/imported/cube.png-e260214673feba36ac20f6849b7601df.s3tc.ctex", "res://.godot/imported/cube.png-e260214673feba36ac20f6849b7601df.etc2.ctex"]
 
 [params]
 

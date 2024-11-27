@@ -95,6 +95,7 @@ Vector2i AICPP::calc(Object *state, int level) {
   auto game_state = new GameState(state);
   auto result =
       _negamax(game_state, depth, -1000, 1000, -2 * game_state->turn + 1);
+  delete game_state;
   return result.cursor;
 }
 
@@ -122,5 +123,7 @@ Result AICPP::_negamax(GameState *state, int depth, int alpha, int beta,
       delete child;
     }
   }
-  return Result(value, best_child->cursor);
+  auto result = Result(value, best_child->cursor);
+  delete best_child;
+  return result;
 }

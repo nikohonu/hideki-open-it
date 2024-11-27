@@ -13,6 +13,7 @@ config_version=5
 config/name="hideki-open-it"
 run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [autoload]
@@ -113,3 +114,7 @@ ui_restart={
 
 locale/translations=PackedStringArray("res://translations/translations.en.translation", "res://translations/translations.uk.translation")
 locale/test="uk"
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true

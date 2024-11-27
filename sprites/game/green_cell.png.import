@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dipmm2bn0610v"
 path.s3tc="res://.godot/imported/green_cell.png-2ed784989657627b87580da0fcdb067c.s3tc.ctex"
+path.etc2="res://.godot/imported/green_cell.png-2ed784989657627b87580da0fcdb067c.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://sprites/game/green_cell.png"
-dest_files=["res://.godot/imported/green_cell.png-2ed784989657627b87580da0fcdb067c.s3tc.ctex"]
+dest_files=["res://.godot/imported/green_cell.png-2ed784989657627b87580da0fcdb067c.s3tc.ctex", "res://.godot/imported/green_cell.png-2ed784989657627b87580da0fcdb067c.etc2.ctex"]
 
 [params]
 
